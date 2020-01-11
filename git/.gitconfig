@@ -1,0 +1,47 @@
+[user]
+	name = Jonathan Gopel
+	email = jgopel@quantlab.com
+[core]
+	autocrlf = false
+	whitespace = blank-at-eol,space-before-tab,tab-in-indent,-blank-at-eof,tabwidth=8
+	logAllRefUpdates = true
+	pager = less
+	excludesfile = ~/.gitignore_global
+[alias]
+	co = checkout
+	stat = status
+	history = log --color --graph --decorate --oneline
+	mylog = log --first-parent master --author jonathan@josh.ai
+	todo = "!git diff --unified=0 $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') HEAD) | ack --no-color '.*TODO'"
+	git = "!sh -c 'echo You are an idiot' && git"
+        nwadd = "!git diff -w --no-color | git apply --cached --ignore-whitespace"
+[status]
+	showuntrackedfiles = normal
+	submodulesummary = true
+[color]
+	ui = true
+[help]
+	autocorrect = 5
+[merge]
+	ff = no
+	conflictstyle = diff3
+	tool = kdiff3
+[pull]
+	ff = only
+[push]
+	default = simple
+[log]
+	date = rfc-local
+[diff]
+	indentHeuristic = true
+	submodule = log
+	colorMoved = zebra
+[fetch]
+	prune = true
+[clangFormat]
+	extension = c,cc,cpp,h,hpp
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

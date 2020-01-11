@@ -1,0 +1,10 @@
+*.swp
+*.swo
+cscope.in.out
+cscope.out
+cscope.po.out
+.vscode/
+.idea/
+tags
+__pycache__/
+

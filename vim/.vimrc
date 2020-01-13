@@ -49,7 +49,7 @@ set colorcolumn=81
 
 " Configure autosave plugin
 let g:auto_save = 1
-" let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 
 " Code file settings
 autocmd FileType c,cpp,python autocmd BufWritePre <buffer> %s/\s\+$//e " Strip trailing whitespace

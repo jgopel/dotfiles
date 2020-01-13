@@ -13,6 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'preservim/nerdcommenter'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/vim-auto-save'
@@ -50,6 +51,10 @@ set colorcolumn=81
 " Configure autosave plugin
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+
+" Configure NERDcommenter
+let g:NERDSpaceDelims = 1
+let g:NERDTrimTrailingWhitespace = 1
 
 " Code file settings
 autocmd FileType c,cpp,python autocmd BufWritePre <buffer> %s/\s\+$//e " Strip trailing whitespace

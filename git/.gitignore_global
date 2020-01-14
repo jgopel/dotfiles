@@ -7,4 +7,5 @@ cscope.po.out
 .idea/
 tags
 __pycache__/
+.ycm_extra_conf.py
 

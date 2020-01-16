@@ -42,6 +42,7 @@ export SVN_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
 export CSCOPE_EDITOR=vim
+export TZ='America/Denver'
 
 # Swap escape and caps lock
 if is_linux && [ -n "$DISPLAY" ] ; then

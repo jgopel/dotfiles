@@ -53,6 +53,9 @@ set colorcolumn=81
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 
+" Configure CtrlP
+let g:ctrlp_cmd = 'CtrlPMixed'
+
 " Configure NERDcommenter
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1

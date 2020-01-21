@@ -29,14 +29,22 @@ filetype plugin indent on
 " Basic environment variables
 set number
 set relativenumber
+
 set ruler
+
 set autoindent
 set smartindent
 set cindent
+
 set wrap
 set linebreak
+
+set hlsearch
+
 set mouse=a
+
 set backspace=indent,eol,start
+
 syntax on
 
 " Setup tab depth

@@ -14,6 +14,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'preservim/nerdcommenter'
+Plugin 'preservim/nerdtree'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
@@ -42,6 +43,9 @@ set linebreak
 set hlsearch
 
 set mouse=a
+
+set splitright
+set splitbelow
 
 set backspace=indent,eol,start
 
@@ -75,6 +79,8 @@ autocmd FileType c,cpp,python autocmd BufWritePre <buffer> %s/\s\+$//e " Strip t
 colorscheme luna-term
 
 " Shortcuts
+map <C-n> :NERDTreeFind<CR>
+
 nmap <F12> :set invrelativenumber<CR>
 
 autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>

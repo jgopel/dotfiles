@@ -19,13 +19,14 @@
               -c color.grep.filename=\"bold green\" \
               -c color.grep.match=\"reverse yellow\" \
               grep --break --heading --line-number
+        cane = commit --amend --no-edit
 [status]
 	showuntrackedfiles = normal
 	submodulesummary = true
 [color]
 	ui = true
 [help]
-	autocorrect = 5
+	autocorrect = 8
 [merge]
 	ff = no
 	conflictstyle = diff3

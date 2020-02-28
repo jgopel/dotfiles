@@ -13,6 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'godlygeek/tabular.git'
 Plugin 'preservim/nerdcommenter'
 Plugin 'preservim/nerdtree'
 Plugin 'rhysd/vim-clang-format'
@@ -54,7 +55,7 @@ syntax on
 " Setup tab depth
 set tabstop=8
 set softtabstop=0
-set shiftwidth=2
+set shiftwidth=2 " TODO: move into local .vimrc
 set expandtab
 set smarttab
 
@@ -66,7 +67,7 @@ colorscheme luna-term
 
 " Configure autosave plugin
 let g:auto_save = 1
-let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+let g:auto_save_in_insert_mode = 0
 
 " Configure CtrlP
 let g:ctrlp_cmd = 'CtrlPMixed'
@@ -91,12 +92,20 @@ autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
 " Cucumber settings
+autocmd BufWritePost *.feature set ft=cucumber " TODO: Move into local .vimrc
 autocmd FileType cucumber autocmd BufWritePre <buffer> %s/\s\+$//e
+
+autocmd FileType cucumber map <Tab> :Tabularize /\|<CR>
 
 " Git settings
 autocmd FileType gitcommit setlocal textwidth=72
 autocmd FileType gitcommit setlocal colorcolumn=+1
 autocmd FileType gitcommit setlocal colorcolumn+=51 " Title width
+
+" Markdown settings
+autocmd FileType markdown autocmd BufWritePre <buffer> %s/\s\+$//e
+
+autocmd FileType markdown map <Tab> :Tabularize /\|<CR>
 
 " Python settings
 autocmd FileType python autocmd BufWritePre <buffer> %s/\s\+$//e

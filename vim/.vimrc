@@ -42,6 +42,8 @@ set wrap
 set linebreak
 
 set hlsearch
+set ignorecase
+set smartcase
 
 set mouse=a
 

@@ -61,6 +61,9 @@ set smarttab
 " Line after column 80
 set colorcolumn=81
 
+" Colors
+colorscheme luna-term
+
 " Configure autosave plugin
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
@@ -72,26 +75,32 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
 
-" Code file settings
-autocmd FileType c,cpp,python autocmd BufWritePre <buffer> %s/\s\+$//e " Strip trailing whitespace
-
-" Colors
-colorscheme luna-term
-
-" Shortcuts
+" General purpose shortcuts
 map <C-n> :NERDTreeFind<CR>
 
 nmap <F12> :set invrelativenumber<CR>
-
-autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-" Filetype specifc overrides
+" C/C++ settings
+autocmd FileType c,cpp autocmd BufWritePre <buffer> %s/\s\+$//e
+
+autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
+
+" Cucumber settings
+autocmd FileType cucumber autocmd BufWritePre <buffer> %s/\s\+$//e
+
+" Git settings
 autocmd FileType gitcommit setlocal textwidth=72
 autocmd FileType gitcommit setlocal colorcolumn=+1
 autocmd FileType gitcommit setlocal colorcolumn+=51 " Title width
+
+" Python settings
+autocmd FileType python autocmd BufWritePre <buffer> %s/\s\+$//e
+
+" VimFile settings
+autocmd FileType vim autocmd BufWritePre <buffer> %s/\s\+$//e
 

@@ -104,6 +104,9 @@ autocmd FileType gitcommit setlocal textwidth=72
 autocmd FileType gitcommit setlocal colorcolumn=+1
 autocmd FileType gitcommit setlocal colorcolumn+=51 " Title width
 
+" Haskell settings
+autocmd FileType haskell autocmd BufWritePre <buffer> %s/\s\+$//e
+
 " Markdown settings
 autocmd FileType markdown autocmd BufWritePre <buffer> %s/\s\+$//e
 

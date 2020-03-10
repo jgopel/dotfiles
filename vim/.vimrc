@@ -16,6 +16,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'godlygeek/tabular.git'
 Plugin 'preservim/nerdcommenter'
 Plugin 'preservim/nerdtree'
+Plugin 'psf/black'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
@@ -114,6 +115,7 @@ autocmd FileType markdown map <Tab> :Tabularize /\|<CR>
 
 " Python settings
 autocmd FileType python autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd FileType python nnoremap <buffer><Leader>cf :Black<CR>
 
 " VimFile settings
 autocmd FileType vim autocmd BufWritePre <buffer> %s/\s\+$//e

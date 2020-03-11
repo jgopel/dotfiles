@@ -68,7 +68,7 @@ set colorcolumn=81
 " Colors
 colorscheme luna-term
 
-" Configure autosave plugin
+" Configure autosave
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
@@ -78,6 +78,11 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 " Configure NERDcommenter
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
+
+" Comfigure YouCompleteMe
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
 
 " General purpose shortcuts
 map <C-n> :NERDTreeFind<CR>

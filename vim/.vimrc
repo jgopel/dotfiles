@@ -94,6 +94,11 @@ autocmd FileType c,cpp autocmd BufWritePre <buffer> %s/\s\+$//e
 autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
+" Cmake settings
+autocmd FileType cmake autocmd BufWritePre <buffer> %s/\s\+$//e
+
+autocmd FileType cmake nnoremap <buffer><Leader>cf !cmake-format -i <afile> | e!
+
 " Cucumber settings
 autocmd BufWritePost *.feature set ft=cucumber " TODO: Move into local .vimrc
 autocmd FileType cucumber autocmd BufWritePre <buffer> %s/\s\+$//e
@@ -115,6 +120,7 @@ autocmd FileType markdown map <Tab> :Tabularize /\|<CR>
 
 " Python settings
 autocmd FileType python autocmd BufWritePre <buffer> %s/\s\+$//e
+
 autocmd FileType python nnoremap <buffer><Leader>cf :Black<CR>
 
 " VimFile settings

@@ -1,2 +1,2 @@
-export PATH=$PATH:/usr/lib/llvm9/9.0.1/bin/
+export PATH=$PATH:/usr/lib/llvm10/10.0.0/bin
 

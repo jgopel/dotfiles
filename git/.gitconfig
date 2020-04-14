@@ -8,18 +8,19 @@
 	pager = less
 	excludesfile = ~/.gitignore_global
 [alias]
-	co = checkout
-	stat = status
-	history = log --color --graph --decorate --oneline
-	mylog = log --first-parent master --author jonathan@josh.ai
-	todo = "!git diff --unified=0 $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') HEAD) | ack --no-color '.*TODO'"
-	git = "!sh -c 'echo You are an idiot' && git"
-        nwadd = "!git diff -w --no-color | git apply --cached --ignore-whitespace"
         ack = -c color.grep.linenumber=\"bold yellow\" \
               -c color.grep.filename=\"bold green\" \
               -c color.grep.match=\"reverse yellow\" \
               grep --break --heading --line-number
         cane = commit --amend --no-edit
+	co = checkout
+	fa = fetch --all --prune --tags
+	git = "!sh -c 'echo You are an idiot' && git"
+	history = log --color --graph --decorate --oneline
+        nwadd = "!git diff -w --no-color | git apply --cached --ignore-whitespace"
+	rb = rebase --rebase-merges --autosquash --autostash --interactive
+	todo = "!git diff --unified=0 $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') HEAD) | ack --no-color '.*TODO'"
+	wip = commit -m "wip"
 [status]
 	showuntrackedfiles = normal
 	submodulesummary = true
@@ -30,7 +31,7 @@
 [merge]
 	ff = no
 	conflictstyle = diff3
-	tool = kdiff3
+	tool = vimdiff
 [pull]
 	ff = only
 [push]

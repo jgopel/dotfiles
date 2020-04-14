@@ -1,0 +1,3 @@
+#!/usr/local/bin/bash
+
+rsync --archive --checksum --progress --compress ~/dotfiles ~/.vim jgopel@hdc-dvuserl46.quantlab.com:~

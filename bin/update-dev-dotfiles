@@ -1,3 +1,14 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env python3
 
-rsync --archive --checksum --progress --compress ~/dotfiles ~/.vim jgopel@hdc-dvuserl46.quantlab.com:~
+import argparse
+import subprocess
+
+parser = argparse.ArgumentParser(description="copy dotfiles to remote server")
+parser.add_argument("--server", default="hdc-dvuserl46.quantlab.com", help="the server to copy to")
+args = parser.parse_args();
+
+subprocess.run(
+  f"rsync --archive --checksum --progress ~/dotfiles ~/.vim jgopel@{args.server}:~",
+  shell=True,
+  check=True)
+

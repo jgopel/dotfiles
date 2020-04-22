@@ -99,6 +99,10 @@ autocmd FileType c,cpp autocmd BufWritePre <buffer> %s/\s\+$//e
 autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
+au BufRead,BufNewFile *.definition set filetype=cpp " TODO: Move into local .vimrc
+au BufRead,BufNewFile *.format set filetype=cpp     " TODO: Move into local .vimrc
+au BufRead,BufNewFile *.graph set filetype=cpp      " TODO: Move into local .vimrc
+
 " Cmake settings
 autocmd FileType cmake autocmd BufWritePre <buffer> %s/\s\+$//e
 

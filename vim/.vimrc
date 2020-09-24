@@ -12,7 +12,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Vundle plugin list
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'damage220/vim-finder'
 Plugin 'godlygeek/tabular.git'
 Plugin 'preservim/nerdcommenter'
 Plugin 'preservim/nerdtree'
@@ -72,9 +72,6 @@ colorscheme luna-term
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
-" Configure CtrlP
-let g:ctrlp_cmd = 'CtrlPMixed'
-
 " Configure NERDcommenter
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
@@ -86,6 +83,7 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 
 " General purpose shortcuts
 map <C-n> :NERDTreeFind<CR>
+map <C-p> :Files<CR>
 
 nmap <F12> :set invrelativenumber<CR>
 

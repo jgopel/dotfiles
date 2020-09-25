@@ -87,6 +87,7 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 map <C-n> :NERDTreeFind<CR>
 map <C-p> :Files<CR>
 
+nmap <F11> :set invpaste<CR>
 nmap <F12> :set invrelativenumber<CR>
 
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>

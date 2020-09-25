@@ -74,25 +74,28 @@ colorscheme luna-term
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
+" Configure NERDTree
+map <C-n> :NERDTreeFind<CR>
+
 " Configure NERDcommenter
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
+
+" Configure vim-finder
+map <C-p> :Files<CR>
 
 " Comfigure YouCompleteMe
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
-" General purpose shortcuts
-map <C-n> :NERDTreeFind<CR>
-map <C-p> :Files<CR>
-
-nmap <F11> :set invpaste<CR>
-nmap <F12> :set invrelativenumber<CR>
-
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" General purpose shortcuts
+nmap <F11> :set invpaste<CR>
+nmap <F12> :set invrelativenumber<CR>
 
 " C/C++ settings
 autocmd FileType c,cpp autocmd BufWritePre <buffer> %s/\s\+$//e

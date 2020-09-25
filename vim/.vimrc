@@ -13,6 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'damage220/vim-finder'
+Plugin 'embear/vim-localvimrc'
 Plugin 'godlygeek/tabular.git'
 Plugin 'preservim/nerdcommenter'
 Plugin 'preservim/nerdtree'
@@ -58,7 +59,8 @@ syntax on
 " Setup tab depth
 set tabstop=8
 set softtabstop=0
-set shiftwidth=2 " TODO: move into local .vimrc
+set shiftwidth=2
+
 set expandtab
 set smarttab
 
@@ -97,16 +99,10 @@ autocmd FileType c,cpp autocmd BufWritePre <buffer> %s/\s\+$//e
 autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
-au BufRead,BufNewFile *.definition set filetype=cpp " TODO: Move into local .vimrc
-au BufRead,BufNewFile *.format set filetype=cpp     " TODO: Move into local .vimrc
-au BufRead,BufNewFile *.graph set filetype=cpp      " TODO: Move into local .vimrc
-au BufRead,BufNewFile *.protocol set filetype=cpp   " TODO: Move into local .vimrc
-
 " Cmake settings
 autocmd FileType cmake autocmd BufWritePre <buffer> %s/\s\+$//e
 
 " Cucumber settings
-autocmd BufWritePost *.feature set ft=cucumber " TODO: Move into local .vimrc
 autocmd FileType cucumber autocmd BufWritePre <buffer> %s/\s\+$//e
 
 autocmd FileType cucumber map <Tab> :Tabularize /\|<CR>

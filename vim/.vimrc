@@ -105,9 +105,6 @@ nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nmap <F11> :set invpaste<CR>
 nmap <F12> :set invrelativenumber<CR>
 
-" Cmake settings
-autocmd FileType cmake autocmd BufWritePre <buffer> %s/\s\+$//e
-
 " Cucumber settings
 autocmd FileType cucumber autocmd BufWritePre <buffer> %s/\s\+$//e
 

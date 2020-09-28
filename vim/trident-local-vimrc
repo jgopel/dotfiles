@@ -15,10 +15,12 @@ autocmd BufWritePost *.feature set ft=cucumber
 " Configure ALE
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
+\  "cmake": ["cmakelint"],
 \  "cpp": ["clang", "clangtidy"],
 \}
 
 let g:ale_fixers = {
+\  "cmake": ["trim_whitespace", "remove_trailing_lines", "cmakeformat"],
 \  "cpp": ["clangtidy", "trim_whitespace", "remove_trailing_lines", "clang-format"],
 \}
 

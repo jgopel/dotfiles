@@ -11,3 +11,18 @@ au BufRead,BufNewFile *.protocol set filetype=cpp
 
 " Cucumber settings
 autocmd BufWritePost *.feature set ft=cucumber
+
+" Configure ALE
+let g:ale_linters_explicit = 1
+let g:ale_linters = {
+\  "cmake": ["cmakelint"],
+\  "cpp": ["clang", "clangtidy"],
+\  "python": ["flake8", "mypy"],
+\}
+
+let g:ale_fixers = {
+\  "cmake": ["trim_whitespace", "remove_trailing_lines", "cmakeformat"],
+\  "cpp": ["clangtidy", "trim_whitespace", "remove_trailing_lines", "clang-format"],
+\  "python": ["trim_whitespace", "remove_trailing_lines", "isort", "black"],
+\}
+

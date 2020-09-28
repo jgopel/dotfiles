@@ -13,6 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'damage220/vim-finder'
+Plugin 'dense-analysis/ale'
 Plugin 'embear/vim-localvimrc'
 Plugin 'godlygeek/tabular.git'
 Plugin 'preservim/nerdcommenter'
@@ -70,6 +71,13 @@ set colorcolumn=81
 " Colors
 colorscheme luna-term
 
+" Configure ALE
+let g:ale_change_sign_column_color = 1
+let g:ale_cursor_detail = 1
+let g:ale_lint_on_insert_leave = 1
+
+map <buffer><Leader>cf :ALEFix<CR>
+
 " Configure autosave
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
@@ -96,12 +104,6 @@ nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " General purpose shortcuts
 nmap <F11> :set invpaste<CR>
 nmap <F12> :set invrelativenumber<CR>
-
-" C/C++ settings
-autocmd FileType c,cpp autocmd BufWritePre <buffer> %s/\s\+$//e
-
-autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
 " Cmake settings
 autocmd FileType cmake autocmd BufWritePre <buffer> %s/\s\+$//e

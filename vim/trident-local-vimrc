@@ -11,3 +11,14 @@ au BufRead,BufNewFile *.protocol set filetype=cpp
 
 " Cucumber settings
 autocmd BufWritePost *.feature set ft=cucumber
+
+" Configure ALE
+let g:ale_linters_explicit = 1
+let g:ale_linters = {
+\  "cpp": ["clang", "clangtidy"],
+\}
+
+let g:ale_fixers = {
+\  "cpp": ["clangtidy", "trim_whitespace", "remove_trailing_lines", "clang-format"],
+\}
+

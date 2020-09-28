@@ -123,11 +123,6 @@ autocmd FileType markdown autocmd BufWritePre <buffer> %s/\s\+$//e
 
 autocmd FileType markdown map <Tab> :Tabularize /\|<CR>
 
-" Python settings
-autocmd FileType python autocmd BufWritePre <buffer> %s/\s\+$//e
-
-autocmd FileType python nnoremap <buffer><Leader>cf :Black<CR>
-
 " VimFile settings
 autocmd FileType vim autocmd BufWritePre <buffer> %s/\s\+$//e
 

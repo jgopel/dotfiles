@@ -1,7 +1,10 @@
 " Tab settings
+set expandtab
 set tabstop=8
-set softtabstop=0
 set shiftwidth=2
+set softtabstop=0
+
+au FileType python setlocal shiftwidth=4
 
 " C/C++ settings
 au BufRead,BufNewFile *.definition set filetype=cpp

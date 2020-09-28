@@ -82,6 +82,9 @@ map <buffer><Leader>cf :ALEFix<CR>
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
+" Configure localvimrc
+let g:localvimrc_persistent = 1
+
 " Configure NERDTree
 map <C-n> :NERDTreeFind<CR>
 

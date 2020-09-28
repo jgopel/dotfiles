@@ -10,7 +10,7 @@ au BufRead,BufNewFile *.graph set filetype=cpp
 au BufRead,BufNewFile *.protocol set filetype=cpp
 
 " Cucumber settings
-autocmd BufWritePost *.feature set ft=cucumber
+au BufRead,BufNewFile *.feature set filetype=cucumber
 
 " Configure ALE
 let g:ale_linters_explicit = 1

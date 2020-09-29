@@ -12,7 +12,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Vundle plugin list
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'damage220/vim-finder'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dense-analysis/ale'
 Plugin 'embear/vim-localvimrc'
 Plugin 'godlygeek/tabular.git'
@@ -82,6 +82,9 @@ map <buffer><Leader>cf :ALEFix<CR>
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
+" Configure CtrlP
+let g:ctrlp_cmd = 'CtrlPMixed'
+
 " Configure localvimrc
 let g:localvimrc_persistent = 1
 
@@ -99,6 +102,11 @@ map <C-p> :Files<CR>
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
+
+" General purpose shortcuts
+map <C-n> :NERDTreeFind<CR>
+
+nmap <F12> :set invrelativenumber<CR>
 
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>

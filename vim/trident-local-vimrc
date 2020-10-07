@@ -12,17 +12,27 @@ au BufRead,BufNewFile *.format set filetype=cpp
 au BufRead,BufNewFile *.graph set filetype=cpp
 au BufRead,BufNewFile *.protocol set filetype=cpp
 
+au BufRead,BufNewFile *.definition :ALEDisableBuffer
+au BufRead,BufNewFile *.format :ALEDisableBuffer
+au BufRead,BufNewFile *.graph :ALEDisableBuffer
+au BufRead,BufNewFile *.protocol :ALEDisableBuffer
+
 " Cucumber settings
 au BufRead,BufNewFile *.feature set filetype=cucumber
 
 " Configure ALE
+let trident_build_dir = getcwd() . "/build"
+let g:ale_c_clangformat_executable = trident_build_dir . "/llvm_path/bin/clang-format"
+let g:ale_cmake_cmakelint_options = "--config=" . getcwd() . "/.cmakelintrc"
+let g:ale_cpp_clangd_executable = trident_build_dir . "/llvm_path/bin/clangd"
+let g:ale_cpp_clangtidy_executable = trident_build_dir . "/llvm_path/bin/clang-tidy"
+
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
 \  "cmake": ["cmakelint"],
 \  "cpp": ["clangd", "clangtidy"],
 \  "python": ["flake8"],
 \}
-let g:ale_cmake_cmakelint_options = "--config=" . getcwd() . "/.cmakelintrc"
 
 let g:ale_fixers = {
 \  "cmake": ["trim_whitespace", "remove_trailing_lines", "cmakeformat"],

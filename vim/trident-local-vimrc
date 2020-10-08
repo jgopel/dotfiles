@@ -17,15 +17,19 @@ au BufRead,BufNewFile *.format :ALEDisableBuffer
 au BufRead,BufNewFile *.graph :ALEDisableBuffer
 au BufRead,BufNewFile *.protocol :ALEDisableBuffer
 
+" General use variables
+let trident_build_dir = getcwd() . "/path-to-build-dir"
+let trident_llvm_bin_dir = trident_build_dir . "/llvm_path/bin"
+let trident_clangd_path = trident_llvm_bin_dir . "/clangd"
+
 " Cucumber settings
 au BufRead,BufNewFile *.feature set filetype=cucumber
 
 " Configure ALE
-let trident_build_dir = getcwd() . "/build"
-let g:ale_c_clangformat_executable = trident_build_dir . "/llvm_path/bin/clang-format"
+let g:ale_c_clangformat_executable = trident_llvm_bin_dir . "/clang-format"
 let g:ale_cmake_cmakelint_options = "--config=" . getcwd() . "/.cmakelintrc"
-let g:ale_cpp_clangd_executable = trident_build_dir . "/llvm_path/bin/clangd"
-let g:ale_cpp_clangtidy_executable = trident_build_dir . "/llvm_path/bin/clang-tidy"
+let g:ale_cpp_clangd_executable = trident_clangd_path
+let g:ale_cpp_clangtidy_executable = trident_llvm_bin_dir . "/clang-tidy"
 
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
@@ -35,8 +39,12 @@ let g:ale_linters = {
 \}
 
 let g:ale_fixers = {
-\  "cmake": ["trim_whitespace", "remove_trailing_lines", "cmakeformat"],
-\  "cpp": ["clangtidy", "trim_whitespace", "remove_trailing_lines", "clang-format"],
-\  "python": ["trim_whitespace", "remove_trailing_lines", "isort", "black"],
+\  "cmake": ["cmakeformat"],
+\  "cpp": ["clangtidy", "clang-format"],
+\  "python": ["isort", "black"],
 \}
+
+" Configure YCM
+let g:ycm_use_clangd = 1
+let g:ycm_clangd_binary_path = trident_clangd_path
 

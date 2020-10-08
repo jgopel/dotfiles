@@ -63,6 +63,8 @@ set shiftwidth=2
 set expandtab
 set smarttab
 
+autocmd FileType python setlocal shiftwidth=4
+
 " Line after column 80
 set colorcolumn=81
 

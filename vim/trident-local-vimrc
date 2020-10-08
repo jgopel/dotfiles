@@ -1,21 +1,13 @@
-" Tab settings
-set expandtab
-set tabstop=8
-set shiftwidth=2
-set softtabstop=0
-
-au FileType python setlocal shiftwidth=4
-
 " C/C++ settings
-au BufRead,BufNewFile *.definition set filetype=cpp
-au BufRead,BufNewFile *.format set filetype=cpp
-au BufRead,BufNewFile *.graph set filetype=cpp
-au BufRead,BufNewFile *.protocol set filetype=cpp
+autocmd BufRead,BufNewFile *.definition set filetype=cpp
+autocmd BufRead,BufNewFile *.format set filetype=cpp
+autocmd BufRead,BufNewFile *.graph set filetype=cpp
+autocmd BufRead,BufNewFile *.protocol set filetype=cpp
 
-au BufRead,BufNewFile *.definition :ALEDisableBuffer
-au BufRead,BufNewFile *.format :ALEDisableBuffer
-au BufRead,BufNewFile *.graph :ALEDisableBuffer
-au BufRead,BufNewFile *.protocol :ALEDisableBuffer
+autocmd BufRead,BufNewFile *.definition :ALEDisableBuffer
+autocmd BufRead,BufNewFile *.format :ALEDisableBuffer
+autocmd BufRead,BufNewFile *.graph :ALEDisableBuffer
+autocmd BufRead,BufNewFile *.protocol :ALEDisableBuffer
 
 " General use variables
 let trident_build_dir = getcwd() . "/path-to-build-dir"
@@ -23,7 +15,7 @@ let trident_llvm_bin_dir = trident_build_dir . "/llvm_path/bin"
 let trident_clangd_path = trident_llvm_bin_dir . "/clangd"
 
 " Cucumber settings
-au BufRead,BufNewFile *.feature set filetype=cucumber
+autocmd BufRead,BufNewFile *.feature set filetype=cucumber
 
 " Configure ALE
 let g:ale_c_clangformat_executable = trident_llvm_bin_dir . "/clang-format"

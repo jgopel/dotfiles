@@ -4,13 +4,13 @@ autocmd BufRead,BufNewFile *.format set filetype=cpp
 autocmd BufRead,BufNewFile *.graph set filetype=cpp
 autocmd BufRead,BufNewFile *.protocol set filetype=cpp
 
-autocmd BufRead,BufNewFile *.definition :ALEDisableBuffer
-autocmd BufRead,BufNewFile *.format :ALEDisableBuffer
-autocmd BufRead,BufNewFile *.graph :ALEDisableBuffer
-autocmd BufRead,BufNewFile *.protocol :ALEDisableBuffer
+autocmd BufRead,BufNewFile *.definition let b:ale_linters = {"cpp":[]}
+autocmd BufRead,BufNewFile *.format let b:ale_linters = {"cpp":[]}
+autocmd BufRead,BufNewFile *.graph let b:ale_linters = {"cpp":[]}
+autocmd BufRead,BufNewFile *.protocol let b:ale_linters = {"cpp":[]}
 
 " General use variables
-let trident_build_dir = getcwd() . "/path-to-build-dir"
+let trident_build_dir = getcwd() . "/build"
 let trident_llvm_bin_dir = trident_build_dir . "/llvm_path/bin"
 let trident_clangd_path = trident_llvm_bin_dir . "/clangd"
 

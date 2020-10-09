@@ -89,34 +89,34 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 let g:localvimrc_persistent = 1
 
 " Configure NERDTree
-map <C-n> :NERDTreeFind<CR>
+noremap <C-n> :NERDTreeFind<CR>
 
 " Configure NERDcommenter
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 " Configure vim-finder
-map <C-p> :Files<CR>
+noremap <C-p> :Files<CR>
 
-" Comfigure YouCompleteMe
+" Configure YouCompleteMe
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
 " General purpose shortcuts
-map <C-n> :NERDTreeFind<CR>
+noremap <C-n> :NERDTreeFind<CR>
 
-nmap <F9> :set invspell<CR>
-nmap <F10> :set invpaste<CR>
-nmap <F12> :set invrelativenumber<CR>
+noremap <F9> :set invspell<CR>
+noremap <F10> :set invpaste<CR>
+noremap <F12> :set invrelativenumber<CR>
 
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " General purpose shortcuts
-nmap <F11> :set invpaste<CR>
-nmap <F12> :set invrelativenumber<CR>
+noremap <F11> :set invpaste<CR>
+noremap <F12> :set invrelativenumber<CR>
 
 " Cucumber settings
 autocmd FileType cucumber autocmd BufWritePre <buffer> %s/\s\+$//e

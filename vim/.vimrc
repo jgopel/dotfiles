@@ -12,10 +12,11 @@ Plugin 'VundleVim/Vundle.vim'
 " Vundle plugin list
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'dense-analysis/ale'
 Plugin 'embear/vim-localvimrc'
 Plugin 'godlygeek/tabular.git'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 Plugin 'preservim/nerdcommenter'
 Plugin 'preservim/nerdtree'
 Plugin 'tpope/vim-surround'
@@ -82,9 +83,6 @@ map <Leader>cf :ALEFix<CR>
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
-" Configure CtrlP
-let g:ctrlp_cmd = 'CtrlPMixed'
-
 " Configure localvimrc
 let g:localvimrc_persistent = 1
 
@@ -95,8 +93,9 @@ noremap <C-n> :NERDTreeFind<CR>
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
 
-" Configure vim-finder
-noremap <C-p> :Files<CR>
+" Configure fzf
+noremap <C-p> :GitFiles<CR>
+noremap <leader>p :Files<CR>
 
 " Configure YouCompleteMe
 let g:ycm_add_preview_to_completeopt = 1

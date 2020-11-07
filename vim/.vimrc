@@ -98,9 +98,10 @@ noremap <C-p> :GitFiles<CR>
 noremap <leader>p :Files<CR>
 
 " Configure YouCompleteMe
-let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_auto_hover = ''
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
+nmap <leader>d <plug>(YCMHover)
 
 " General purpose shortcuts
 noremap <C-n> :NERDTreeFind<CR>

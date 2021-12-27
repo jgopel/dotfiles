@@ -118,11 +118,13 @@ noremap <F11> :set invpaste<CR>
 noremap <F12> :set invrelativenumber<CR>
 
 " Cucumber settings
+autocmd FileType cucumber setlocal spell
 autocmd FileType cucumber autocmd BufWritePre <buffer> %s/\s\+$//e
 
 autocmd FileType cucumber map <Tab> :Tabularize /\|<CR>
 
 " Git settings
+autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit setlocal textwidth=72
 autocmd FileType gitcommit setlocal colorcolumn=+1
 autocmd FileType gitcommit setlocal colorcolumn+=51 " Title width
@@ -131,6 +133,7 @@ autocmd FileType gitcommit setlocal colorcolumn+=51 " Title width
 autocmd FileType haskell autocmd BufWritePre <buffer> %s/\s\+$//e
 
 " Markdown settings
+autocmd FileType markdown setlocal spell
 autocmd FileType markdown autocmd BufWritePre <buffer> %s/\s\+$//e
 
 autocmd FileType markdown map <Tab> :Tabularize /\|<CR>

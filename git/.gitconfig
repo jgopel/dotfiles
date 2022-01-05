@@ -28,7 +28,7 @@
 [color]
 	ui = true
 [help]
-	autocorrect = 8
+	autocorrect = prompt
 [merge]
 	ff = no
 	conflictstyle = diff3

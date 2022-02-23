@@ -6,7 +6,7 @@ if is_linux; then
     LS_PARAMS=$GNU_LS_PARAMS
 elif is_osx; then
     LS_PARAMS=$GNU_LS_PARAMS
-    LS_PATH="/usr/local/bin/gls"
+    LS_PATH="$(/opt/homebrew/bin/brew --prefix coreutils)/bin/gls"
 fi
 
 alias sudo="sudo "

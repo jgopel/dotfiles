@@ -1,6 +1,6 @@
 [user]
 	name = Jonathan Gopel
-	email = jgopel@quantlab.com
+	email = jgopel@gmail.com
 [core]
 	autocrlf = false
 	whitespace = blank-at-eol,space-before-tab,tab-in-indent,-blank-at-eof,tabwidth=8

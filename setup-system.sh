@@ -19,6 +19,12 @@ else
     exit 1
 fi
 
+if [ "$(uname)" == "Darwin" ]; then
+    SHELLS_FILE=/etc/shells
+    BREW_BASH_LOCATION=$(brew --prefix bash)/bin/bash
+    sudo grep -qxF "${BREW_BASH_LOCATION}" /etc/shells || echo "${BREW_BASH_LOCATION}" | sudo tee -a ${SHELLS_FILE}
+    chsh -s "${BREW_BASH_LOCATION}"
+fi
 [ -f .bashrc ] && mv .bashrc $BACKUP_DIR
 [ -f .bash_profile ] && mv .bash_profile $BACKUP_DIR
 ln -s dotfiles/bash/.bashrc

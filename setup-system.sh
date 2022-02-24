@@ -12,8 +12,7 @@ if [ "$(uname)" == "Darwin" ]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     brew install $(cat dotfiles/osx/packages)
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    echo "Linux unsupported"
-    exit 1
+    echo "Linux package installation not written"
 else
     echo "Platform unsupported"
     exit 1

@@ -1,0 +1,2 @@
+# Setup git for Gemini
+git config --global user.email jonathan.gopel@gemini.com

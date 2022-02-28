@@ -72,3 +72,7 @@ update_ssl_certs() {
   sudo update-ca-certificates --fresh
   export SSL_CERT_DIR=/etc/ssl/certs
 }
+
+# gemcli
+export GEMINI_REPO_HOME=$HOME/gemini
+source $GEMINI_REPO_HOME/raptor-tools/rap-cli/setup

@@ -66,3 +66,5 @@ PERL_MM_OPT="INSTALL_BASE=/Users/jonathan/perl5"; export PERL_MM_OPT;
 # vim mode
 set -o vi
 
+# Use FZF for reverse search
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

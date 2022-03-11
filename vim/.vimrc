@@ -129,6 +129,10 @@ autocmd FileType gitcommit setlocal textwidth=72
 autocmd FileType gitcommit setlocal colorcolumn=+1
 autocmd FileType gitcommit setlocal colorcolumn+=51 " Title width
 
+" Groovy settings
+autocmd BufRead,BufNewFile Jenkinsfile set filetype=groovy
+autocmd FileType groovy autocmd BufWritePre <buffer> %s/\s\+$//e
+
 " Haskell settings
 autocmd FileType haskell autocmd BufWritePre <buffer> %s/\s\+$//e
 

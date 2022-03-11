@@ -142,6 +142,9 @@ autocmd FileType markdown autocmd BufWritePre <buffer> %s/\s\+$//e
 
 autocmd FileType markdown map <Tab> :Tabularize /\|<CR>
 
+" Shell settings
+autocmd FileType sh autocmd BufWritePre <buffer> %s/\s\+$//e
+
 " VimFile settings
 autocmd FileType vim autocmd BufWritePre <buffer> %s/\s\+$//e
 

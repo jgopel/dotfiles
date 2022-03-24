@@ -34,3 +34,8 @@ if [ -f "${SSH_ENV}" ]; then
 else
   start_agent;
 fi
+
+# Setup dev VM
+export LDAP_USER=jonathan.gopel
+export RAPTOR_IDE_HOME=${HOME}/work/raptor-ide
+export AWS_HOST=dev-shared-122.aws-qa.host.gem.link

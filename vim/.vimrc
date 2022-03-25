@@ -21,6 +21,7 @@ Plugin 'preservim/nerdcommenter'
 Plugin 'preservim/nerdtree'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-scripts/Tabmerge'
 Plugin 'vim-scripts/vim-auto-save'
 
 " Colors

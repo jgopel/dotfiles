@@ -76,6 +76,7 @@ colorscheme luna-term
 " Configure ALE
 let g:ale_change_sign_column_color = 1
 let g:ale_lint_on_insert_leave = 1
+let g:ale_linters_explicit = 1
 
 map <Leader>cf :ALEFix<CR>
 

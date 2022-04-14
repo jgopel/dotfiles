@@ -3,14 +3,15 @@ git config --global user.email jonathan.gopel@gemini.com
 
 # Manage packages
 CMAKE_VERSION=3.21.5
-FZF_VERSION=0.29.0
-GIT_VERSION=2.35.1
+FZF_VERSION=0.30.0
+GIT_VERSION=2.35.2
 TMUX_VERSION=3.2a
 
 setup_cmake_package() {
   pushd ~/packages/cmake
+  git fetch --all --jobs=$(nproc)
   git checkout v${CMAKE_VERSION}
-  ./bootstrap
+  env CC=/usr/local/gcc-11.2.0/bin/gcc-11.2.0 CXX=/usr/local/gcc-11.2.0/bin/g++-11.2.0 ./bootstrap --parallel=$(nproc)
   make -j $(nproc)
   sudo make install
   popd
@@ -18,16 +19,18 @@ setup_cmake_package() {
 
 setup_fzf_package() {
   pushd ~/packages/fzf
+  git fetch --all --jobs=$(nproc)
   git checkout ${FZF_VERSION}
   ./install --all
   popd
 }
 
 setup_git_package() {
-  sudo apt install --assume-yes dh-autoreconf libcurl4-gnutls-dev libexpat1-dev \
-                                gettext libz-dev libssl-dev asciidoc xmlto \
-                                docbook2x
+  sudo apt-get install --assume-yes dh-autoreconf libcurl4-gnutls-dev libexpat1-dev \
+                                    gettext libz-dev libssl-dev asciidoc xmlto \
+                                    docbook2x
   pushd ~/packages/git
+  git fetch --all --jobs=$(nproc)
   git checkout v${GIT_VERSION}
   make configure
   ./configure --prefix=/usr
@@ -37,8 +40,9 @@ setup_git_package() {
 }
 
 setup_tmux_package() {
-  sudo apt install --assume-yes libevent-dev bison
+  sudo apt-get install --assume-yes libevent-dev bison
   pushd ~/packages/tmux/
+  git fetch --all --jobs=$(nproc)
   git checkout ${TMUX_VERSION}
   sh autogen.sh
   ./configure
@@ -48,8 +52,8 @@ setup_tmux_package() {
 }
 
 setup_vim_package() {
-  sudo apt install --assume-yes libncurses5-dev libgtk2.0-dev libatk1.0-dev \
-                                libcairo2-dev libx11-dev libxpm-dev libxt-dev
+  sudo apt-get install --assume-yes libncurses5-dev libgtk2.0-dev libatk1.0-dev \
+                                    libcairo2-dev libx11-dev libxpm-dev libxt-dev
   pushd ~/packages/vim
   git pull
   ./configure --with-features=huge --enable-python3interp
@@ -59,13 +63,20 @@ setup_vim_package() {
 }
 
 setup_packages() {
-  set -euo pipefail
-  setup_git_package
   setup_tmux_package
   setup_vim_package
+  setup_git_package
   setup_fzf_package
-  setup_cmake_package
-  set +euo pipefail
+  # setup_cmake_package
+}
+
+setup() {
+  # set -euo pipefail
+  sudo apt-get update
+  sudo updatedb
+  setup_packages
+  setup-vim
+  # set +euo pipefail
 }
 
 update_ssl_certs() {

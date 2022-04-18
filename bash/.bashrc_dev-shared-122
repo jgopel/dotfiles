@@ -4,7 +4,7 @@ git config --global user.email jonathan.gopel@gemini.com
 # Manage packages
 CMAKE_VERSION=3.21.5
 FZF_VERSION=0.30.0
-GIT_VERSION=2.35.2
+GIT_VERSION=2.35.3
 TMUX_VERSION=3.2a
 
 setup_cmake_package() {

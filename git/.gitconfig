@@ -7,6 +7,13 @@
 	logAllRefUpdates = true
 	pager = less
 	excludesfile = ~/.gitignore_global
+[init]
+	defaultBranch = main
+[help]
+	autocorrect = prompt
+[color]
+	ui = true
+
 [alias]
 	ack = -c color.grep.linenumber=\"bold yellow\" \
 	      -c color.grep.filename=\"bold green\" \
@@ -22,13 +29,10 @@
 	rb = rebase --rebase-merges --autosquash --autostash --interactive
 	todo = "!git diff --unified=0 $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') HEAD) | ack --no-color '.*TODO'"
 	wip = commit -m "wip"
+
 [status]
 	showuntrackedfiles = normal
 	submodulesummary = true
-[color]
-	ui = true
-[help]
-	autocorrect = prompt
 [merge]
 	ff = no
 	conflictstyle = diff3
@@ -47,5 +51,8 @@
 	prune = true
 [clangFormat]
 	extension = c,cc,cpp,h,hpp
-[init]
-	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

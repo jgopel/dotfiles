@@ -38,9 +38,11 @@ ln -s dotfiles/ctags/.ctags
 if [ "$(uname)" == "Darwin" ]; then
     cp dotfiles/fonts/* ~/Library/Fonts
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    mkdir -p .fonts
-    cp dotfiles/fonts/* .fonts
-    fc-cache -f -v
+    if [ command -v fc-cache ]; then
+        mkdir -p .fonts
+        cp dotfiles/fonts/* .fonts
+        fc-cache -f -v
+    fi
 else
     echo "Platform unsupported"
     exit 1

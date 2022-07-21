@@ -27,7 +27,7 @@
 	nwadd = "!git diff -w --no-color | git apply --cached --ignore-whitespace"
 	push-ci = push -o ci.variable=PUSH_RUN_CI=1
 	rb = rebase --rebase-merges --autosquash --autostash --interactive
-	todo = "!git diff --unified=0 $(git merge-base $(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') HEAD) | ack --no-color '.*TODO'"
+	todo = "!git diff --unified=0 $(git merge-base $(git symbolic-ref refs/remotes/upstream/HEAD | sed 's@^refs/remotes/upstream/@@') HEAD) | ack --no-color '.*TODO'"
 	wip = commit -m "wip"
 
 [status]

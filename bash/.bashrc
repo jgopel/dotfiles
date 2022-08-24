@@ -22,7 +22,7 @@ fi
 include_if_exists /etc/bashrc true
 include_if_exists $DIR/.bash_aliases
 include_if_exists $DIR/.terminal_colors
-include_if_exists $DIR/.bashrc_$(hostname -s) 
+include_if_exists $DIR/.bashrc_$(hostname -s)
 
 # Remove need to type cd
 shopt -s autocd
@@ -43,6 +43,9 @@ export VISUAL=vim
 export EDITOR=vim
 export CSCOPE_EDITOR=vim
 export TZ='America/Denver'
+
+# Python cache directory
+export PYTHONPYCACHEPREFIX="$HOME/.cache/cpython/"
 
 # Swap escape and caps lock
 if is_linux && [ -n "$DISPLAY" ] ; then

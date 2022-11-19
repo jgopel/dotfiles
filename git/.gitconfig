@@ -21,7 +21,7 @@
 	      grep --break --heading --line-number
 	cane = commit --amend --no-edit
 	co = checkout
-	fa = fetch --all --prune --tags
+	fa = "!git fetch --all --prune --tags --jobs=$(nproc)"
 	git = "!sh -c 'echo You are an idiot' && git"
 	history = log --color --graph --decorate --oneline
 	nwadd = "!git diff -w --no-color | git apply --cached --ignore-whitespace"

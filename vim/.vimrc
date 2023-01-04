@@ -15,6 +15,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'dense-analysis/ale'
 Plugin 'embear/vim-localvimrc'
 Plugin 'godlygeek/tabular.git'
+Plugin 'jszakmeister/vim-togglecursor'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'preservim/nerdcommenter'
@@ -71,6 +72,11 @@ autocmd FileType python setlocal shiftwidth=4
 
 " Line after column 80
 set colorcolumn=81
+
+" cursor shape
+if &term =~? 'screen-' || &term =~? 'xterm-'
+  let g:togglecursor_force = 'xterm'
+endif
 
 " Colors
 colorscheme luna-term

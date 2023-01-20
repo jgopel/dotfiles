@@ -4,6 +4,11 @@ set -euo pipefail
 
 BACKUP_DIR=~/.dotfiles-backup/$(date -u +'%Y-%m-%dT%H:%M:%S%z')
 
+backup_and_replace() {
+  [ -f $1 ] && mv $1 $BACKUP_DIR
+  ln -s $2 $1
+}
+
 mkdir -p $BACKUP_DIR
 
 cd ~
@@ -40,16 +45,15 @@ if [ "$is_macos" = true ]; then
     sudo grep -qxF "${BREW_BASH_LOCATION}" /etc/shells || echo "${BREW_BASH_LOCATION}" | sudo tee -a ${SHELLS_FILE}
     chsh -s "${BREW_BASH_LOCATION}"
 fi
-[ -f .bashrc ] && mv .bashrc $BACKUP_DIR
-[ -f .bash_profile ] && mv .bash_profile $BACKUP_DIR
-ln -s dotfiles/bash/.bashrc
-ln -s dotfiles/bash/.bash_profile
+backup_and_replace .bashrc dotfiles/bash/.bashrc
+backup_and_replace .bash_profiles dotfiles/bash/.bash_profiles
+backup_and_replace .inputrc dotfiles/bash/.inputrc
+backup_and_replace .editrc dotfiles/bash/.editrc
 
 [ -d bin ] && mv bin $BACKUP_DIR
 ln -s dotfiles/bin
 
-[ -f .ctags ] && mv .ctags $BACKUP_DIR
-ln -s dotfiles/ctags/.ctags
+backup_and_replace .ctags dotfiles/ctags/.ctags
 
 echo "Installing fonts"
 if [ "$is_macos" = true ]; then
@@ -68,17 +72,14 @@ fi
 echo "Setting up git"
 [ -f .gitconfig ] && mv .gitconfig $BACKUP_DIR
 [ -f .gitignore_global ] && mv .gitignore_global $BACKUP_DIR
-ln -s dotfiles/git/.gitconfig
-ln -s dotfiles/git/.gitignore_global
-
+backup_and_replace .gitconfig dotfiles/git/.gitconfig
+backup_and_replace .gitignore_global dotfiles/git/.gitignore_global
 
 echo "Setting up tmux"
-[ -f .tmux.conf ] && mv .tmux.conf $BACKUP_DIR
-ln -s dotfiles/tmux/.tmux.conf
+backup_and_replace .tmux.conf dotfiles/tmux/.tmux.conf
 
 echo "Setting up vim"
-[ -f .vimrc ] && mv .vimrc $BACKUP_DIR
-ln -s dotfiles/vim/.vimrc
+backup_and_replace .vimrc dotfiles/vim/.vimrc
 dotfiles/bin/setup-vim
 
 echo "System ready for use"

@@ -1,3 +1,4 @@
 [ -f /etc/profile.d/bash_completion.sh ] && . /etc/profile.d/bash_completion.sh
 
 export PATH="/home/dev/.local/bin:$PATH"
+export OPTSIM_CACHE="~/.cache/optsim"

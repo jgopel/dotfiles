@@ -23,3 +23,5 @@ alias cscope="cscope -qR"
 alias refresh="source ~/.bashrc"
 
 alias sudol="sudo -E"
+
+alias pr="poetry run"

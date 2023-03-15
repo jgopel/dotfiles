@@ -101,6 +101,11 @@ let g:localvimrc_persistent = 1
 noremap <C-n> :NERDTreeFind<CR>
 
 " Configure NERDcommenter
+let g:NERDCustomDelimiters = {
+    \ 'python': {'left': '#'}
+\ }
+
+let g:NERDCommentEmptyLines = 1
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
 

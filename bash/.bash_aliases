@@ -25,3 +25,5 @@ alias refresh="source ~/.bashrc"
 alias sudol="sudo -E"
 
 alias pr="poetry run"
+
+alias link-lvimrc="ln -s ~/dotfiles/vim/default-lvimrc .lvimrc"

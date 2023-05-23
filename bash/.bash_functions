@@ -43,4 +43,3 @@ is_linux() {
 is_osx() {
     [[ $OSTYPE == darwin* ]]
 }
-

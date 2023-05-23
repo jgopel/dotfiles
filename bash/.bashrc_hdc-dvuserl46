@@ -1,3 +1,2 @@
 export PATH=$PATH:/usr/lib/llvm11-jit/11.0.0_e7eb72bf/bin
 export PATH=$PATH:~/.local/bin
-

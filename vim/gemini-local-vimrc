@@ -13,4 +13,3 @@ let g:ale_fixers = {
 
 " Configure YCM
 let g:ycm_use_clangd = 1
-

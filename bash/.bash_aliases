@@ -1,5 +1,7 @@
-LS_PATH="ls"
-LS_PARAMS="-F"
+# shellcheck shell=bash
+
+LS_PATH='ls'
+LS_PARAMS='-F'
 GNU_LS_PARAMS="$LS_PARAMS --ignore-backups --color --group-directories-first --human-readable"
 
 if is_linux; then
@@ -9,21 +11,19 @@ elif is_osx; then
     LS_PATH="$(brew --prefix coreutils)/bin/gls"
 fi
 
-alias sudo="sudo "
+alias ls='$LS_PATH $LS_PARAMS'
+alias ll='ls -l'
+alias la='LC_COLLATE=C ls -A'
+alias lla='la -l'
 
-alias ls="$LS_PATH $LS_PARAMS"
-alias ll="ls -l"
-alias la="LC_COLLATE=C ls -A"
-alias lla="la -l"
+alias grep='grep --color=auto'
 
-alias grep="grep --color=auto"
+alias gdb='gdb -silent'
+alias cscope='cscope -qR'
+alias refresh='source ~/.bashrc'
 
-alias gdb="gdb -silent"
-alias cscope="cscope -qR"
-alias refresh="source ~/.bashrc"
+alias sudol='sudo -E'
 
-alias sudol="sudo -E"
+alias pr='poetry run'
 
-alias pr="poetry run"
-
-alias link-lvimrc="ln -s ~/dotfiles/vim/default-lvimrc .lvimrc"
+alias link-lvimrc='ln -s ~/dotfiles/vim/default-lvimrc .lvimrc'

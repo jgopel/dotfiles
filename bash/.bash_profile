@@ -1,10 +1,11 @@
-# .bash_profile
+# shellcheck shell=bash
 
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
+    # shellcheck disable=1090
+    . ~/.bashrc
 else
-    echo "~/.bashrc not found"
+    echo "$HOME/.bashrc not found"
 fi
 
 # User specific environment and startup programs
@@ -12,4 +13,3 @@ fi
 PATH=$PATH:$HOME/bin
 
 export PATH
-

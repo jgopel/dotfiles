@@ -11,4 +11,3 @@ subprocess.run(
   f"rsync --archive --checksum --progress ~/dotfiles ~/.vim jgopel@{args.server}:~",
   shell=True,
   check=True)
-

@@ -1,4 +1,5 @@
-# .bashrc
+# shellcheck shell=bash
+
 set +x
 PROMPT_COMMAND=""
 
@@ -9,16 +10,17 @@ DIR="$(dirname "${RESOLVED_SOURCE}")"
 
 # Pull in handy-dandy bash functions
 if [[ -f $DIR/.bash_functions ]]; then
-    . $DIR/.bash_functions
+    # shellcheck disable=1091
+    . "$DIR/.bash_functions"
 else
     echo "$DIR/.bash_functions not found"
 fi
 
 # Do includes
 include_if_exists /etc/bashrc true
-include_if_exists $DIR/.bash_aliases
-include_if_exists $DIR/.terminal_colors
-include_if_exists $DIR/.bashrc_$(hostname -s)
+include_if_exists "$DIR/.bash_aliases"
+include_if_exists "$DIR/.terminal_colors"
+include_if_exists "$DIR/.bashrc_$(hostname -s)"
 
 # Remove need to type cd
 shopt -s autocd
@@ -56,14 +58,9 @@ fi
 PROMPT_COMMAND="set_bash_prompt;$PROMPT_COMMAND"
 export PS2="$ "
 
-PATH="/Users/jonathan/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/Users/jonathan/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/Users/jonathan/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/Users/jonathan/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/Users/jonathan/perl5"; export PERL_MM_OPT;
-
 # vim mode
 set -o vi
 
 # Use FZF for reverse search
+# shellcheck disable=1090
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

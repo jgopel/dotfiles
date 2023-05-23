@@ -39,4 +39,3 @@ let g:ale_fixers = {
 " Configure YCM
 let g:ycm_use_clangd = 1
 let g:ycm_clangd_binary_path = trident_clangd_path
-

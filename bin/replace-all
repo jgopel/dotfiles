@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -euo pipefail
+
+grep "$1" --recursive --files-with-matches --exclude-dir='.*' | xargs sed -i "s/$1/$2/g"

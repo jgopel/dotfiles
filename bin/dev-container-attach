@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -euo pipefail
-
-CONTAINER_NAME=dev-container
-
-ecr-login
-cd ~/work/seven
-./run-dev-container.sh --detach --name ${CONTAINER_NAME} 2> /dev/null || docker exec -it ${CONTAINER_NAME} bash

@@ -1,3 +1,6 @@
+# shellcheck shell=bash
+# shellcheck disable=SC2034
+
 # Reset
 END_COLOR='\[\e[0m\]'       # Text Reset
 

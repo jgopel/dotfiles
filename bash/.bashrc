@@ -9,17 +9,17 @@ RESOLVED_SOURCE="$(realpath "${SOURCE}")"
 DIR="$(dirname "${RESOLVED_SOURCE}")"
 
 # Pull in handy-dandy bash functions
-if [[ -f $DIR/.bash_functions ]]; then
+if [[ -f $DIR/functions.sh ]]; then
     # shellcheck disable=1091
-    . "$DIR/.bash_functions"
+    . "$DIR/functions.sh"
 else
-    echo "$DIR/.bash_functions not found"
+    echo "$DIR/functions.sh not found"
 fi
 
 # Do includes
 include_if_exists /etc/bashrc true
 include_if_exists "$DIR/.bash_aliases"
-include_if_exists "$DIR/.terminal_colors"
+include_if_exists "$DIR/terminal_colors.sh"
 include_if_exists "$DIR/.bashrc_$(hostname -s)"
 
 # Remove need to type cd

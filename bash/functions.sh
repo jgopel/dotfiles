@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # Git branch prompt
 set_bash_prompt() {
     PROMPT="[$GREEN\u$END_COLOR@$RED\h$END_COLOR $CYAN\w$END_COLOR] "
@@ -21,17 +23,17 @@ git_branch() {
         return 0
     fi
 
-    echo $(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
+    git branch 2>/dev/null | sed -n '/^\*/s/^\* //p'
 }
 
 include_if_exists() {
-    if [ -f $1 ]; then
-        . $1
+    if [ -f "$1" ]; then
+        . "$1"
         return 0
     elif [ "$2" = true ] ; then
         return 0
     else
-        echo $1 not found
+        echo "$1" not found
         return 1
     fi
 }
@@ -46,19 +48,19 @@ is_osx() {
 
 # https://superuser.com/questions/39751/add-directory-to-path-if-its-not-already-there
 pathappend() {
-  for ARG in "$@"
-  do
-    if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
-        PATH="${PATH:+"$PATH:"}$ARG"
-    fi
-  done
+    for ARG in "$@"
+    do
+        if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
+            PATH="${PATH:+"$PATH:"}$ARG"
+        fi
+    done
 }
 pathprepend() {
-  for ((i=$#; i>0; i--));
-  do
-    ARG=${!i}
-    if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
-        PATH="$ARG${PATH:+":$PATH"}"
-    fi
-  done
+    for ((i=$#; i>0; i--));
+    do
+        ARG=${!i}
+        if [ -d "$ARG" ] && [[ ":$PATH:" != *":$ARG:"* ]]; then
+            PATH="$ARG${PATH:+":$PATH"}"
+        fi
+    done
 }

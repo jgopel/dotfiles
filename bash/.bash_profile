@@ -7,9 +7,3 @@ if [ -f ~/.bashrc ]; then
 else
     echo "$HOME/.bashrc not found"
 fi
-
-# User specific environment and startup programs
-
-PATH=$PATH:$HOME/bin
-
-export PATH

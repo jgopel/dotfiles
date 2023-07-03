@@ -4,3 +4,6 @@ pathappend $HOME/bin $HOME/.local/bin
 export PATH
 
 export OPTSIM_CACHE="~/.cache/optsim"
+export IB_USERNAME="<redacted>"
+export IB_PASSWORD="<redacted>"
+export SEVEN_IB_ACCOUNT="<redacted>"

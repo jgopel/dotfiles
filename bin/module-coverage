@@ -2,5 +2,5 @@
 
 set -euo pipefail
 
-poetry run coverage run --source="$1" --module pytest "$1"
+poetry run coverage run --source="$1" --module pytest "$1" "${@:2}"
 poetry run coverage report

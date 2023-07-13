@@ -1,5 +1,9 @@
 export PYTHONPATH=~/work/qti_airflow_example
 
+export IB_USERNAME="<redacted>"
+export IB_PASSWORD="<redacted>"
+export SEVEN_IB_ACCOUNT="<redacted>"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/ubuntu/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"

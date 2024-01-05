@@ -12,6 +12,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Vundle plugin list
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'bkad/CamelCaseMotion'
 Plugin 'dense-analysis/ale'
 Plugin 'embear/vim-localvimrc'
 Plugin 'godlygeek/tabular.git'
@@ -93,6 +94,9 @@ nnoremap <leader>ap :ALEPrev<CR>
 " Configure autosave
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
+
+" Configure CamelCaseMotion
+let g:camelcasemotion_key = '<leader>'
 
 " Configure localvimrc
 let g:localvimrc_persistent = 1

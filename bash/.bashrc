@@ -48,9 +48,9 @@ export PYTHONPYCACHEPREFIX="$HOME/.cache/cpython/"
 # Swap escape and caps lock
 if is_linux && [ -n "$DISPLAY" ] ; then
     if hash setxkbmap 2>/dev/null; then
-        setxkbmap -option caps:swapescape
+        setxkbmap -option caps:escape
     else
-        echo "Cannot swap escape and caps"
+        echo "Cannot make capslock escape"
     fi
 fi
 

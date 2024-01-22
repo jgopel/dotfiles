@@ -127,15 +127,7 @@ nmap <leader>d <plug>(YCMHover)
 " General purpose shortcuts
 noremap <C-n> :NERDTreeFind<CR>
 
-noremap <F9> :set invspell<CR>
-noremap <F10> :set invpaste<CR>
-noremap <F12> :set invrelativenumber<CR>
-
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-" General purpose shortcuts
+noremap <F10> :set invspell<CR>
 noremap <F11> :set invpaste<CR>
 noremap <F12> :set invrelativenumber<CR>
 
@@ -169,3 +161,8 @@ autocmd FileType sh autocmd BufWritePre <buffer> %s/\s\+$//e
 
 " VimFile settings
 autocmd FileType vim autocmd BufWritePre <buffer> %s/\s\+$//e
+
+" YouCompleteME settings
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>

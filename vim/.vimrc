@@ -25,6 +25,7 @@ Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/Tabmerge'
+Plugin 'vim-scripts/argtextobj.vim'
 Plugin 'vim-scripts/vim-auto-save'
 
 " Colors

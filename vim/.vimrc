@@ -1,41 +1,40 @@
-" Vundle bootstrap and configuration
-if !filereadable($HOME . '/.vim/bundle/Vundle.vim/.git/config') && confirm("Clone Vundle?","Y\nn") == 1
-    exec '!git clone https://github.com/gmarik/Vundle.vim ~/.vim/bundle/Vundle.vim/'
-    exec '!vim +PluginInstall +qall'
+" VimPlug bootstrap
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
 
-" Vundle plugin list
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bkad/CamelCaseMotion'
-Plugin 'dense-analysis/ale'
-Plugin 'embear/vim-localvimrc'
-Plugin 'godlygeek/tabular.git'
-Plugin 'jszakmeister/vim-togglecursor'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'preservim/nerdcommenter'
-Plugin 'preservim/nerdtree'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-surround'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-scripts/Tabmerge'
-Plugin 'vim-scripts/argtextobj.vim'
-Plugin 'vim-scripts/vim-auto-save'
+call plug#begin()
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clangd-completer --rust-completer' }
+Plug 'airblade/vim-gitgutter'
+Plug 'bkad/CamelCaseMotion'
+Plug 'dense-analysis/ale'
+Plug 'embear/vim-localvimrc'
+Plug 'godlygeek/tabular'
+Plug 'jszakmeister/vim-togglecursor'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-scripts/Tabmerge'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'vim-scripts/vim-auto-save'
 
 " Colors
-Plugin 'notpratheek/vim-luna'
+Plug 'notpratheek/vim-luna'
 
-" Vundle end
-call vundle#end()
-filetype plugin indent on
+call plug#end()
 
 " Basic environment variables
+set nocompatible
+
+syntax on
+
 set number
 set relativenumber
 
@@ -43,7 +42,7 @@ set ruler
 
 set autoindent
 set smartindent
-set cindent
+filetype indent on
 
 set wrap
 set linebreak
@@ -59,8 +58,6 @@ set splitbelow
 
 set backspace=indent,eol,start
 set encoding=utf-8
-
-syntax on
 
 " Setup tab depth
 set tabstop=8

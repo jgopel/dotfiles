@@ -83,6 +83,11 @@ endif
 " Colors
 colorscheme luna-term
 
+" General purpose shortcuts
+noremap <F10> :set invspell<CR>
+noremap <F11> :set invpaste<CR>
+noremap <F12> :set invrelativenumber<CR>
+
 " Configure ALE
 let g:ale_change_sign_column_color = 1
 let g:ale_lint_on_insert_leave = 1
@@ -122,14 +127,12 @@ noremap <leader>p :Files<CR>
 let g:ycm_auto_hover = ''
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
+
 nmap <leader>d <plug>(YCMHover)
 
-" General purpose shortcuts
-noremap <C-n> :NERDTreeFind<CR>
-
-noremap <F10> :set invspell<CR>
-noremap <F11> :set invpaste<CR>
-noremap <F12> :set invrelativenumber<CR>
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Cucumber settings
 autocmd FileType cucumber setlocal spell
@@ -161,8 +164,3 @@ autocmd FileType sh autocmd BufWritePre <buffer> %s/\s\+$//e
 
 " VimFile settings
 autocmd FileType vim autocmd BufWritePre <buffer> %s/\s\+$//e
-
-" YouCompleteME settings
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>

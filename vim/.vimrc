@@ -85,6 +85,11 @@ noremap <F10> :set invspell<CR>
 noremap <F11> :set invpaste<CR>
 noremap <F12> :set invrelativenumber<CR>
 
+map <up> <C-w><up>
+map <down> <C-w><down>
+map <left> <C-w><left>
+map <right> <C-w><right>
+
 " Configure ALE
 let g:ale_change_sign_column_color = 1
 let g:ale_lint_on_insert_leave = 1

@@ -136,6 +136,10 @@ nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+nnoremap <leader>vgl :vsplit \| YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>vgf :vsplit \| YcmCompleter GoToDefinition<CR>
+nnoremap <leader>vgg :vsplit \| YcmCompleter GoToDefinitionElseDeclaration<CR>
+
 " Cucumber settings
 autocmd FileType cucumber setlocal spell
 autocmd FileType cucumber autocmd BufWritePre <buffer> %s/\s\+$//e

@@ -26,7 +26,7 @@ Plug 'vim-scripts/argtextobj.vim'
 Plug 'vim-scripts/vim-auto-save'
 
 " Colors
-Plug 'notpratheek/vim-luna'
+Plug 'sainnhe/sonokai'
 
 call plug#end()
 
@@ -78,7 +78,14 @@ if &term =~? 'screen-' || &term =~? 'xterm-'
 endif
 
 " Colors
-colorscheme luna-term
+let g:sonokai_style = 'default'
+let g:sonokai_better_performance = 1
+
+let g:sonokai_spell_foreground = 1
+let g:sonokai_disable_italic_comment = 1
+
+colorscheme sonokai
+let g:airline_theme = 'sonokai'
 
 " General purpose shortcuts
 noremap <F10> :set invspell<CR>

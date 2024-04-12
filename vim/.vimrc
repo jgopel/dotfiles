@@ -151,7 +151,7 @@ nnoremap <leader>vgg :vsplit \| YcmCompleter GoToDefinitionElseDeclaration<CR>
 autocmd FileType cucumber setlocal spell
 autocmd FileType cucumber autocmd BufWritePre <buffer> %s/\s\+$//e
 
-autocmd FileType cucumber map <Tab> :Tabularize /\|<CR>
+autocmd FileType cucumber map <leader><Tab> :Tabularize /\|<CR>
 
 " Git settings
 autocmd FileType gitcommit setlocal spell
@@ -170,7 +170,7 @@ autocmd FileType haskell autocmd BufWritePre <buffer> %s/\s\+$//e
 autocmd FileType markdown setlocal spell
 autocmd FileType markdown autocmd BufWritePre <buffer> %s/\s\+$//e
 
-autocmd FileType markdown map <Tab> :Tabularize /\|<CR>
+autocmd FileType markdown map <leader><Tab> :Tabularize /\|<CR>
 
 " Shell settings
 autocmd FileType sh autocmd BufWritePre <buffer> %s/\s\+$//e

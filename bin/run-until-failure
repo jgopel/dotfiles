@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -euo pipefail
+
+COUNTER=1
+while true; do
+  echo "Starting iteration ${COUNTER}"
+  "$@"
+  echo
+  COUNTER=$[$COUNTER + 1]
+done

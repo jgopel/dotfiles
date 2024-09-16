@@ -32,7 +32,7 @@ if [ "$is_macos" = true ]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     brew install "$(cat dotfiles/osx/packages)"
 elif [ "$is_ubuntu" = true ]; then
-    sudo apt-get -qq install --yes "$(cat dotfiles/ubuntu/packages)"
+    sudo apt-get -qq install --yes $(cat dotfiles/ubuntu/packages | tr '\n' ' ')
 else
     echo "Package installation not supported on this platform"
     exit 1

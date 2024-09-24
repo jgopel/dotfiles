@@ -3,6 +3,7 @@ let g:ale_linters_explicit = 1
 let g:ale_linters = {
 \  "cmake": ["cmakelint"],
 \  "cpp": ["clangd", "clangtidy"],
+\  "rust": ["analyzer"],
 \  "python": ["flake8"],
 \}
 
@@ -10,6 +11,7 @@ let g:ale_fixers = {
 \  "*": ["remove_trailing_lines", "trim_whitespace"],
 \  "cmake": ["cmakeformat"],
 \  "cpp": ["clangtidy", "clang-format"],
+\  "rust": ["rustfmt"],
 \  "python": ["isort", "black"],
 \}
 

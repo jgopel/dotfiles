@@ -1,13 +1,4 @@
 #!/bin/bash
 
-set -euo pipefail
-
-CONTAINER_NAME=dev-container
-
-ecr-login
-cd ~/work/seven
-
-# Start container if it's not already running
-./run-dev-container.sh --detach --name ${CONTAINER_NAME} 2> /dev/null || true
-
-docker exec -it ${CONTAINER_NAME} bash
+pushd ~/work/containers/
+./attach-to-dev-container.sh

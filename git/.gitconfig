@@ -21,7 +21,8 @@
 	      grep --break --heading --line-number
 	cane = commit --amend --no-edit
 	co = checkout
-	delete-merged = !git branch --merged upstream/main | egrep -v \"(^\\*|master|main|dev)\" | xargs git branch -d
+	default-branch = !git symbolic-ref refs/remotes/upstream/HEAD --short 2> /dev/null || git symbolic-ref refs/remotes/origin/HEAD --short 2> /dev/null
+	delete-merged = !git branch --merged $(git default-branch) | egrep -v \"(^\\*|master|main)\" | xargs git branch -d 2> /dev/null
 	fa = "!git fetch --all --prune --tags --jobs=$(nproc)"
 	git = "!sh -c 'echo You are an idiot' && git"
 	history = log --color --graph --decorate --oneline

@@ -23,6 +23,7 @@ repos:
     rev: v6.2.1
     hooks:
       - id: beautysh
+        language_version: '3.11'
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.9.0.2
     hooks:

@@ -69,6 +69,11 @@ set smarttab
 
 autocmd FileType python setlocal shiftwidth=4
 
+" Automatically reload files when changed externally
+set autoread
+au CursorHold,CursorHoldI * checktime
+au FocusGained,BufEnter * :checktime
+
 " Line after column 80
 set colorcolumn=81
 

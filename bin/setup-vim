@@ -2,5 +2,6 @@
 
 set -euo pipefail
 
-vim +PlugUpdate +qall
 vim +PlugUpgrade +qall
+vim +PlugClean! +qall
+vim +PlugUpdate +qall

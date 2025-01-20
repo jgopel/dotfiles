@@ -77,6 +77,7 @@ backup_and_replace .gitignore_global dotfiles/git/.gitignore_global
 
 echo "Setting up tmux"
 backup_and_replace .tmux.conf dotfiles/tmux/.tmux.conf
+dotfiles/bin/setup-tmux
 
 echo "Setting up vim"
 backup_and_replace .vimrc dotfiles/vim/.vimrc

@@ -1,6 +1,16 @@
 # shellcheck shell=bash
 
 # Git branch prompt
+is_git_repository() {
+    git branch > /dev/null 2>&1
+}
+git_branch() {
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        return 0
+    fi
+
+    git branch 2>/dev/null | sed -n '/^\*/s/^\* //p'
+}
 set_bash_prompt() {
     PROMPT="[$GREEN\u$END_COLOR@$RED\h$END_COLOR $CYAN\w$END_COLOR] "
     if is_git_repository; then
@@ -14,16 +24,6 @@ set_bash_prompt() {
     fi
 
     export PS1="$PROMPT\$ "
-}
-is_git_repository() {
-    git branch > /dev/null 2>&1
-}
-git_branch() {
-    if ! git rev-parse --git-dir > /dev/null 2>&1; then
-        return 0
-    fi
-
-    git branch 2>/dev/null | sed -n '/^\*/s/^\* //p'
 }
 
 include_if_exists() {

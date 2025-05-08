@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-ack "$1" --recurse --files-with-matches --ignore-dir='.*' | xargs sed -i "s/$1/$2/g"
+ack "$1" --recurse --files-with-matches --ignore-dir='.*' | xargs sed -iz "s/$1/$2/g"

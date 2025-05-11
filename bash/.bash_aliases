@@ -22,6 +22,8 @@ alias gdb='gdb -silent'
 alias cscope='cscope -qR'
 alias refresh='source ~/.bashrc'
 
+alias tmux='tmux -u'
+
 alias sudol='sudo -E'
 
 alias pr='poetry run'

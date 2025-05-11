@@ -1,0 +1,4 @@
+[ -f /etc/profile.d/bash_completion.sh ] && . /etc/profile.d/bash_completion.sh
+
+pathappend $HOME/bin $HOME/.local/bin
+export PATH

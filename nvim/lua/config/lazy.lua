@@ -27,18 +27,24 @@ require("lazy").setup({
   { "tpope/vim-abolish" },
   { "tpope/vim-surround" },
   { "tpope/vim-sleuth" },
-  { "pocco81/auto-save.nvim", lazy = false },
+  { "pocco81/auto-save.nvim" },
   { "numToStr/Comment.nvim" },
 
   -- AI
   {
     "olimorris/codecompanion.nvim",
     dependencies = { "j-hui/fidget.nvim" },
+    cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionCmd", "CodeCompanionChat" },
     keys = {
       { "<leader>aip", "<cmd>CodeCompanionActions<CR>", desc = "CodeCompanion AI action palette" },
+      { "<leader>aic", "<cmd>CodeCompanionChat<CR>", desc = "CodeCompanion AI chat" },
     },
     opts = {
-      strategies = { chat = { adapter = "gemini" } },
+      strategies = {
+        chat = { adapter = "gemini", model = "gemini-2.5-pro-exp-03-25" },
+        inline = { adapter = "gemini", model = "gemini-2.5-pro-exp-03-25" },
+        cmd = { adapter = "gemini", model = "gemini-2.5-pro-exp-03-25" },
+      },
       opts = { log_level = "DEBUG" },
     },
   },
@@ -47,7 +53,6 @@ require("lazy").setup({
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    -- TODO: Figure out how to move these to keys
     config = function()
       require("gitsigns").setup({
         on_attach = function(bufnr)
@@ -182,7 +187,7 @@ require("lazy").setup({
         "clangd",
         "lua_ls",
       },
-      automatic_installation = true, -- TODO: What does this do?
+      automatic_installation = true,
     },
   },
   {
@@ -192,11 +197,6 @@ require("lazy").setup({
     config = function()
       local lspconfig = require("lspconfig")
       local capabilities_cmp = require("cmp_nvim_lsp").default_capabilities()
-      local capabilities = capabilities_cmp
-      if package.loaded["parrot"] and require("parrot").get_capabilities then
-        local parrot_capabilities = require("parrot").get_capabilities()
-        capabilities = vim.tbl_deep_extend("force", capabilities_cmp, parrot_capabilities)
-      end
 
       local on_attach_common = function(client, bufnr)
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -235,7 +235,7 @@ require("lazy").setup({
   -- Formatting: conform.nvim
   {
     "stevearc/conform.nvim",
-    cmd = { "Search treesitter" },
+    cmd = "ConformInfo",
     keys = {
       {
         "<leader>cf",
@@ -265,7 +265,15 @@ require("lazy").setup({
   {
     "mfussenegger/nvim-lint",
     event = { "BufWritePost", "BufReadPost", "InsertLeave" },
-    lazy = false,
+    keys = {
+      {
+        "<leader>cl",
+        function()
+          require("lint").try_lint()
+        end,
+        desc = "Trigger linting",
+      },
+    },
     config = function()
       local lint_augroup = vim.api.nvim_create_augroup("nvim-lint-autogroup", { clear = true })
       require("lint").linters_by_ft = {
@@ -280,9 +288,6 @@ require("lazy").setup({
           require("lint").try_lint(nil, { bufnr = args.buf })
         end,
       })
-      vim.keymap.set("n", "<leader>cl", function()
-        require("lint").try_lint()
-      end, { desc = "Trigger linting" })
     end,
   },
 
@@ -311,12 +316,6 @@ require("lazy").setup({
         { name = "buffer", keyword_length = 3 },
         { name = "path" },
       }
-
-      local parrot_cmp_ok, parrot_cmp = pcall(require, "parrot.cmp")
-      if parrot_cmp_ok and parrot_cmp.source then
-        table.insert(sources, 1, { name = "parrot" })
-        parrot_cmp.setup()
-      end
 
       cmp.setup({
         snippet = {

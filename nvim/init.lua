@@ -23,7 +23,7 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 vim.opt.mouse = "a"

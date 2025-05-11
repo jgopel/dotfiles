@@ -8,7 +8,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out,                            "WarningMsg" },
+      { out, "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -35,7 +35,7 @@ require("lazy").setup({
     "olimorris/codecompanion.nvim",
     dependencies = { "j-hui/fidget.nvim" },
     keys = {
-      { "<leader>aip", "<cmd>CodeCompanionActions<CR>", desc = "CodeCompanion AI action palette" }
+      { "<leader>aip", "<cmd>CodeCompanionActions<CR>", desc = "CodeCompanion AI action palette" },
     },
     opts = {
       strategies = { chat = { adapter = "gemini" } },
@@ -81,7 +81,7 @@ require("lazy").setup({
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFindFileToggle" },
     keys = {
-      { "<leader>e", "<cmd>NvimTreeToggle<CR>",         { desc = "Toggle File Explorer" } },
+      { "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle File Explorer" } },
       { "<leader>o", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Find file" } },
     },
     opts = { view = { width = 40 } },
@@ -308,7 +308,7 @@ require("lazy").setup({
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "luasnip" },
-        { name = "buffer",                 keyword_length = 3 },
+        { name = "buffer", keyword_length = 3 },
         { name = "path" },
       }
 

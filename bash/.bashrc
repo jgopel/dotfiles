@@ -61,6 +61,9 @@ export PS2="$ "
 # vim mode
 set -o vi
 
+# API Keys
+export GEMINI_API_KEY=<redacted>
+
 # Use FZF for reverse search
 # shellcheck disable=1090
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

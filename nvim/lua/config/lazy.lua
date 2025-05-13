@@ -95,7 +95,15 @@ require("lazy").setup({
   -- Status Line
   {
     "nvim-lualine/lualine.nvim",
-    opts = { extensions = { "nvim-tree", "mason" } },
+    opts = {
+      sections = {
+        lualine_c = { { "filename", path = 1, file_status = true } },
+      },
+      inactive_sections = {
+        lualine_c = { { "filename", path = 1, file_status = true, newfile_status = true } },
+      },
+      extensions = { "nvim-tree", "mason" },
+    },
   },
 
   -- Syntax Highlighting

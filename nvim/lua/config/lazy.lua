@@ -133,6 +133,7 @@ require("lazy").setup({
       })
     end,
   },
+  { "nvim-treesitter/nvim-treesitter-context" },
 
   -- Fuzzy Finder: Telescope
   {

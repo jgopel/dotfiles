@@ -41,9 +41,9 @@ require("lazy").setup({
     },
     opts = {
       strategies = {
-        chat = { adapter = "gemini", model = "gemini-2.5-pro-exp-03-25" },
-        inline = { adapter = "gemini", model = "gemini-2.5-pro-exp-03-25" },
-        cmd = { adapter = "gemini", model = "gemini-2.5-pro-exp-03-25" },
+        chat = { adapter = "gemini" },
+        inline = { adapter = "gemini" },
+        cmd = { adapter = "gemini" },
       },
       opts = { log_level = "DEBUG" },
     },

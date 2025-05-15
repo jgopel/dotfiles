@@ -222,10 +222,11 @@ require("lazy").setup({
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     opts = {
       ensure_installed = {
-        "rust_analyzer",
         "clangd",
         "lua_ls",
+        "rust_analyzer",
       },
+      automatic_enable = false,
     },
   },
   {

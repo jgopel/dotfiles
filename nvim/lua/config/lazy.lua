@@ -200,7 +200,6 @@ require("lazy").setup({
   -- Language server plugins
   {
     "williamboman/mason.nvim",
-    cmd = "Mason",
     opts = {
       ensure_installed = {
         -- Linters
@@ -221,20 +220,18 @@ require("lazy").setup({
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-    event = "VeryLazy",
     opts = {
       ensure_installed = {
         "rust_analyzer",
         "clangd",
         "lua_ls",
       },
-      automatic_installation = true,
     },
   },
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
-    event = "VeryLazy",
     config = function()
       local lspconfig = require("lspconfig")
       local capabilities_cmp = require("cmp_nvim_lsp").default_capabilities()
@@ -257,11 +254,10 @@ require("lazy").setup({
           severity_sort = true,
         })
       end
-      lspconfig.rust_analyzer.setup({ capabilities = capabilities, on_attach = on_attach_common })
-      lspconfig.clangd.setup({ capabilities = capabilities, on_attach = on_attach_common })
-      lspconfig.pyright.setup({ capabilities = capabilities, on_attach = on_attach_common })
+      lspconfig.rust_analyzer.setup({ capabilities = capabilities_cmp, on_attach = on_attach_common })
+      lspconfig.clangd.setup({ capabilities = capabilities_cmp, on_attach = on_attach_common })
       lspconfig.lua_ls.setup({
-        capabilities = capabilities,
+        capabilities = capabilities_cmp,
         on_attach = on_attach_common,
         settings = { Lua = { diagnostics = { globals = { "vim" } } } },
       })

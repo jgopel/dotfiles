@@ -315,10 +315,11 @@ require("lazy").setup({
     config = function()
       local lint_augroup = vim.api.nvim_create_augroup("nvim-lint-autogroup", { clear = true })
       require("lint").linters_by_ft = {
-        python = { "pylint", "flake8", "mypy" },
-        cpp = { "clangtidy" },
-        c = { "clangtidy" },
         bash = { "shellcheck" },
+        c = { "clangtidy" },
+        cpp = { "clangtidy" },
+        python = { "pylint", "flake8", "mypy" },
+        rust = { "clippy" },
       }
       vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" }, {
         group = lint_augroup,

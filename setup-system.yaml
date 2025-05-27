@@ -45,6 +45,7 @@
     - name: Install all prereqs
       ansible.builtin.apt:
         name:
+          - apt-transport-https
           - ca-certificates
           - curl
           - gnupg

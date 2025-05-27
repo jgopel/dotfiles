@@ -28,6 +28,7 @@ require("lazy").setup({
   { "tpope/vim-surround" },
   { "tpope/vim-sleuth" },
   { "pocco81/auto-save.nvim" },
+  { "vim-scripts/Tabmerge" },
   { "numToStr/Comment.nvim" },
 
   -- AI

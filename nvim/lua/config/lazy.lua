@@ -89,7 +89,7 @@ require("lazy").setup({
     cmd = { "NvimTreeToggle", "NvimTreeFindFileToggle" },
     keys = {
       { "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle File Explorer" } },
-      { "<leader>o", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Find file" } },
+      { "<leader>o", "<cmd>NvimTreeFindFile<CR>", { desc = "Find file" } },
     },
     opts = { view = { width = 40 } },
   },

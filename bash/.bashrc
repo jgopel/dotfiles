@@ -36,10 +36,10 @@ shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # Environment settings
-export SVN_EDITOR=vim
-export VISUAL=vim
-export EDITOR=vim
-export CSCOPE_EDITOR=vim
+export SVN_EDITOR=nvim
+export VISUAL=nvim
+export EDITOR=nvim
+export CSCOPE_EDITOR=nvim
 export TZ='America/Denver'
 
 # Python cache directory

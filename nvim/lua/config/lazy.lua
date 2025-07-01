@@ -49,6 +49,17 @@ require("lazy").setup({
       opts = { log_level = "DEBUG" },
     },
   },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end,
+  },
 
   -- Git Integration
   {
@@ -343,16 +354,19 @@ require("lazy").setup({
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp-signature-help",
+      "zbirenbaum/copilot-cmp",
     },
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
       require("luasnip.loaders.from_vscode").lazy_load()
+      require("copilot_cmp").setup()
 
       local sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "luasnip" },
+        { name = "copilot" },
         { name = "buffer", keyword_length = 3 },
         { name = "path" },
       }

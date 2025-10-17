@@ -47,3 +47,5 @@ font-style = Regular
 font-size = 8
 adjust-cell-width = -1
 adjust-cell-height = -1
+
+scrollback-limit=100000

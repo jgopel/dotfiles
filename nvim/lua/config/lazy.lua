@@ -232,24 +232,35 @@ require("lazy").setup({
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-    opts = {
-      ensure_installed = {
-        "clangd",
-        "lua_ls",
-        "rust_analyzer",
-      },
-      automatic_enable = false,
-    },
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "clangd",
+          "lua_ls",
+          "rust_analyzer",
+        },
+        handlers = {
+          function(server_name) -- default handler
+            require("lspconfig")[server_name].setup({
+              capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            })
+          end,
+          ["lua_ls"] = function()
+            require("lspconfig").lua_ls.setup({
+              capabilities = require("cmp_nvim_lsp").default_capabilities(),
+              settings = { Lua = { diagnostics = { globals = { "vim" } } } },
+            })
+          end,
+        },
+      })
+    end,
   },
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
-      local lspconfig = require("lspconfig")
-      local capabilities_cmp = require("cmp_nvim_lsp").default_capabilities()
-
-      local on_attach_common = function(client, bufnr)
+      local on_attach_common = function(_, bufnr)
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
@@ -267,12 +278,12 @@ require("lazy").setup({
           severity_sort = true,
         })
       end
-      lspconfig.rust_analyzer.setup({ capabilities = capabilities_cmp, on_attach = on_attach_common })
-      lspconfig.clangd.setup({ capabilities = capabilities_cmp, on_attach = on_attach_common })
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities_cmp,
-        on_attach = on_attach_common,
-        settings = { Lua = { diagnostics = { globals = { "vim" } } } },
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+        callback = function(ev)
+          on_attach_common(ev.client_id, ev.buf)
+        end,
       })
 
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })

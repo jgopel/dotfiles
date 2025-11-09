@@ -137,8 +137,8 @@
         - {src: 'git/.gitconfig', dest: '.gitconfig'}
         - {src: 'git/.gitignore_global', dest: '.gitignore_global'}
         - {src: 'nvim/init.lua', dest: '.config/nvim/init.lua'}
-        - {src: 'nvim/lua/config/lazy.lua', dest: '.config/nvim/lua/config/lazy.lua',}
-        - {src: 'tmux/.tmux.conf', dest: '.tmux.conf'}
+        - {src: 'nvim/lua/config/lazy.lua', dest: '.config/nvim/lua/config/lazy.lua'}
+        - {src: 'tmux/.tmux.conf', dest: '.tmux.conf',}
 
     - name: Run setup-tmux script
       ansible.builtin.command: "{{ dotfiles_dir }}/bin/setup-tmux"

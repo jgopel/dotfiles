@@ -7,4 +7,4 @@ SESSION_NAME=dev
 # Start session if it's not already running
 tmux new-session -d -s ${SESSION_NAME} || true
 
-tmux attach -t dev
+tmux -u attach -t dev

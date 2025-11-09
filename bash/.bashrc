@@ -36,10 +36,10 @@ shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # Environment settings
-export SVN_EDITOR=vim
-export VISUAL=vim
-export EDITOR=vim
-export CSCOPE_EDITOR=vim
+export SVN_EDITOR=nvim
+export VISUAL=nvim
+export EDITOR=nvim
+export CSCOPE_EDITOR=nvim
 export TZ='America/Denver'
 
 # Python cache directory
@@ -60,6 +60,9 @@ export PS2="$ "
 
 # vim mode
 set -o vi
+
+# API Keys
+export GEMINI_API_KEY=<redacted>
 
 # Use FZF for reverse search
 # shellcheck disable=1090

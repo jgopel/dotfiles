@@ -171,9 +171,31 @@ require("lazy").setup({
       {
         "<leader>ff",
         function()
-          require("telescope.builtin").find_files({ find_command = { "rg", "--files", "--hidden", "--no-ignore", "--glob", "!.git" } })
+          require("telescope.builtin").find_files({
+            find_command = {
+              "rg",
+              "--files",
+              "--hidden",
+              "--no-ignore",
+              "--glob",
+              "!.git",
+              "--glob",
+              "!target",
+              "--glob",
+              "!build",
+              "--glob",
+              "!build-*",
+            },
+          })
         end,
-        desc = "Find files",
+        desc = "Find files (ignore build dirs)",
+      },
+      {
+        "<leader>fv",
+        function()
+          require("telescope.builtin").find_files({ find_command = { "rg", "--files", "--hidden", "--no-ignore" } })
+        end,
+        desc = "Find files (verbose)",
       },
       {
         "<leader>ft",

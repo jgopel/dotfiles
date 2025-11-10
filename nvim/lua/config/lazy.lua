@@ -171,7 +171,7 @@ require("lazy").setup({
       {
         "<leader>ff",
         function()
-          require("telescope.builtin").find_files({ find_command = { "rg", "--files", "--iglob", "!.git", "--hidden" } })
+          require("telescope.builtin").find_files({ find_command = { "rg", "--files", "--hidden", "--no-ignore", "--glob", "!.git" } })
         end,
         desc = "Find files",
       },

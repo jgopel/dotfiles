@@ -22,6 +22,9 @@ vim.opt.expandtab = true
 vim.opt.autoindent = true
 
 vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.breakindent = true
+vim.opt.breakindentopt = "shift:2"
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 vim.opt.mouse = "a"

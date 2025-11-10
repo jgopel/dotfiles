@@ -33,23 +33,6 @@ require("lazy").setup({
 
   -- AI
   {
-    "olimorris/codecompanion.nvim",
-    dependencies = { "j-hui/fidget.nvim" },
-    cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionCmd", "CodeCompanionChat" },
-    keys = {
-      { "<leader>aip", "<cmd>CodeCompanionActions<CR>", desc = "CodeCompanion AI action palette" },
-      { "<leader>aic", "<cmd>CodeCompanionChat<CR>", desc = "CodeCompanion AI chat" },
-    },
-    opts = {
-      strategies = {
-        chat = { adapter = "gemini" },
-        inline = { adapter = "gemini" },
-        cmd = { adapter = "gemini" },
-      },
-      opts = { log_level = "DEBUG" },
-    },
-  },
-  {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",

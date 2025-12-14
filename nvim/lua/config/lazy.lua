@@ -250,6 +250,18 @@ require("lazy").setup({
               capabilities = require("cmp_nvim_lsp").default_capabilities(),
             })
           end,
+          ["rust_analyzer"] = function()
+            require("lspconfig").rust_analyzer.setup({
+              capabilities = require("cmp_nvim_lsp").default_capabilities(),
+              settings = {
+                ["rust-analyzer"] = {
+                  cargo = {
+                    allFeatures = true,
+                  },
+                },
+              },
+            })
+          end,
           ["lua_ls"] = function()
             require("lspconfig").lua_ls.setup({
               capabilities = require("cmp_nvim_lsp").default_capabilities(),

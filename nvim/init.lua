@@ -63,6 +63,8 @@ vim.keymap.set("n", "<Down>", "<C-w><Down>", { desc = "Window Nav: Down" })
 
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+vim.cmd("autocmd FileType gitcommit setlocal spell")
+vim.cmd("autocmd FileType markdown setlocal spell")
 
 require("config.lazy")
 

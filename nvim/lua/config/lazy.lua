@@ -258,6 +258,22 @@ require("lazy").setup({
                   cargo = {
                     allFeatures = true,
                   },
+                  inlayHints = {
+                    bindingModeHints = { enable = false },
+                    chainingHints = { enable = true },
+                    closingBraceHints = { enable = true, minLines = 25 },
+                    closureReturnTypeHints = { enable = "onlyBlock" },
+                    lifetimeElisionHints = { enable = "always", useParameterNames = false },
+                    maxLength = 25,
+                    parameterHints = { enable = true },
+                    reborrowHints = { enable = "always" },
+                    renderColons = true,
+                    typeHints = {
+                      enable = true,
+                      hideClosureInitialization = false,
+                      hideNamedConstructor = false,
+                    },
+                  },
                 },
               },
             })
@@ -277,7 +293,7 @@ require("lazy").setup({
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
-      local on_attach_common = function(_, bufnr)
+      local on_attach_common = function(client, bufnr)
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
@@ -287,6 +303,14 @@ require("lazy").setup({
         vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, bufopts)
         vim.keymap.set({ "n", "v" }, "<leader>la", vim.lsp.buf.code_action, bufopts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+
+        if client.server_capabilities.inlayHintProvider then
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+          vim.keymap.set("n", "<leader>it", function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+          end, { desc = "Toggle Inlay Hints", buffer = bufnr })
+        end
+
         vim.diagnostic.config({
           virtual_text = true,
           signs = true,
@@ -299,7 +323,8 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
         callback = function(ev)
-          on_attach_common(ev.client_id, ev.buf)
+          local client = vim.lsp.get_client_by_id(ev.data.client_id)
+          on_attach_common(client, ev.buf)
         end,
       })
 

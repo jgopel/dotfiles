@@ -182,6 +182,8 @@ require("lazy").setup({
               "--glob",
               "!target",
               "--glob",
+              "!.venv",
+              "--glob",
               "!build",
               "--glob",
               "!build-*",

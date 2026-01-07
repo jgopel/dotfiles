@@ -227,8 +227,9 @@ require("lazy").setup({
     lazy = false,
     opts = {
       ensure_installed = {
+        -- LSP servers
+        "clangd",
         -- Linters
-        "clang-tidy",
         "mypy",
         "flake8",
         "pylint",

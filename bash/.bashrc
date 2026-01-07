@@ -67,3 +67,8 @@ export GEMINI_API_KEY=<redacted>
 # Use FZF for reverse search
 # shellcheck disable=1090
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Amp CLI
+export PATH="/home/jonathan/.amp/bin:$PATH"
+
+. "$HOME/.local/bin/env"

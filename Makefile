@@ -3,4 +3,5 @@ all: quality
 
 .PHONY: quality
 quality:
-	poetry run pre-commit run --all-files
+	uv sync
+	uv run pre-commit run --all-files

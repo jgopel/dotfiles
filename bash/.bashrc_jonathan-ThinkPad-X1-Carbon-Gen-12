@@ -1,3 +1,1 @@
-export PATH=$PATH:~/.local/bin
-source /etc/profile.d/bash_completion.sh
-eval "$(fzf --bash)"
+.bashrc_dev_machine_generic

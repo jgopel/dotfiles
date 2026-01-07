@@ -54,8 +54,7 @@ if is_linux && [ -n "$DISPLAY" ] ; then
     fi
 fi
 
-# Prompt coloring
-PROMPT_COMMAND="set_bash_prompt;$PROMPT_COMMAND"
+# Continuation prompt
 export PS2="$ "
 
 # vim mode

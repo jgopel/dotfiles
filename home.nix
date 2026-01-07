@@ -29,6 +29,13 @@ in
     nix-direnv.enable = true;
   };
 
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
+  xdg.configFile."starship.toml".source = ./starship.toml;
+
   home.packages = with pkgs; [
     ack
     atop

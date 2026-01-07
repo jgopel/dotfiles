@@ -1,0 +1,46 @@
+# Starship prompt configuration
+# Matches previous style: [user@host path] (git_branch)
+# Single line when not in git repo, two lines when in git repo
+
+format = "\\[$username@$hostname $directory\\] $git_branch$nix_shell$python$status$character "
+
+[username]
+style_user = "green"
+style_root = "red bold"
+format = "[$user]($style)"
+show_always = true
+
+[hostname]
+style = "red"
+format = "[$hostname]($style)"
+ssh_only = false
+
+[directory]
+style = "cyan"
+truncation_length = 0
+truncate_to_repo = false
+format = "[$path]($style)"
+
+[git_branch]
+style = "yellow"
+format = "[\\($branch\\)]($style)\n"
+
+[nix_shell]
+format = "[$symbol$state]($style) "
+symbol = "❄️"
+style = "blue"
+
+[python]
+style = "yellow"
+format = "[($virtualenv)]($style)"
+
+[status]
+disabled = false
+format = "[$symbol$status]($style) "
+symbol = "✗ "
+style = "red"
+
+[character]
+success_symbol = "[\\$]()"
+error_symbol = "[\\$]()"
+format = "$symbol"

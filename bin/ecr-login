@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -euo pipefail
-
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 143586981971.dkr.ecr.us-east-1.amazonaws.com

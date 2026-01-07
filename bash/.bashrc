@@ -69,6 +69,4 @@ export GEMINI_API_KEY=<redacted>
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Amp CLI
-export PATH="/home/jonathan/.amp/bin:$PATH"
-
-. "$HOME/.local/bin/env"
+export PATH="/home/adminjg/.amp/bin:$PATH"

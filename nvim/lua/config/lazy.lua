@@ -219,6 +219,12 @@ require("lazy").setup({
   -- Language server plugins
   {
     "williamboman/mason.nvim",
+    opts = {},
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    lazy = false,
     opts = {
       ensure_installed = {
         -- Linters
@@ -234,6 +240,8 @@ require("lazy").setup({
         "shfmt",
         "prettier",
       },
+      auto_update = false,
+      run_on_start = true,
     },
   },
   {
@@ -244,6 +252,7 @@ require("lazy").setup({
         ensure_installed = {
           "clangd",
           "lua_ls",
+          "pyright",
           "rust_analyzer",
         },
         handlers = {

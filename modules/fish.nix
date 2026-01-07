@@ -17,7 +17,7 @@
       sudol = "sudo -E";
       pr = "poetry run";
       link-lvimrc = "ln -s ~/dotfiles/vim/default-lvimrc .lvimrc";
-      "-" = "cd -";
+
     };
 
     shellInit = ''

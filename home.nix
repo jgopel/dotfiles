@@ -6,6 +6,7 @@ in
 {
   imports = [
     ./modules/bash.nix
+    ./modules/fish.nix
     ./modules/git.nix
     ./modules/tmux.nix
     ./modules/nvim.nix
@@ -20,18 +21,15 @@ in
 
   programs.fzf = {
     enable = true;
-    enableBashIntegration = true;
   };
 
   programs.direnv = {
     enable = true;
-    enableBashIntegration = true;
     nix-direnv.enable = true;
   };
 
   programs.starship = {
     enable = true;
-    enableBashIntegration = true;
   };
 
   xdg.configFile."starship.toml".source = ./starship.toml;
@@ -39,7 +37,8 @@ in
   home.packages = with pkgs; [
     ack
     atop
-    bash-completion
+    fishPlugins.done
+    fishPlugins.fzf-fish
     cmake
     curl
     dtrx

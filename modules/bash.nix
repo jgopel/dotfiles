@@ -16,6 +16,11 @@ in
       if [[ -f "${dotfilesDir}/bash/.bashrc" ]]; then
         . "${dotfilesDir}/bash/.bashrc"
       fi
+
+      # Launch fish for interactive sessions
+      if [[ $- == *i* && -z "$BASH_EXECUTION_STRING" ]]; then
+        exec fish
+      fi
     '';
   };
 

@@ -26,19 +26,18 @@ style = "yellow"
 format = "[\\($branch\\)]($style)\n"
 
 [nix_shell]
-format = "[$symbol$state]($style) "
-symbol = "❄️"
 style = "blue"
+format = "[\\(nix\\)]($style) "
 
 [python]
 style = "yellow"
 format = "[($virtualenv)]($style)"
 
 [status]
-disabled = false
-format = "[$symbol$status]($style) "
-symbol = "✗ "
 style = "red"
+disabled = false
+symbol = "✗ "
+format = "[$symbol$status]($style) "
 
 [character]
 success_symbol = "[\\$]()"

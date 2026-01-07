@@ -54,5 +54,17 @@
           homeDirectory = "/home/adminjg";
         };
       };
+
+      homeConfigurations."jonathan@ip-172-31-2-254" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          ./home.nix
+        ];
+        extraSpecialArgs = {
+          inherit llm-agents;
+          username = "jonathan";
+          homeDirectory = "/home/jonathan";
+        };
+      };
     };
 }

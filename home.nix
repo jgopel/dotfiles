@@ -55,6 +55,7 @@ in
     mosh
     ninja
     nodejs
+    openssh_gssapi
     perf
     plocate
     python3

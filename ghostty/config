@@ -45,7 +45,7 @@
 font-family = Hack
 font-style = Regular
 font-size = 8
-adjust-cell-width = -1
-adjust-cell-height = -1
+adjust-cell-width = 0
+adjust-cell-height = -2
 
 scrollback-limit=100000

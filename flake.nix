@@ -23,9 +23,14 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, llm-agents, rust-overlay, ... }:
+  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, llm-agents, nixgl, rust-overlay, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -48,7 +53,7 @@
           ./modules/desktop.nix
         ];
         extraSpecialArgs = {
-          inherit llm-agents rustToolchain;
+          inherit llm-agents nixgl rustToolchain;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };

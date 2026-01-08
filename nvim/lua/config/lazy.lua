@@ -94,11 +94,21 @@ require("lazy").setup({
     opts = {
       sections = {
         lualine_c = { { "filename", path = 1, file_status = true } },
+        lualine_x = { function() return require("direnv").statusline() end, "encoding", "fileformat", "filetype" },
       },
       inactive_sections = {
         lualine_c = { { "filename", path = 1, file_status = true, newfile_status = true } },
       },
       extensions = { "nvim-tree", "mason" },
+    },
+  },
+
+  -- Direnv integration
+  {
+    "NotAShelf/direnv.nvim",
+    opts = {
+      autoload_direnv = true,
+      statusline = { enabled = true },
     },
   },
 
@@ -254,8 +264,8 @@ require("lazy").setup({
           "clangd",
           "lua_ls",
           "pyright",
-          "rust_analyzer",
         },
+        automatic_installation = { exclude = { "rust_analyzer" } },
         handlers = {
           function(server_name) -- default handler
             require("lspconfig")[server_name].setup({
@@ -269,6 +279,7 @@ require("lazy").setup({
                 ["rust-analyzer"] = {
                   cargo = {
                     allFeatures = true,
+                    allTargets = true,
                   },
                   inlayHints = {
                     bindingModeHints = { enable = false },

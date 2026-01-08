@@ -18,15 +18,26 @@
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, llm-agents, ... }:
+  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, llm-agents, rust-overlay, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ neovim-nightly-overlay.overlays.default ];
+        overlays = [
+          neovim-nightly-overlay.overlays.default
+          rust-overlay.overlays.default
+        ];
         config.allowUnfree = true;
+      };
+      rustToolchain = pkgs.rust-bin.stable.latest.default.override {
+        extensions = [ "rust-src" "rust-analyzer" "clippy" "rustfmt" ];
       };
     in
     {
@@ -37,7 +48,7 @@
           ./modules/desktop.nix
         ];
         extraSpecialArgs = {
-          inherit llm-agents;
+          inherit llm-agents rustToolchain;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };
@@ -49,7 +60,7 @@
           ./home.nix
         ];
         extraSpecialArgs = {
-          inherit llm-agents;
+          inherit llm-agents rustToolchain;
           username = "adminjg";
           homeDirectory = "/home/adminjg";
         };
@@ -61,7 +72,7 @@
           ./home.nix
         ];
         extraSpecialArgs = {
-          inherit llm-agents;
+          inherit llm-agents rustToolchain;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };

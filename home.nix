@@ -1,4 +1,4 @@
-{ config, pkgs, username, homeDirectory, ... }:
+{ config, pkgs, username, homeDirectory, rustToolchain, ... }:
 
 let
   dotfilesDir = builtins.toString ./.;
@@ -34,11 +34,15 @@ in
 
   xdg.configFile."starship.toml".source = ./starship.toml;
 
+  home.sessionPath = [ "$HOME/.cargo/bin" ];
+
   home.packages = with pkgs; [
-    ack
-    atop
     fishPlugins.done
     fishPlugins.fzf-fish
+    rustToolchain
+
+    ack
+    atop
     cmake
     curl
     dtrx
@@ -56,7 +60,6 @@ in
     python3
     ripgrep
     rsync
-    rustup
     sysstat
     strace
     time

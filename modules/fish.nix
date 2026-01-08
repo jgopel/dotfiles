@@ -4,6 +4,18 @@
   programs.fish = {
     enable = true;
 
+    plugins = [
+      {
+        name = "loadenv";
+        src = pkgs.fetchFromGitHub {
+          owner = "berk-karaal";
+          repo = "loadenv.fish";
+          rev = "v1.1.0";
+          sha256 = "sha256-+DmAnmHXHYlHjH95eMjPx2RBvt3BK5uNp+OjnM3QXO0=";
+        };
+      }
+    ];
+
     shellAliases = {
       ls = "ls -F --ignore-backups --color --group-directories-first --human-readable";
       ll = "ls -l";

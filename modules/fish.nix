@@ -43,7 +43,6 @@
     interactiveShellInit = ''
       # Add ~/bin to PATH
       fish_add_path -g $HOME/bin
-      fish_add_path -g $HOME/.amp/bin
 
       # Environment settings
       set -gx SVN_EDITOR nvim

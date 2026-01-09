@@ -2,7 +2,7 @@
 # Matches previous style: [user@host path] (git_branch)
 # Single line when not in git repo, two lines when in git repo
 
-format = "\\[$username@$hostname $directory\\] $git_branch$nix_shell$python$status$character "
+format = "\\[$username@$hostname $directory\\] $git_branch$git_state$nix_shell$python$status$character "
 
 [username]
 style_user = "green"
@@ -24,6 +24,10 @@ format = "[$path]($style)"
 [git_branch]
 style = "yellow"
 format = "[\\($branch\\)]($style)\n"
+
+[git_state]
+style = "yellow"
+format = "[\\($state $progress_current/$progress_total\\)]($style) "
 
 [nix_shell]
 style = "blue"

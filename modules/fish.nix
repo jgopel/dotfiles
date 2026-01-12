@@ -55,7 +55,7 @@
       set -gx PYTHONPYCACHEPREFIX "$HOME/.cache/cpython/"
 
       # API Keys
-      set -gx GEMINI_API_KEY "[REDACTED:api-key]"
+      set -gx GEMINI_API_KEY "<redacted>"
 
       # Continuation prompt
       set -g fish_prompt_pwd_dir_length 0

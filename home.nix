@@ -10,7 +10,6 @@ in
     ./modules/git.nix
     ./modules/tmux.nix
     ./modules/nvim.nix
-    ./modules/llm.nix
   ];
 
   home.username = username;
@@ -42,12 +41,16 @@ in
     rustToolchain
 
     ack
+    amp-cli
     atop
+    claude-code
     cmake
+    codex
     curl
     dtrx
     gcc
     gdb
+    gemini-cli
     gnumake
     htop
     inetutils
@@ -58,11 +61,12 @@ in
     openssh_gssapi
     perf
     plocate
+    poetry
     python3
     ripgrep
     rsync
-    sysstat
     strace
+    sysstat
     time
     tree
     uv

@@ -14,11 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    llm-agents = {
-      url = "github:numtide/llm-agents.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +25,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, llm-agents, nixgl, rust-overlay, ... }:
+  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, nixgl, rust-overlay, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -53,7 +48,20 @@
           ./modules/desktop.nix
         ];
         extraSpecialArgs = {
-          inherit llm-agents nixgl rustToolchain;
+          inherit nixgl rustToolchain;
+          username = "jonathan";
+          homeDirectory = "/home/jonathan";
+        };
+      };
+
+      homeConfigurations."jonathan@jonathan-XPS-17-9720" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          ./home.nix
+          ./modules/desktop.nix
+        ];
+        extraSpecialArgs = {
+          inherit nixgl rustToolchain;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };
@@ -65,7 +73,7 @@
           ./home.nix
         ];
         extraSpecialArgs = {
-          inherit llm-agents rustToolchain;
+          inherit rustToolchain;
           username = "adminjg";
           homeDirectory = "/home/adminjg";
         };
@@ -77,7 +85,7 @@
           ./home.nix
         ];
         extraSpecialArgs = {
-          inherit llm-agents rustToolchain;
+          inherit rustToolchain;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };

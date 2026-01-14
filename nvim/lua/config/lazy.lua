@@ -197,6 +197,8 @@ require("lazy").setup({
               "!build",
               "--glob",
               "!build-*",
+              "--glob",
+              "!.mypy_cache",
             },
           })
         end,

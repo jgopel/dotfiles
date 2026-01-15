@@ -18,6 +18,10 @@ in
 
   programs.home-manager.enable = true;
 
+  home.activation.report-changes = config.lib.dag.entryAnywhere ''
+    ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath || true
+  '';
+
   programs.fzf = {
     enable = true;
   };

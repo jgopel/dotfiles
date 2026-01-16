@@ -47,6 +47,7 @@ in
     # General tools
     ack
     atop
+    colorized-logs
     curl
     dtrx
     gdb

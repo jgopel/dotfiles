@@ -43,39 +43,52 @@ in
   home.packages = with pkgs; [
     fishPlugins.done
     fishPlugins.fzf-fish
-    rustToolchain
 
+    # General tools
     ack
     atop
-    claude-code
-    cmake
-    codex
     curl
     dtrx
-    gcc
     gdb
-    gemini-cli
-    gnumake
     htop
     inetutils
     jq
     mosh
-    ninja
-    nodejs
     openssh_gssapi
     perf
     plocate
-    poetry
-    python3
     ripgrep
     rsync
     strace
     sysstat
     time
     tree
-    uv
     wget
     yq
+
+    # Language agnostic tools
+    gnumake
+
+    # C++ tools
+    cmake
+    gcc
+    ninja
+
+    # Python tools
+    poetry
+    python3
+    uv
+
+    # Rust tools
+    rustToolchain
+
+    # LLMs
+    amp-cli
+    claude-code
+    codex
+    gemini-cli
+    nodejs
+
   ];
 
   home.file."bin".source = "${dotfilesDir}/bin";

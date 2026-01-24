@@ -16,6 +16,16 @@ if ! grep -q "experimental-features" ~/.config/nix/nix.conf 2>/dev/null; then
     echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 fi
 
+# Add nix-community binary cache for pre-built packages (e.g., neovim-nightly)
+echo "Adding nix-community binary cache..."
+if ! grep -q "nix-community.cachix.org" /etc/nix/nix.conf 2>/dev/null; then
+    sudo tee -a /etc/nix/nix.conf > /dev/null <<'EOF'
+extra-substituters = https://nix-community.cachix.org
+extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+EOF
+    sudo systemctl restart nix-daemon
+fi
+
 # Check if running as root
 if [[ $EUID -eq 0 ]]; then
     echo "Error: Do not run this script as root. It will use sudo when needed."

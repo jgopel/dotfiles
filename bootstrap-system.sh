@@ -63,6 +63,10 @@ echo "Enabling Docker service..."
 sudo systemctl enable docker
 sudo systemctl start docker
 
+# Install Amp CLI (self-updating, outside Nix)
+echo "Installing Amp CLI..."
+curl -fsSL https://ampcode.com/install.sh | bash
+
 echo ""
 echo "=== Bootstrap Complete ==="
 echo "NOTE: Log out and back in for docker group membership to take effect."

@@ -94,7 +94,14 @@ require("lazy").setup({
     opts = {
       sections = {
         lualine_c = { { "filename", path = 1, file_status = true } },
-        lualine_x = { function() return require("direnv").statusline() end, "encoding", "fileformat", "filetype" },
+        lualine_x = {
+          function()
+            return require("direnv").statusline()
+          end,
+          "encoding",
+          "fileformat",
+          "filetype",
+        },
       },
       inactive_sections = {
         lualine_c = { { "filename", path = 1, file_status = true, newfile_status = true } },

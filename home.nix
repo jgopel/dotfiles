@@ -37,7 +37,7 @@ in
 
   xdg.configFile."starship.toml".source = ./starship.toml;
 
-  home.sessionPath = [ "$HOME/.cargo/bin" ];
+  home.sessionPath = [ "$HOME/.cargo/bin" "$HOME/.amp/bin" ];
 
   home.packages = with pkgs; [
     fishPlugins.done
@@ -45,7 +45,6 @@ in
     rustToolchain
 
     ack
-    amp-cli
     atop
     claude-code
     cmake

@@ -5,16 +5,9 @@ set -euo pipefail
 # Run this once on a new system before running make switch.
 
 echo "=== Bootstrap System ==="
-echo "This script configures Nix, installs Docker, and adds the current user to the docker group."
+echo "This script configures binary caches, installs Docker, and adds the current user to the docker group."
 echo "Requires sudo privileges."
 echo ""
-
-# Enable flakes and nix-command
-echo "Enabling Nix flakes and nix-command..."
-mkdir -p ~/.config/nix
-if ! grep -q "experimental-features" ~/.config/nix/nix.conf 2>/dev/null; then
-    echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
-fi
 
 # Add nix-community binary cache for pre-built packages (e.g., neovim-nightly)
 echo "Adding nix-community binary cache..."

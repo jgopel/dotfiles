@@ -36,6 +36,7 @@ in
   };
 
   xdg.configFile."starship.toml".source = ./starship.toml;
+  xdg.configFile."amp/settings.json".source = ./amp/settings.json;
 
   home.sessionPath = [ "$HOME/.cargo/bin" "$HOME/.amp/bin" ];
 

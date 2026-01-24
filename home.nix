@@ -84,7 +84,6 @@ in
     rustToolchain
 
     # LLMs
-    amp-cli
     claude-code
     codex
     gemini-cli

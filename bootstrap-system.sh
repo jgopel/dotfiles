@@ -82,6 +82,17 @@ echo "Installing docker garbage collection..."
 sudo cp "${SCRIPT_DIR}/scripts/docker-gc" /etc/cron.daily/docker-gc
 sudo chmod +x /etc/cron.daily/docker-gc
 
+# Desktop-specific setup
+echo ""
+read -p "Is this a desktop system? [y/N] " -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "Configuring AppArmor for desktop applications..."
+    "${SCRIPT_DIR}/scripts/disable_app_armor_discord.sh"
+    "${SCRIPT_DIR}/scripts/disable_app_armor_slack.sh"
+    "${SCRIPT_DIR}/scripts/disable_app_armor_signal.sh"
+fi
+
 echo ""
 echo "=== Bootstrap Complete ==="
 echo "NOTE: Log out and back in for docker group membership to take effect."

@@ -46,6 +46,7 @@
         modules = [
           ./home.nix
           ./modules/desktop.nix
+          ./modules/nascent.nix
         ];
         extraSpecialArgs = {
           inherit nixgl rustToolchain;

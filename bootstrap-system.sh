@@ -4,6 +4,8 @@ set -euo pipefail
 # Bootstrap script for privileged operations that Home Manager cannot perform.
 # Run this once on a new system before running make switch.
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 echo "=== Bootstrap System ==="
 echo "This script configures binary caches, installs Docker, and adds the current user to the docker group."
 echo "Requires sudo privileges."
@@ -69,6 +71,11 @@ sudo systemctl start docker
 # Install Amp CLI (self-updating, outside Nix)
 echo "Installing Amp CLI..."
 curl -fsSL https://ampcode.com/install.sh | bash
+
+# Install nix garbage collection
+echo "Installing nix garbage collection..."
+sudo cp "${SCRIPT_DIR}/scripts/nix-gc" /etc/cron.daily/nix-gc
+sudo chmod +x /etc/cron.daily/nix-gc
 
 echo ""
 echo "=== Bootstrap Complete ==="

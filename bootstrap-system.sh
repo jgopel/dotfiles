@@ -77,6 +77,11 @@ echo "Installing nix garbage collection..."
 sudo cp "${SCRIPT_DIR}/scripts/nix-gc" /etc/cron.daily/nix-gc
 sudo chmod +x /etc/cron.daily/nix-gc
 
+# Install docker garbage collection
+echo "Installing docker garbage collection..."
+sudo cp "${SCRIPT_DIR}/scripts/docker-gc" /etc/cron.daily/docker-gc
+sudo chmod +x /etc/cron.daily/docker-gc
+
 echo ""
 echo "=== Bootstrap Complete ==="
 echo "NOTE: Log out and back in for docker group membership to take effect."

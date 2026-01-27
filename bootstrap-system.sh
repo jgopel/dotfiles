@@ -113,6 +113,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     "${SCRIPT_DIR}/scripts/disable_app_armor_discord.sh"
     "${SCRIPT_DIR}/scripts/disable_app_armor_slack.sh"
     "${SCRIPT_DIR}/scripts/disable_app_armor_signal.sh"
+    "${SCRIPT_DIR}/scripts/disable_app_armor_zoom.sh"
 fi
 
 echo ""

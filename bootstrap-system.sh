@@ -102,6 +102,12 @@ echo ""
 read -p "Is this a desktop system? [y/N] " -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "Installing OpenRazer for Razer peripheral support..."
+    sudo add-apt-repository -y ppa:openrazer/stable
+    sudo apt-get update
+    sudo apt-get install -y openrazer-meta
+    sudo gpasswd -a "$USER" plugdev
+
     echo "Configuring AppArmor for desktop applications..."
     "${SCRIPT_DIR}/scripts/disable_app_armor_chrome.sh"
     "${SCRIPT_DIR}/scripts/disable_app_armor_discord.sh"

@@ -16,6 +16,7 @@ in
     dropbox
     hack-font
     keepassxc
+    polychromatic
     wrappedChrome
     wrappedDiscord
     wrappedFirefox

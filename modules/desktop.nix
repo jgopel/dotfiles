@@ -3,6 +3,7 @@
 let
   dotfilesDir = builtins.toString ./..;
   wrap = config.lib.nixGL.wrap;
+  wrappedChrome = wrap pkgs.google-chrome;
   wrappedDiscord = wrap pkgs.discord;
   wrappedFirefox = wrap pkgs.firefox;
   wrappedGhostty = wrap pkgs.ghostty;
@@ -13,9 +14,9 @@ in
 
   home.packages = with pkgs; [
     dropbox
-    google-chrome
     hack-font
     keepassxc
+    wrappedChrome
     wrappedDiscord
     wrappedFirefox
     wrappedGhostty
@@ -40,6 +41,23 @@ in
   # Hide the original unwrapped .desktop file from the ghostty package
   xdg.desktopEntries."com.mitchellh.ghostty" = {
     name = "Ghostty (unwrapped)";
+    exec = "false";
+    noDisplay = true;
+  };
+
+  xdg.desktopEntries.google-chrome = {
+    name = "Google Chrome";
+    exec = "google-chrome-stable %U";
+    icon = "google-chrome";
+    terminal = false;
+    categories = [ "Network" "WebBrowser" ];
+    comment = "Access the Internet";
+    mimeType = [ "text/html" "text/xml" "application/xhtml+xml" "x-scheme-handler/http" "x-scheme-handler/https" ];
+  };
+
+  # Hide the original unwrapped .desktop files from the google-chrome package
+  xdg.desktopEntries."com.google.Chrome" = {
+    name = "Google Chrome (unwrapped)";
     exec = "false";
     noDisplay = true;
   };

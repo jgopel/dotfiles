@@ -103,6 +103,7 @@ read -p "Is this a desktop system? [y/N] " -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Configuring AppArmor for desktop applications..."
+    "${SCRIPT_DIR}/scripts/disable_app_armor_chrome.sh"
     "${SCRIPT_DIR}/scripts/disable_app_armor_discord.sh"
     "${SCRIPT_DIR}/scripts/disable_app_armor_slack.sh"
     "${SCRIPT_DIR}/scripts/disable_app_armor_signal.sh"

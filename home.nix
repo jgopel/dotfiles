@@ -47,9 +47,14 @@ in
 
   home.sessionPath = [ "$HOME/.cargo/bin" "$HOME/.amp/bin" ];
 
+  home.sessionVariables = {
+    TERMINFO_DIRS = "$HOME/.nix-profile/share/terminfo:/usr/share/terminfo";
+  };
+
   home.packages = with pkgs; [
     fishPlugins.done
     fishPlugins.fzf-fish
+    ghostty.terminfo
 
     # General tools
     ack

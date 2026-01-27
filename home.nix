@@ -24,7 +24,9 @@ in
   };
 
   home.activation.report-changes = config.lib.dag.entryAnywhere ''
-    ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath || true
+    if [[ -n "''${oldGenPath:-}" ]]; then
+      ${pkgs.nvd}/bin/nvd diff "$oldGenPath" "$newGenPath" || true
+    fi
   '';
 
   programs.fzf = {

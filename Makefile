@@ -6,9 +6,9 @@ quality:
 	uv sync
 	uv run pre-commit run --all-files
 
-.PHONY: switch
-switch:
-	nix run home-manager -- switch --flake .
+.PHONY: setup-nix
+setup-nix:
+	NIX_CONFIG="extra-experimental-features = nix-command flakes" nix run home-manager -- switch --flake .
 
 .PHONY: bootstrap
 bootstrap:

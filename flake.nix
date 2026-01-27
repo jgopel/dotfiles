@@ -97,5 +97,17 @@
           homeDirectory = "/home/jonathan";
         };
       };
+
+      homeConfigurations."jonathan@ip-172-31-96-20" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          ./home.nix
+        ];
+        extraSpecialArgs = {
+          inherit rustToolchain;
+          username = "jonathan";
+          homeDirectory = "/home/jonathan";
+        };
+      };
     };
 }

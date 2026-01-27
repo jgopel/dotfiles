@@ -1,0 +1,3 @@
+(?d)**/target/
+(?d)**/.venv
+(?d)**/.direnv

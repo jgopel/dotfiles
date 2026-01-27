@@ -9,10 +9,6 @@
 # 3. Access GUI at http://127.0.0.1:8384 on each machine
 # 4. Add devices by exchanging Device IDs (Actions > Show ID)
 # 5. Add the ~/work folder in the GUI and share with cluster devices
-#
-# With tunnels enabled (desktop only):
-# - http://127.0.0.1:8385 -> sov-cpu-srv syncthing
-# - http://127.0.0.1:8386 -> ip-172-31-2-254 syncthing
 
 let
   cfg = config.services.syncthing-user;
@@ -32,8 +28,9 @@ in
       }
     ];
     tunnels = lib.mkIf cfg.nascent-tunnels [
-      { name = "sov-cpu-srv"; host = "adminjg@sov-cpu-srv"; localPort = 8385; }
-      { name = "aws-dev"; host = "jonathan@ip-172-31-2-254"; localPort = 8386; }
+      { name = "montreal_dev_box"; host = "montreal_dev_box"; localPort = 8385; }
+      { name = "japan_dev_box"; host = "japan_dev_box"; localPort = 8386; }
+      { name = "ib_fix_dev_box"; host = "ib_fix_dev_box"; localPort = 8387; }
     ];
   };
 }

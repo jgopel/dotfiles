@@ -102,6 +102,8 @@
         inherit pkgs;
         modules = [
           ./home.nix
+          ./modules/server.nix
+          ./modules/syncthing-nascent.nix
         ];
         extraSpecialArgs = {
           inherit rustToolchain;

@@ -60,6 +60,7 @@ in
     inetutils
     jq
     mosh
+    eternal-terminal
     openssh_gssapi
     perf
     plocate

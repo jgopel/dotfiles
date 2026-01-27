@@ -72,6 +72,7 @@
         inherit pkgs;
         modules = [
           ./home.nix
+          ./modules/server.nix
         ];
         extraSpecialArgs = {
           inherit rustToolchain;
@@ -84,6 +85,7 @@
         inherit pkgs;
         modules = [
           ./home.nix
+          ./modules/server.nix
         ];
         extraSpecialArgs = {
           inherit rustToolchain;

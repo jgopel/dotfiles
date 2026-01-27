@@ -82,6 +82,21 @@ echo "Installing docker garbage collection..."
 sudo cp "${SCRIPT_DIR}/scripts/docker-gc" /etc/cron.daily/docker-gc
 sudo chmod +x /etc/cron.daily/docker-gc
 
+# Server-specific setup
+echo ""
+read -p "Is this a server system? [y/N] " -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "Enabling lingering for user systemd services..."
+    sudo loginctl enable-linger "$USER"
+
+    echo "Installing Eternal Terminal server..."
+    sudo add-apt-repository -y ppa:jgmath2000/et
+    sudo apt-get update
+    sudo apt-get install -y et
+    sudo systemctl enable --now et
+fi
+
 # Desktop-specific setup
 echo ""
 read -p "Is this a desktop system? [y/N] " -n 1 -r

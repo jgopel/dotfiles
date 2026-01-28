@@ -1,6 +1,1 @@
-[ -f /etc/profile.d/bash_completion.sh ] && . /etc/profile.d/bash_completion.sh
-
-eval "$(fzf --bash)"
-
-pathappend $HOME/bin $HOME/.local/bin
-export PATH
+.bashrc_dev_machine_generic

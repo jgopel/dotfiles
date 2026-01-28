@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -euo pipefail
-
-docker build --tag cpp-dev-container --pull ~/work/dev-container

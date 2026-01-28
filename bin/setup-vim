@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -euo pipefail
-
-vim +PlugUpgrade +qall
-vim +PlugClean! +qall
-vim +PlugUpdate +qall

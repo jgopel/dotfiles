@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -euo pipefail
-
-aws codeartifact login --tool pip --repository PyPI --domain pypi --domain-owner 143586981971 --duration-seconds 0

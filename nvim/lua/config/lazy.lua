@@ -94,11 +94,28 @@ require("lazy").setup({
     opts = {
       sections = {
         lualine_c = { { "filename", path = 1, file_status = true } },
+        lualine_x = {
+          function()
+            return require("direnv").statusline()
+          end,
+          "encoding",
+          "fileformat",
+          "filetype",
+        },
       },
       inactive_sections = {
         lualine_c = { { "filename", path = 1, file_status = true, newfile_status = true } },
       },
       extensions = { "nvim-tree", "mason" },
+    },
+  },
+
+  -- Direnv integration
+  {
+    "NotAShelf/direnv.nvim",
+    opts = {
+      autoload_direnv = true,
+      statusline = { enabled = true },
     },
   },
 
@@ -187,6 +204,8 @@ require("lazy").setup({
               "!build",
               "--glob",
               "!build-*",
+              "--glob",
+              "!.mypy_cache",
             },
           })
         end,
@@ -219,10 +238,17 @@ require("lazy").setup({
   -- Language server plugins
   {
     "williamboman/mason.nvim",
+    opts = {},
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    lazy = false,
     opts = {
       ensure_installed = {
+        -- LSP servers
+        "clangd",
         -- Linters
-        "clang-tidy",
         "mypy",
         "flake8",
         "pylint",
@@ -234,6 +260,8 @@ require("lazy").setup({
         "shfmt",
         "prettier",
       },
+      auto_update = false,
+      run_on_start = true,
     },
   },
   {
@@ -244,8 +272,9 @@ require("lazy").setup({
         ensure_installed = {
           "clangd",
           "lua_ls",
-          "rust_analyzer",
+          "pyright",
         },
+        automatic_installation = { exclude = { "rust_analyzer" } },
         handlers = {
           function(server_name) -- default handler
             require("lspconfig")[server_name].setup({
@@ -259,6 +288,7 @@ require("lazy").setup({
                 ["rust-analyzer"] = {
                   cargo = {
                     allFeatures = true,
+                    allTargets = true,
                   },
                   inlayHints = {
                     bindingModeHints = { enable = false },

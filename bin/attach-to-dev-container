@@ -1,4 +1,0 @@
-#!/bin/bash
-
-pushd ~/work/containers/
-./attach-to-dev-container.sh

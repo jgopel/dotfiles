@@ -31,5 +31,5 @@ alias pr='poetry run'
 alias link-lvimrc='ln -s ~/dotfiles/vim/default-lvimrc .lvimrc'
 
 function ct {
-    command cargo test --color always $@ -- --color always 2>&1 | sed 's/\//g' | less -RFX
+    command cargo test --color always "$@" -- --color always 2>&1 | sed 's/\//g' | less -RFX
 }

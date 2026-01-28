@@ -45,8 +45,8 @@ export TZ='America/Denver'
 # Python cache directory
 export PYTHONPYCACHEPREFIX="$HOME/.cache/cpython/"
 
-# Swap escape and caps lock
-if is_linux && [ -n "$DISPLAY" ] ; then
+# Swap escape and caps lock (only on X11)
+if is_linux && [ "$XDG_SESSION_TYPE" = "x11" ]; then
     if hash setxkbmap 2>/dev/null; then
         setxkbmap -option caps:escape
     else
@@ -54,8 +54,7 @@ if is_linux && [ -n "$DISPLAY" ] ; then
     fi
 fi
 
-# Prompt coloring
-PROMPT_COMMAND="set_bash_prompt;$PROMPT_COMMAND"
+# Continuation prompt
 export PS2="$ "
 
 # vim mode

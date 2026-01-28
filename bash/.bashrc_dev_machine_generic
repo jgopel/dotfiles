@@ -1,5 +1,4 @@
 include_if_exists /etc/profile.d/bash_completion.sh
-include_if_exists /usr/share/doc/fzf/examples/key-bindings.bash
 
 pathappend $HOME/bin $HOME/.local/bin
 export PATH

@@ -28,6 +28,7 @@ set_bash_prompt() {
 
 include_if_exists() {
     if [ -f "$1" ]; then
+        # shellcheck source=/dev/null
         . "$1"
         return 0
     elif [ "$2" = true ] ; then

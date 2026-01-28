@@ -53,7 +53,6 @@ in
     terminal = false;
     categories = [ "Network" "WebBrowser" ];
     comment = "Access the Internet";
-    mimeType = [ "text/html" "text/xml" "application/xhtml+xml" "x-scheme-handler/http" "x-scheme-handler/https" ];
   };
 
   # Hide the original unwrapped .desktop files from the google-chrome package
@@ -64,4 +63,13 @@ in
   };
 
   fonts.fontconfig.enable = true;
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "text/html" = "firefox.desktop";
+    };
+  };
 }

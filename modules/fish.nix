@@ -44,6 +44,9 @@
       # Add ~/bin and ~/.amp/bin to PATH
       fish_add_path -g $HOME/bin $HOME/.amp/bin
 
+      # et (eternal-terminal) completions - wraps ssh for host/user completions
+      complete -c et --wraps ssh
+
       # Environment settings
       set -gx SVN_EDITOR nvim
       set -gx VISUAL nvim

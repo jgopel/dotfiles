@@ -23,6 +23,9 @@
     ];
 
     extraConfig = ''
+      # Enable extended keys for better key sequence support
+      set -s extended-keys on
+      set -as terminal-features 'xterm*:extkeys'
 
       ### Bindings ###
 

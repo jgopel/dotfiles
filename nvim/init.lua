@@ -30,7 +30,6 @@ vim.opt.breakindentopt = "shift:2"
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 vim.opt.mouse = "a"
-vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = { "menuone", "noselect", "noinsert" }
 vim.opt.shortmess:append("c")
 
@@ -56,6 +55,11 @@ vim.keymap.set(
   "<cmd>set invrelativenumber<CR>",
   { silent = true, desc = "Toggle Relative Number" }
 )
+
+vim.keymap.set({ "n", "x" }, "sy", '"+y', { desc = "Copy to system clipboard" })
+vim.keymap.set("n", "sp", '"+p', { desc = "Paste from system clipboard" })
+vim.keymap.set("x", "sp", '"+P', { desc = "Paste from system clipboard - visual" })
+
 vim.keymap.set("n", "<Right>", "<C-w><Right>", { desc = "Window Nav: Right" })
 vim.keymap.set("n", "<Left>", "<C-w><Left>", { desc = "Window Nav: Left" })
 vim.keymap.set("n", "<Up>", "<C-w><Up>", { desc = "Window Nav: Up" })

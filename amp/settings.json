@@ -1,4 +1,4 @@
 {
-  "amp.internal.visibleModes": ["large"],
-  "amp.experimental.modes": ["deep"]
+  "amp.internal.visibleModes": ["large", "bombadil"],
+  "amp.anthropic.effort": "max"
 }

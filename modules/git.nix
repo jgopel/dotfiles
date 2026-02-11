@@ -80,7 +80,6 @@
       ".cache/"
       "*.sync-conflict-*.lock"
       ".syncthing.*.tmp"
-      ".claude/"
     ];
   };
 }

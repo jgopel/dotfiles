@@ -29,6 +29,8 @@ in
     fi
   '';
 
+  programs.nix-index-database.comma.enable = true;
+
   programs.fzf = {
     enable = true;
   };

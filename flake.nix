@@ -23,9 +23,14 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, nixgl, rust-overlay, ... }:
+  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, nixgl, rust-overlay, nix-index-database, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -44,7 +49,9 @@
       homeConfigurations."jonathan@jonathan-ThinkPad-X1-Carbon-Gen-12" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
+          nix-index-database.hmModules.nix-index
           ./home.nix
+
           ./modules/desktop.nix
           ./modules/nascent.nix
           ./modules/syncthing-nascent.nix
@@ -60,7 +67,9 @@
       homeConfigurations."jonathan@jonathan-XPS-17-9720" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
+          nix-index-database.hmModules.nix-index
           ./home.nix
+
           ./modules/desktop.nix
         ];
         extraSpecialArgs = {
@@ -73,7 +82,9 @@
       homeConfigurations."adminjg@sov-cpu-srv" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
+          nix-index-database.hmModules.nix-index
           ./home.nix
+
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
         ];
@@ -87,7 +98,9 @@
       homeConfigurations."jonathan@ip-172-31-2-254" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
+          nix-index-database.hmModules.nix-index
           ./home.nix
+
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
         ];
@@ -101,7 +114,9 @@
       homeConfigurations."jonathan@ip-172-31-96-20" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
+          nix-index-database.hmModules.nix-index
           ./home.nix
+
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
         ];

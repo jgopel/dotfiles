@@ -5,6 +5,10 @@ let
   wrappedTelegram = wrap pkgs.telegram-desktop;
 in
 {
+  home.sessionVariables = {
+    GITHUB_PERSONAL_ACCESS_TOKEN = "<redacted>";
+  };
+
   home.packages = [
     wrappedTelegram
   ];

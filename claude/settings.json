@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "defaultMode": "plan"
+  },
+  "model": "opus",
+  "alwaysThinkingEnabled": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
+  }
+}

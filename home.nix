@@ -109,4 +109,9 @@ in
   ];
 
   home.file."bin".source = "${dotfilesDir}/bin";
+  home.file.".claude/statusline.sh" = {
+    source = ./claude/statusline.sh;
+    executable = true;
+  };
+  home.file.".claude/settings.json".source = ./claude/settings.json;
 }

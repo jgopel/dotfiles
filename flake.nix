@@ -49,7 +49,7 @@
       homeConfigurations."jonathan@jonathan-ThinkPad-X1-Carbon-Gen-12" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          nix-index-database.hmModules.nix-index
+          nix-index-database.homeModules.nix-index
           ./home.nix
 
           ./modules/desktop.nix
@@ -67,7 +67,7 @@
       homeConfigurations."jonathan@jonathan-XPS-17-9720" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          nix-index-database.hmModules.nix-index
+          nix-index-database.homeModules.nix-index
           ./home.nix
 
           ./modules/desktop.nix
@@ -82,7 +82,7 @@
       homeConfigurations."adminjg@sov-cpu-srv" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          nix-index-database.hmModules.nix-index
+          nix-index-database.homeModules.nix-index
           ./home.nix
 
           ./modules/server.nix
@@ -98,7 +98,7 @@
       homeConfigurations."jonathan@ip-172-31-2-254" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          nix-index-database.hmModules.nix-index
+          nix-index-database.homeModules.nix-index
           ./home.nix
 
           ./modules/server.nix
@@ -114,7 +114,7 @@
       homeConfigurations."jonathan@ip-172-31-96-20" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          nix-index-database.hmModules.nix-index
+          nix-index-database.homeModules.nix-index
           ./home.nix
 
           ./modules/server.nix

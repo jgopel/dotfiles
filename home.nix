@@ -84,6 +84,7 @@ in
     yq
 
     # Language agnostic tools
+    ast-grep
     gnumake
 
     # C++ tools

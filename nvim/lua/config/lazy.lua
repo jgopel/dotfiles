@@ -179,6 +179,31 @@ require("lazy").setup({
     end,
   },
 
+  -- Find and Replace
+  {
+    "MagicDuck/grug-far.nvim",
+    keys = {
+      { "<leader>fr", function() require("grug-far").open({ transient = true }) end, desc = "Find & Replace" },
+      {
+        "<leader>fw",
+        function() require("grug-far").open({ transient = true, prefills = { search = vim.fn.expand("<cword>") } }) end,
+        desc = "Find & Replace (word under cursor)",
+      },
+      {
+        "<leader>fr",
+        function()
+          require("grug-far").open({
+            transient = true,
+            prefills = { search = require("grug-far").get_current_visual_selection() },
+          })
+        end,
+        mode = "x",
+        desc = "Find & Replace (selection)",
+      },
+    },
+    opts = {},
+  },
+
   -- Fuzzy Finder: Telescope
   {
     "nvim-telescope/telescope.nvim",

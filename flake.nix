@@ -54,6 +54,7 @@
 
           ./modules/desktop.nix
           ./modules/nascent.nix
+          ./modules/nascent-desktop.nix
           ./modules/syncthing-nascent.nix
           { services.syncthing-user.nascent-tunnels = true; }
         ];
@@ -87,6 +88,7 @@
 
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
+          ./modules/nascent.nix
         ];
         extraSpecialArgs = {
           inherit rustToolchain;
@@ -103,6 +105,7 @@
 
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
+          ./modules/nascent.nix
         ];
         extraSpecialArgs = {
           inherit rustToolchain;
@@ -119,6 +122,7 @@
 
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
+          ./modules/nascent.nix
         ];
         extraSpecialArgs = {
           inherit rustToolchain;

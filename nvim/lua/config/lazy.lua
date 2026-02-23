@@ -24,6 +24,20 @@ require("lazy").setup({
   -- Theme: Sonokai
   { "sainnhe/sonokai" },
 
+  {
+    "alexghergh/nvim-tmux-navigation",
+    config = function()
+      require("nvim-tmux-navigation").setup({
+        keybindings = {
+          left = "<M-h>",
+          down = "<M-j>",
+          up = "<M-k>",
+          right = "<M-l>",
+        },
+      })
+    end,
+  },
+
   { "tpope/vim-abolish" },
   { "tpope/vim-surround" },
   { "tpope/vim-sleuth" },

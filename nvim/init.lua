@@ -60,10 +60,6 @@ vim.keymap.set({ "n", "x" }, "sy", '"+y', { desc = "Copy to system clipboard" })
 vim.keymap.set("n", "sp", '"+p', { desc = "Paste from system clipboard" })
 vim.keymap.set("x", "sp", '"+P', { desc = "Paste from system clipboard - visual" })
 
-vim.keymap.set("n", "<Right>", "<C-w><Right>", { desc = "Window Nav: Right" })
-vim.keymap.set("n", "<Left>", "<C-w><Left>", { desc = "Window Nav: Left" })
-vim.keymap.set("n", "<Up>", "<C-w><Up>", { desc = "Window Nav: Up" })
-vim.keymap.set("n", "<Down>", "<C-w><Down>", { desc = "Window Nav: Down" })
 
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")

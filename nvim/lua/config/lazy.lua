@@ -197,10 +197,18 @@ require("lazy").setup({
   {
     "MagicDuck/grug-far.nvim",
     keys = {
-      { "<leader>fr", function() require("grug-far").open({ transient = true }) end, desc = "Find & Replace" },
+      {
+        "<leader>fr",
+        function()
+          require("grug-far").open({ transient = true })
+        end,
+        desc = "Find & Replace",
+      },
       {
         "<leader>fw",
-        function() require("grug-far").open({ transient = true, prefills = { search = vim.fn.expand("<cword>") } }) end,
+        function()
+          require("grug-far").open({ transient = true, prefills = { search = vim.fn.expand("<cword>") } })
+        end,
         desc = "Find & Replace (word under cursor)",
       },
       {

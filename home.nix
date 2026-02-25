@@ -65,12 +65,13 @@ in
     colorized-logs
     curl
     dtrx
+    eternal-terminal
     gdb
     htop
     inetutils
     jq
+    less
     mosh
-    eternal-terminal
     openssh_gssapi
     perf
     plocate

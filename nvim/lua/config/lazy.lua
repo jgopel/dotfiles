@@ -27,14 +27,45 @@ require("lazy").setup({
   {
     "alexghergh/nvim-tmux-navigation",
     config = function()
-      require("nvim-tmux-navigation").setup({
-        keybindings = {
-          left = "<M-h>",
-          down = "<M-j>",
-          up = "<M-k>",
-          right = "<M-l>",
-        },
-      })
+      require("nvim-tmux-navigation").setup({})
+
+      local tmux_dirs = { h = "L", j = "D", k = "U", l = "R" }
+      local tmux_edge_flags = {
+        h = "pane_at_left",
+        j = "pane_at_bottom",
+        k = "pane_at_top",
+        l = "pane_at_right",
+      }
+
+      local function navigate_no_wrap(direction)
+        local winnr = vim.fn.winnr()
+        pcall(vim.cmd, "wincmd " .. direction)
+        if winnr ~= vim.fn.winnr() then
+          return
+        end
+        if not vim.env.TMUX then
+          return
+        end
+        local socket = vim.fn.split(vim.env.TMUX, ",")[1]
+        local at_edge =
+          vim.fn.system("tmux -S " .. socket .. " display-message -p '#{" .. tmux_edge_flags[direction] .. "}'")
+        if vim.trim(at_edge) ~= "1" then
+          vim.fn.system("tmux -S " .. socket .. " select-pane -" .. tmux_dirs[direction])
+        end
+      end
+
+      vim.keymap.set("n", "<M-h>", function()
+        navigate_no_wrap("h")
+      end, { silent = true })
+      vim.keymap.set("n", "<M-j>", function()
+        navigate_no_wrap("j")
+      end, { silent = true })
+      vim.keymap.set("n", "<M-k>", function()
+        navigate_no_wrap("k")
+      end, { silent = true })
+      vim.keymap.set("n", "<M-l>", function()
+        navigate_no_wrap("l")
+      end, { silent = true })
     end,
   },
 
@@ -105,16 +136,97 @@ require("lazy").setup({
   -- Status Line
   {
     "nvim-lualine/lualine.nvim",
+    config = function(_, opts)
+      vim.g.nvim_focused = true
+      require("lualine").setup(opts)
+
+      vim.api.nvim_create_autocmd("FocusLost", {
+        callback = function()
+          vim.g.nvim_focused = false
+          require("lualine").refresh()
+        end,
+      })
+      vim.api.nvim_create_autocmd("FocusGained", {
+        callback = function()
+          vim.g.nvim_focused = true
+          require("lualine").refresh()
+        end,
+      })
+    end,
     opts = {
       sections = {
+        lualine_a = {
+          {
+            "mode",
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
+        },
+        lualine_b = {
+          {
+            "branch",
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
+          {
+            "diff",
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
+          {
+            "diagnostics",
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
+        },
         lualine_c = { { "filename", path = 1, file_status = true } },
         lualine_x = {
-          function()
-            return require("direnv").statusline()
-          end,
-          "encoding",
-          "fileformat",
-          "filetype",
+          {
+            function()
+              return require("direnv").statusline()
+            end,
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
+          {
+            "encoding",
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
+          {
+            "fileformat",
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
+          {
+            "filetype",
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
+        },
+        lualine_y = {
+          {
+            "progress",
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
+        },
+        lualine_z = {
+          {
+            "location",
+            cond = function()
+              return vim.g.nvim_focused
+            end,
+          },
         },
       },
       inactive_sections = {

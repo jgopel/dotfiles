@@ -23,6 +23,9 @@
     ];
 
     extraConfig = ''
+      # Pass focus events through to applications (e.g. Neovim FocusGained/FocusLost)
+      set -g focus-events on
+
       # Enable extended keys for better key sequence support
       set -s extended-keys on
       set -as terminal-features 'xterm*:extkeys'

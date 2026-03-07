@@ -1,10 +1,14 @@
 {
-  "amp.internal.visibleModes": ["large", "bombadil"],
+  "amp.internal.visibleModes": [
+    "large",
+    "bombadil"
+  ],
   "amp.internal.deepReasoningEffort": "xhigh",
   "amp.anthropic.effort": "max",
   "amp.git.commit.ampThread.enabled": false,
   "amp.git.commit.coauthor.enabled": false,
   "amp.defaultVisibility": {
     "github.com/jgopel/dotfiles": "private"
-  }
+  },
+  "amp.agent.deepReasoningEffort": "xhigh"
 }

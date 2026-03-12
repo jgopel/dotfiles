@@ -82,6 +82,7 @@ in
     sysstat
     time
     tree
+    unzip
     wget
     yq
 

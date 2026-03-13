@@ -80,7 +80,7 @@
         };
       };
 
-      homeConfigurations."adminjg@sov-cpu-srv" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."jonathan@sov-cpu-srv" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
           nix-index-database.homeModules.nix-index
@@ -92,8 +92,8 @@
         ];
         extraSpecialArgs = {
           inherit rustToolchain;
-          username = "adminjg";
-          homeDirectory = "/home/adminjg";
+          username = "jonathan";
+          homeDirectory = "/home/jonathan";
         };
       };
 

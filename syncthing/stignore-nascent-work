@@ -1,3 +1,6 @@
-(?d)**/target/
-(?d)**/.venv
 (?d)**/.direnv
+(?d)**/.mypy_cache
+(?d)**/.ruff_cache
+(?d)**/.venv
+
+(?d)**/target/

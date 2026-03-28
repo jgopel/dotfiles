@@ -248,60 +248,65 @@ require("lazy").setup({
   -- Syntax Highlighting
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
-    event = { "BufReadPre", "BufNewFile" },
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-          "c",
-          "cpp",
-          "rust",
-          "python",
-          "lua",
-          "vim",
-          "vimdoc",
-          "query",
-          "markdown",
-          "json",
-          "yaml",
-          "toml",
-          "bash",
-        },
-        highlight = { enable = true },
-        indent = { enable = true },
+      require("nvim-treesitter").install({
+        "c",
+        "cpp",
+        "rust",
+        "python",
+        "lua",
+        "vim",
+        "vimdoc",
+        "query",
+        "markdown",
+        "json",
+        "yaml",
+        "toml",
+        "bash",
+        "nix",
       })
     end,
   },
   { "nvim-treesitter/nvim-treesitter-context" },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
     lazy = false,
     config = function()
-      require("nvim-treesitter.configs").setup({
-        textobjects = {
-          select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-              ["aa"] = "@parameter.outer",
-              ["ia"] = "@parameter.inner",
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
-              ["ic"] = "@class.inner",
-            },
-          },
-          swap = {
-            enable = true,
-            swap_next = {
-              ["<leader>a"] = "@parameter.inner",
-            },
-            swap_previous = {
-              ["<leader>A"] = "@parameter.inner",
-            },
-          },
-        },
+      require("nvim-treesitter-textobjects").setup({
+        select = { lookahead = true },
       })
+
+      local select = require("nvim-treesitter-textobjects.select")
+      local swap = require("nvim-treesitter-textobjects.swap")
+
+      vim.keymap.set({ "x", "o" }, "aa", function()
+        select.select_textobject("@parameter.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "ia", function()
+        select.select_textobject("@parameter.inner", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "af", function()
+        select.select_textobject("@function.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "if", function()
+        select.select_textobject("@function.inner", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "ac", function()
+        select.select_textobject("@class.outer", "textobjects")
+      end)
+      vim.keymap.set({ "x", "o" }, "ic", function()
+        select.select_textobject("@class.inner", "textobjects")
+      end)
+      vim.keymap.set("n", "<leader>a", function()
+        swap.swap_next("@parameter.inner")
+      end)
+      vim.keymap.set("n", "<leader>A", function()
+        swap.swap_previous("@parameter.inner")
+      end)
     end,
   },
 

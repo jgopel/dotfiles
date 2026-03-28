@@ -93,6 +93,7 @@ in
     # Language agnostic tools
     ast-grep
     gnumake
+    tree-sitter
 
     # C++ tools
     cmake

@@ -65,6 +65,13 @@ vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
 vim.cmd("autocmd FileType gitcommit setlocal spell")
 vim.cmd("autocmd FileType markdown setlocal spell")
 
+-- Enable treesitter highlighting for languages with installed parsers
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
+
 require("config.lazy")
 
 vim.cmd.colorscheme("sonokai")

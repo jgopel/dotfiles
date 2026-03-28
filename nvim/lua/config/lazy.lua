@@ -78,13 +78,30 @@ require("lazy").setup({
 
   -- AI
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
+    "milanglacier/minuet-ai.nvim",
     event = "InsertEnter",
+    cmd = "Minuet",
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
+      require("minuet").setup({
+        provider = "gemini",
+        provider_options = {
+          gemini = {
+            model = "gemini-3.1-flash-lite-preview",
+            stream = true,
+          },
+        },
+        virtualtext = {
+          auto_trigger_ft = { "c", "cpp", "lua", "nix", "python", "rust", "sh" },
+          keymap = {
+            accept = "<M-A>",
+            accept_line = "<M-a>",
+            accept_n_lines = "<M-z>",
+            prev = "<M-[>",
+            next = "<M-]>",
+            dismiss = "<M-e>",
+          },
+        },
       })
     end,
   },
@@ -602,19 +619,16 @@ require("lazy").setup({
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp-signature-help",
-      "zbirenbaum/copilot-cmp",
     },
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
       require("luasnip.loaders.from_vscode").lazy_load()
-      require("copilot_cmp").setup()
 
       local sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "luasnip" },
-        { name = "copilot" },
         { name = "buffer", keyword_length = 3 },
         { name = "path" },
       }

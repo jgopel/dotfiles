@@ -38,6 +38,27 @@
         overlays = [
           neovim-nightly-overlay.overlays.default
           rust-overlay.overlays.default
+          # TODO: Remove this once nixpkgs has 2.0.15 or later - syncthing
+          # 2.0.12-2.0.14 hit a panic due to a QUIC error
+          (final: prev: {
+            syncthing = prev.syncthing.overrideAttrs (old: rec {
+              version = "2.0.15";
+              src = prev.fetchFromGitHub {
+                owner = "syncthing";
+                repo = "syncthing";
+                tag = "v${version}";
+                hash = "sha256-v77ovjV+UoCRA1GteP+HDqC8dsRvtOhFX/IkSgSIf8Y=";
+              };
+              vendorHash = "sha256-boYTLgvH+iWlh3y3Z0LPvSVGEget3X94AthtJKphhCw=";
+              buildPhase = prev.lib.replaceStrings
+                [ "-version v${old.version}" ]
+                [ "-version v${version}" ]
+                old.buildPhase;
+              meta = old.meta // {
+                changelog = "https://github.com/syncthing/syncthing/releases/tag/v${version}";
+              };
+            });
+          })
         ];
         config.allowUnfree = true;
       };

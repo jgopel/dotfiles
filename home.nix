@@ -1,4 +1,4 @@
-{ config, pkgs, username, homeDirectory, rustToolchain, ... }:
+{ config, pkgs, username, homeDirectory, rustToolchain, cargo-nightly, ... }:
 
 let
   dotfilesDir = builtins.toString ./.;
@@ -106,6 +106,8 @@ in
     uv
 
     # Rust tools
+    cargo-nextest
+    cargo-nightly
     rustToolchain
 
     # LLMs

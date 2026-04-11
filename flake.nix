@@ -65,6 +65,12 @@
       rustToolchain = pkgs.rust-bin.stable.latest.default.override {
         extensions = [ "rust-src" "rust-analyzer" "clippy" "rustfmt" ];
       };
+      rustNightly = pkgs.rust-bin.nightly.latest.default;
+      cargo-nightly = pkgs.writeShellScriptBin "cargo-nightly" ''
+        export RUSTC="${rustNightly}/bin/rustc"
+        export RUSTDOC="${rustNightly}/bin/rustdoc"
+        exec ${rustNightly}/bin/cargo "$@"
+      '';
     in
     {
       homeConfigurations."jonathan@jonathan-ThinkPad-X1-Carbon-Gen-12" = home-manager.lib.homeManagerConfiguration {
@@ -80,7 +86,7 @@
           { services.syncthing-user.nascent-tunnels = true; }
         ];
         extraSpecialArgs = {
-          inherit nixgl rustToolchain;
+          inherit nixgl rustToolchain cargo-nightly;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };
@@ -95,7 +101,7 @@
           ./modules/desktop.nix
         ];
         extraSpecialArgs = {
-          inherit nixgl rustToolchain;
+          inherit nixgl rustToolchain cargo-nightly;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };
@@ -112,7 +118,7 @@
           ./modules/nascent.nix
         ];
         extraSpecialArgs = {
-          inherit rustToolchain;
+          inherit rustToolchain cargo-nightly;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };
@@ -129,7 +135,7 @@
           ./modules/nascent.nix
         ];
         extraSpecialArgs = {
-          inherit rustToolchain;
+          inherit rustToolchain cargo-nightly;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };
@@ -146,7 +152,7 @@
           ./modules/nascent.nix
         ];
         extraSpecialArgs = {
-          inherit rustToolchain;
+          inherit rustToolchain cargo-nightly;
           username = "jonathan";
           homeDirectory = "/home/jonathan";
         };

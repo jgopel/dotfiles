@@ -10,8 +10,5 @@ in
     defaultEditor = true;
   };
 
-  xdg.configFile = {
-    "nvim/init.lua".source = "${dotfilesDir}/nvim/init.lua";
-    "nvim/lua/config/lazy.lua".source = "${dotfilesDir}/nvim/lua/config/lazy.lua";
-  };
+  xdg.configFile."nvim".source = "${dotfilesDir}/nvim";
 }

@@ -357,7 +357,13 @@ require("lazy").setup({
         desc = "Find & Replace (selection)",
       },
     },
-    opts = {},
+    opts = {
+      engines = {
+        ripgrep = {
+          extraArgs = table.concat(require("config.rg-flags"), " "),
+        },
+      },
+    },
   },
 
   -- Fuzzy Finder: Telescope
@@ -369,25 +375,9 @@ require("lazy").setup({
       {
         "<leader>ff",
         function()
+          local rg_flags = require("config.rg-flags")
           require("telescope.builtin").find_files({
-            find_command = {
-              "rg",
-              "--files",
-              "--hidden",
-              "--no-ignore",
-              "--glob",
-              "!.git",
-              "--glob",
-              "!target",
-              "--glob",
-              "!.venv",
-              "--glob",
-              "!build",
-              "--glob",
-              "!build-*",
-              "--glob",
-              "!.mypy_cache",
-            },
+            find_command = vim.list_extend({ "rg", "--files" }, rg_flags),
           })
         end,
         desc = "Find files (ignore build dirs)",
@@ -409,7 +399,8 @@ require("lazy").setup({
       {
         "<leader>fg",
         function()
-          require("telescope.builtin").live_grep()
+          local rg_flags = require("config.rg-flags")
+          require("telescope.builtin").live_grep({ additional_args = rg_flags })
         end,
         desc = "Live grep",
       },

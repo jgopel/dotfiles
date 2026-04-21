@@ -26,8 +26,8 @@ repos:
           - --no-sort
         exclude: |
           (?x)^(
-            poetry.lock|
-            rust/Cargo.lock
+            rust/Cargo.lock|
+            uv.lock
           )$
   - repo: https://github.com/executablebooks/mdformat
     rev: 1.0.0

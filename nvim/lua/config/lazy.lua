@@ -249,7 +249,7 @@ require("lazy").setup({
       inactive_sections = {
         lualine_c = { { "filename", path = 1, file_status = true, newfile_status = true } },
       },
-      extensions = { "nvim-tree", "mason" },
+      extensions = { "nvim-tree" },
     },
   },
 
@@ -409,94 +409,53 @@ require("lazy").setup({
 
   -- Language server plugins
   {
-    "williamboman/mason.nvim",
-    opts = {},
-  },
-  {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    dependencies = { "williamboman/mason.nvim" },
-    lazy = false,
-    opts = {
-      ensure_installed = {
-        -- LSP servers
-        "clangd",
-        -- Linters
-        "mypy",
-        "flake8",
-        "pylint",
-        "shellcheck",
-        -- Formatters
-        "black",
-        "isort",
-        "stylua",
-        "shfmt",
-        "prettier",
-      },
-      auto_update = false,
-      run_on_start = true,
-    },
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "clangd",
-          "lua_ls",
-          "pyright",
-        },
-        automatic_installation = { exclude = { "rust_analyzer" } },
-        handlers = {
-          function(server_name) -- default handler
-            require("lspconfig")[server_name].setup({
-              capabilities = require("cmp_nvim_lsp").default_capabilities(),
-            })
-          end,
-          ["rust_analyzer"] = function()
-            require("lspconfig").rust_analyzer.setup({
-              capabilities = require("cmp_nvim_lsp").default_capabilities(),
-              settings = {
-                ["rust-analyzer"] = {
-                  cargo = {
-                    allFeatures = true,
-                    allTargets = true,
-                  },
-                  inlayHints = {
-                    bindingModeHints = { enable = false },
-                    chainingHints = { enable = true },
-                    closingBraceHints = { enable = true, minLines = 25 },
-                    closureReturnTypeHints = { enable = "onlyBlock" },
-                    lifetimeElisionHints = { enable = "always", useParameterNames = false },
-                    maxLength = 25,
-                    parameterHints = { enable = true },
-                    reborrowHints = { enable = "always" },
-                    renderColons = true,
-                    typeHints = {
-                      enable = true,
-                      hideClosureInitialization = false,
-                      hideNamedConstructor = false,
-                    },
-                  },
-                },
-              },
-            })
-          end,
-          ["lua_ls"] = function()
-            require("lspconfig").lua_ls.setup({
-              capabilities = require("cmp_nvim_lsp").default_capabilities(),
-              settings = { Lua = { diagnostics = { globals = { "vim" } } } },
-            })
-          end,
-        },
-      })
-    end,
-  },
-  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      vim.lsp.config("clangd", { capabilities = capabilities })
+      vim.lsp.config("lua_ls", {
+        capabilities = capabilities,
+        settings = { Lua = { diagnostics = { globals = { "vim" } } } },
+      })
+      vim.lsp.config("rust_analyzer", {
+        capabilities = capabilities,
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+              allTargets = true,
+            },
+            inlayHints = {
+              bindingModeHints = { enable = false },
+              chainingHints = { enable = true },
+              closingBraceHints = { enable = true, minLines = 25 },
+              closureReturnTypeHints = { enable = "onlyBlock" },
+              lifetimeElisionHints = { enable = "always", useParameterNames = false },
+              maxLength = 25,
+              parameterHints = { enable = true },
+              reborrowHints = { enable = "always" },
+              renderColons = true,
+              typeHints = {
+                enable = true,
+                hideClosureInitialization = false,
+                hideNamedConstructor = false,
+              },
+            },
+          },
+        },
+      })
+      vim.lsp.config("ruff", { capabilities = capabilities })
+      vim.lsp.config("ty", { capabilities = capabilities })
+      vim.lsp.config("pyright", { capabilities = capabilities })
+
+      vim.lsp.enable({ "clangd", "lua_ls", "rust_analyzer", "ruff", "ty" })
+      if vim.fn.executable("pyright-langserver") == 1 then
+        vim.lsp.enable("pyright")
+      end
+
       local on_attach_common = function(client, bufnr)
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
@@ -554,7 +513,7 @@ require("lazy").setup({
     opts = {
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "isort", "black" },
+        python = { "isort", "ruff_format" },
         rust = { "rustfmt" },
         c = { "clang_format" },
         cpp = { "clang_format" },
@@ -581,12 +540,18 @@ require("lazy").setup({
       },
     },
     config = function()
+      local function available(linters)
+        return vim.tbl_filter(function(name)
+          return vim.fn.executable(name) == 1
+        end, linters)
+      end
+
       local lint_augroup = vim.api.nvim_create_augroup("nvim-lint-autogroup", { clear = true })
       require("lint").linters_by_ft = {
         bash = { "shellcheck" },
         c = { "clangtidy" },
         cpp = { "clangtidy" },
-        python = { "pylint", "flake8", "mypy" },
+        python = available({ "pylint", "flake8", "mypy", "pyright" }),
         rust = { "clippy" },
       }
       vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" }, {

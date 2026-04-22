@@ -101,14 +101,25 @@ in
     ninja
 
     # Python tools
+    isort
     poetry
     python3
+    ruff
+    ty
     uv
 
     # Rust tools
     cargo-nextest
     cargo-nightly
     rustToolchain
+
+    # LSP servers and formatters
+    clang-tools
+    lua-language-server
+    prettier
+    shellcheck
+    shfmt
+    stylua
 
     # LLMs
     claude-code

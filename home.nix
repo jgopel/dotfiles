@@ -123,9 +123,9 @@ in
     # LLMs
     claude-code
     codex
+    forge
     gemini-cli
     nodejs
-
   ];
 
   home.file."bin".source = "${dotfilesDir}/bin";

@@ -28,9 +28,15 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    forge-bin = {
+      type = "file";
+      url = "https://github.com/tailcallhq/forgecode/releases/latest/download/forge-x86_64-unknown-linux-musl";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, nixgl, rust-overlay, nix-index-database, ... }:
+  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, nixgl, rust-overlay, nix-index-database, forge-bin, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -38,6 +44,25 @@
         overlays = [
           neovim-nightly-overlay.overlays.default
           rust-overlay.overlays.default
+          (final: prev: {
+            forge = prev.stdenvNoCC.mkDerivation {
+              pname = "forge";
+              # Version tracks whatever `forge-bin` resolves to; bump with
+              # `nix flake update forge-bin`.
+              version = "latest";
+              src = forge-bin;
+              dontUnpack = true;
+              installPhase = ''
+                install -Dm755 $src $out/bin/forge
+              '';
+              meta = {
+                description = "ForgeCode CLI";
+                homepage = "https://github.com/tailcallhq/forgecode";
+                mainProgram = "forge";
+                platforms = [ "x86_64-linux" ];
+              };
+            };
+          })
           # TODO: Remove this once nixpkgs has 2.0.15 or later - syncthing
           # 2.0.12-2.0.14 hit a panic due to a QUIC error
           (final: prev: {

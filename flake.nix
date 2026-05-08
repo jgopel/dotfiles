@@ -28,15 +28,9 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    forge-bin = {
-      type = "file";
-      url = "https://github.com/tailcallhq/forgecode/releases/latest/download/forge-x86_64-unknown-linux-musl";
-      flake = false;
-    };
   };
 
-  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, nixgl, rust-overlay, nix-index-database, forge-bin, ... }:
+  outputs = { nixpkgs, home-manager, neovim-nightly-overlay, nixgl, rust-overlay, nix-index-database, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -45,12 +39,17 @@
           neovim-nightly-overlay.overlays.default
           rust-overlay.overlays.default
           (final: prev: {
-            forge = prev.stdenvNoCC.mkDerivation {
+            # Bump with `./scripts/bump-forge`.
+            forge = let
+              version = "2.12.12";
+              hash = "sha256-wyYj0LnNLXpW5jGEyANP0rcFwMlqcJxECA6GSLLZAUs=";
+            in prev.stdenvNoCC.mkDerivation {
               pname = "forge";
-              # Version tracks whatever `forge-bin` resolves to; bump with
-              # `nix flake update forge-bin`.
-              version = "latest";
-              src = forge-bin;
+              inherit version;
+              src = prev.fetchurl {
+                url = "https://github.com/tailcallhq/forgecode/releases/download/v${version}/forge-x86_64-unknown-linux-musl";
+                inherit hash;
+              };
               dontUnpack = true;
               installPhase = ''
                 install -Dm755 $src $out/bin/forge

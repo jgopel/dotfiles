@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Bump the pinned `forge` binary in flake.nix to the latest GitHub release.
+# Resolves the latest release tag, prefetches the SRI hash, and rewrites the
+# `version` and `hash` literals inside the forge overlay block.
+
+set -euo pipefail
+
+repo="tailcallhq/forgecode"
+asset="forge-x86_64-unknown-linux-musl"
+flake="$(git -C "$(dirname "$0")" rev-parse --show-toplevel)/flake.nix"
+
+# Resolve the latest release tag (e.g. "v2.12.12") via the redirect on
+# /releases/latest, then strip the leading "v".
+tag=$(curl -fsSI "https://github.com/${repo}/releases/latest" \
+    | awk 'tolower($1) == "location:" { sub(/\r$/, "", $2); n = split($2, p, "/"); print p[n] }')
+version="${tag#v}"
+
+if [[ -z "$version" ]]; then
+    echo "Failed to resolve latest forge release tag" >&2
+    exit 1
+fi
+
+url="https://github.com/${repo}/releases/download/v${version}/${asset}"
+hash=$(nix store prefetch-file --hash-type sha256 --json "$url" \
+    | sed -E 's/.*"hash":"([^"]+)".*/\1/')
+
+# Restrict the replacements to the block delimited by the marker comment and
+# the `in prev.stdenvNoCC` line so we don't touch e.g. the syncthing override.
+# shellcheck disable=SC2016 # backticks here are literal text in the sed address
+range='/# Bump with `\.\/scripts\/bump-forge`/,/in prev\.stdenvNoCC/'
+sed -i -E \
+    -e "${range} s|^([[:space:]]*version = )\"[^\"]*\";|\\1\"${version}\";|" \
+    -e "${range} s|^([[:space:]]*hash = )\"[^\"]*\";|\\1\"${hash}\";|" \
+    "$flake"
+
+echo "forge bumped to ${version} (${hash})"

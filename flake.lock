@@ -39,18 +39,6 @@
         "type": "github"
       }
     },
-    "forge-bin": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-o38esuPwIP92I5esK1Ttb0fSt4BuJYeKZH5nHYiJx8U=",
-        "type": "file",
-        "url": "https://github.com/tailcallhq/forgecode/releases/latest/download/forge-x86_64-unknown-linux-musl"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/tailcallhq/forgecode/releases/latest/download/forge-x86_64-unknown-linux-musl"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -168,7 +156,6 @@
     },
     "root": {
       "inputs": {
-        "forge-bin": "forge-bin",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-index-database": "nix-index-database",

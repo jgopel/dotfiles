@@ -20,6 +20,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v22
       - uses: DeterminateSystems/magic-nix-cache-action@v13
       - run: nix flake update
+      - run: ./scripts/bump-forge
 
       # Python
       - uses: actions/setup-python@v6

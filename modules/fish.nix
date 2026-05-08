@@ -21,15 +21,10 @@
       ll = "ls -l";
       la = "LC_COLLATE=C ls -A";
       lla = "la -l";
-      grep = "grep --color=auto";
       gdb = "gdb -silent";
-      cscope = "cscope -qR";
       refresh = "source ~/.config/fish/config.fish";
       tmux = "tmux -u";
       sudol = "sudo -E";
-      pr = "poetry run";
-      link-lvimrc = "ln -s ~/dotfiles/vim/default-lvimrc .lvimrc";
-
     };
 
     shellInit = ''
@@ -48,10 +43,8 @@
       complete -c et --wraps ssh
 
       # Environment settings
-      set -gx SVN_EDITOR nvim
       set -gx VISUAL nvim
       set -gx EDITOR nvim
-      set -gx CSCOPE_EDITOR nvim
       set -gx TZ 'America/Denver'
 
       # Python cache directory

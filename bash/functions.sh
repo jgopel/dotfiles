@@ -19,9 +19,6 @@ set_bash_prompt() {
     if [ -n "${PIPENV_ACTIVE}" ]; then
         PROMPT="$PROMPT(pipenv) "
     fi
-    if [ -n "${POETRY_ACTIVE}" ]; then
-        PROMPT="$PROMPT(poetry) "
-    fi
 
     export PS1="$PROMPT\$ "
 }

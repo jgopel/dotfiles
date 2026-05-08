@@ -102,7 +102,6 @@ in
 
     # Python tools
     isort
-    poetry
     python3
     ruff
     ty

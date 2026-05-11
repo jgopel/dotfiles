@@ -2,6 +2,10 @@
 -- Bootstrap lazy.nvim
 --==============================================================================
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+-- Home Manager makes ~/.config/nvim read-only; keep lazy.nvim's generated
+-- lockfile in XDG state (~/.local/state/nvim/lazy-lock.json) so :Lazy update
+-- can write to it.
+local lazy_lockfile = vim.fn.stdpath("state") .. "/lazy-lock.json"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
@@ -629,4 +633,6 @@ require("lazy").setup({
       cmp.setup.cmdline("/", { mapping = cmp.mapping.preset.cmdline(), sources = { { name = "buffer" } } })
     end,
   },
+}, {
+  lockfile = lazy_lockfile,
 })

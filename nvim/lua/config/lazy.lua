@@ -436,7 +436,7 @@ require("lazy").setup({
               bindingModeHints = { enable = false },
               chainingHints = { enable = true },
               closingBraceHints = { enable = true, minLines = 25 },
-              closureReturnTypeHints = { enable = "onlyBlock" },
+              closureReturnTypeHints = { enable = "with_block" },
               lifetimeElisionHints = { enable = "always", useParameterNames = false },
               maxLength = 25,
               parameterHints = { enable = true },

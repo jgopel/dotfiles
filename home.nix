@@ -109,6 +109,7 @@ in
     uv
 
     # Rust tools
+    bacon
     cargo-nextest
     cargo-nightly
     rustToolchain

@@ -41,8 +41,8 @@
           (final: prev: {
             # Bump with `./scripts/bump-forge`.
             forge = let
-              version = "2.12.12";
-              hash = "sha256-wyYj0LnNLXpW5jGEyANP0rcFwMlqcJxECA6GSLLZAUs=";
+              version = "2.12.14";
+              hash = "sha256-iEzkI8wkbsGXcjo/YTBoloTUBHjiyjFQYdsx/DuGLHE=";
             in prev.stdenvNoCC.mkDerivation {
               pname = "forge";
               inherit version;

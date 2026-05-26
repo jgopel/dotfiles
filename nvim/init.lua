@@ -56,9 +56,9 @@ vim.keymap.set(
   { silent = true, desc = "Toggle Relative Number" }
 )
 
-vim.keymap.set({ "n", "x" }, "sy", '"+y', { desc = "Copy to system clipboard" })
-vim.keymap.set("n", "sp", '"+p', { desc = "Paste from system clipboard" })
-vim.keymap.set("x", "sp", '"+P', { desc = "Paste from system clipboard - visual" })
+vim.keymap.set({ "n", "x" }, "<leader>sy", '"+y', { desc = "Copy to system clipboard" })
+vim.keymap.set("n", "<leader>sp", '"+p', { desc = "Paste from system clipboard" })
+vim.keymap.set("x", "<leader>sp", '"+P', { desc = "Paste from system clipboard - visual" })
 
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")

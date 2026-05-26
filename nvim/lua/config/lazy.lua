@@ -91,7 +91,7 @@ require("lazy").setup({
         provider = "gemini",
         provider_options = {
           gemini = {
-            model = "gemini-3.1-flash-lite-preview",
+            model = "gemini-3.1-flash-lite",
             stream = true,
           },
         },

@@ -94,6 +94,7 @@ in
     # Language agnostic tools
     ast-grep
     gnumake
+    prek
     tree-sitter
 
     # C++ tools

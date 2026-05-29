@@ -3,8 +3,7 @@ all: quality
 
 .PHONY: quality
 quality:
-	uv sync
-	uv run pre-commit run --all-files
+	prek run --all-files
 
 .PHONY: setup-nix
 setup-nix:

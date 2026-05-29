@@ -22,18 +22,8 @@ jobs:
       - run: nix flake update
       - run: ./scripts/bump-forge
 
-      # Python
-      - uses: actions/setup-python@v6
-        with:
-          python-version: "3.14"
-      - uses: astral-sh/setup-uv@v7
-        with:
-          enable-cache: true
-          cache-dependency-glob: uv.lock
-      - run: uv lock --upgrade
-
-      # Pre-commit
-      - run: uv run pre-commit autoupdate
+      # Prek
+      - run: nix run nixpkgs#prek -- auto-update
 
       - uses: peter-evans/create-pull-request@v8
         with:

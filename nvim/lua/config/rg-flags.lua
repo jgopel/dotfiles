@@ -3,6 +3,8 @@ return {
   "--no-ignore",
   -- Generic
   "--glob=!.git",
+  -- Nix
+  "--glob=!.direnv",
   -- Rust
   "--glob=!target",
   -- Python

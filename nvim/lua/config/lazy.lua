@@ -431,6 +431,7 @@ require("lazy").setup({
             cargo = {
               allFeatures = true,
               allTargets = true,
+              targetDir = true,
             },
             inlayHints = {
               bindingModeHints = { enable = false },

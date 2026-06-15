@@ -52,6 +52,7 @@ in
   };
 
   xdg.configFile."starship.toml".source = ./starship.toml;
+  xdg.configFile."bacon/prefs.toml".source = ./bacon/prefs.toml;
   xdg.configFile."amp/settings.json".source =
     config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/dotfiles/amp/settings.json";
   xdg.configFile."agents/skills".source = ./agents/skills;

@@ -1,0 +1,4 @@
+#:schema https://dystroy.org/bacon/.bacon.schema.json
+# Global bacon preferences. See https://dystroy.org/bacon/config/
+
+default_job = "check-all"

@@ -6,6 +6,7 @@ let
 in
 {
   home.packages = [
+    pkgs.tailscale
     wrappedTelegram
   ];
 

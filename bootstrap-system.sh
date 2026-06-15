@@ -103,6 +103,27 @@ echo ""
 read -p "Is this a desktop system? [y/N] " -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo ""
+    read -p "Is this a Nascent desktop system? [y/N] " -n 1 -r
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        # Install Tailscale and configure it to accept subnet routes for NFS access.
+        echo "Installing Tailscale..."
+        if ! dpkg-query -W -f='${Status}' tailscale 2>/dev/null | grep -q "install ok installed"; then
+            curl -fsSL https://tailscale.com/install.sh | sh
+        fi
+
+        echo "Enabling Tailscale service..."
+        sudo systemctl enable --now tailscaled
+
+        echo "Configuring Tailscale to accept advertised routes for NFS access..."
+        if sudo tailscale status >/dev/null 2>&1; then
+            sudo tailscale set --accept-routes=true
+        else
+            sudo tailscale up --accept-routes=true
+        fi
+    fi
+
     echo "Installing OpenRazer for Razer peripheral support..."
     sudo add-apt-repository -y ppa:openrazer/stable
     sudo apt-get update

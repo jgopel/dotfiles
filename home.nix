@@ -129,7 +129,6 @@ in
     # LLMs
     claude-code
     codex
-    forge
     gemini-cli
     nodejs
   ];

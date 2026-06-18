@@ -38,30 +38,6 @@
         overlays = [
           neovim-nightly-overlay.overlays.default
           rust-overlay.overlays.default
-          (final: prev: {
-            # Bump with `./scripts/bump-forge`.
-            forge = let
-              version = "2.13.7";
-              hash = "sha256-s6ChzqkWRUGTwx8zYgnGHP4ZOcmr3N9qEzXyFA+SCOY=";
-            in prev.stdenvNoCC.mkDerivation {
-              pname = "forge";
-              inherit version;
-              src = prev.fetchurl {
-                url = "https://github.com/tailcallhq/forgecode/releases/download/v${version}/forge-x86_64-unknown-linux-musl";
-                inherit hash;
-              };
-              dontUnpack = true;
-              installPhase = ''
-                install -Dm755 $src $out/bin/forge
-              '';
-              meta = {
-                description = "ForgeCode CLI";
-                homepage = "https://github.com/tailcallhq/forgecode";
-                mainProgram = "forge";
-                platforms = [ "x86_64-linux" ];
-              };
-            };
-          })
           # TODO: Remove this once nixpkgs has 2.0.15 or later - syncthing
           # 2.0.12-2.0.14 hit a panic due to a QUIC error
           (final: prev: {

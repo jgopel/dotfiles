@@ -1,4 +1,19 @@
-#:schema https://dystroy.org/bacon/.bacon.schema.json
+# :schema https://dystroy.org/bacon/.bacon.schema.json
 # Global bacon preferences. See https://dystroy.org/bacon/config/
 
 default_job = "check-all"
+
+# Override the default nextest job to test all targets and features.
+[jobs.nextest]
+command = [
+  "cargo",
+  "nextest",
+  "run",
+  "--all-targets",
+  "--all-features",
+  "--hide-progress-bar",
+  "--failure-output",
+  "final",
+]
+need_stdout = true
+analyzer = "nextest"

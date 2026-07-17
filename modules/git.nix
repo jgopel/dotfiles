@@ -22,6 +22,7 @@
       init.defaultBranch = "main";
       help.autocorrect = "prompt";
       color.ui = true;
+      rerere.enabled = true;
 
       status = {
         showuntrackedfiles = "normal";

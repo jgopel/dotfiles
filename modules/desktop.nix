@@ -5,12 +5,35 @@ let
 
   wrap = config.lib.nixGL.wrap;
 
-  wrappedChrome = wrap pkgs.google-chrome;
-  wrappedDiscord = wrap pkgs.discord;
+  withRuntimeDirTmp = package: pkgs.symlinkJoin {
+    name = "${package.name}-runtime-dir";
+    paths = [ package ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      for executable in "$out/bin/"*; do
+        [ -f "$executable" ] || continue
+        wrapProgram "$executable" \
+          --run 'export TMPDIR="''${XDG_RUNTIME_DIR:-/tmp}"'
+      done
+
+      for sourceDesktopEntry in "${package}/share/applications/"*.desktop; do
+        [ -e "$sourceDesktopEntry" ] || continue
+        if grep -qF "${package}/" "$sourceDesktopEntry"; then
+          desktopEntry="$out/share/applications/$(basename "$sourceDesktopEntry")"
+          cp --remove-destination "$sourceDesktopEntry" "$desktopEntry"
+          substituteInPlace "$desktopEntry" \
+            --replace-fail "${package}/" "$out/"
+        fi
+      done
+    '';
+  };
+
+  wrappedChrome = withRuntimeDirTmp (wrap pkgs.google-chrome);
+  wrappedDiscord = withRuntimeDirTmp (wrap pkgs.discord);
   wrappedFirefox = wrap pkgs.firefox;
   wrappedGhostty = wrap pkgs.ghostty;
-  wrappedSignal = wrap pkgs.signal-desktop;
-  wrappedSlack = wrap pkgs.slack;
+  wrappedSignal = withRuntimeDirTmp (wrap pkgs.signal-desktop);
+  wrappedSlack = withRuntimeDirTmp (wrap pkgs.slack);
 in
 {
   targets.genericLinux.nixGL.packages = nixgl.packages;
@@ -27,6 +50,11 @@ in
     wrappedSignal
     wrappedSlack
   ];
+
+  xdg.configFile."autostart/discord.desktop" = {
+    source = "${wrappedDiscord}/share/applications/discord.desktop";
+    force = true;
+  };
 
   xdg.configFile."ghostty/config".source = "${dotfilesDir}/ghostty/config";
 

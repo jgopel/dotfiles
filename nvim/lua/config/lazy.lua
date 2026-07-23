@@ -88,10 +88,12 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("minuet").setup({
-        provider = "gemini",
+        provider = "codestral",
         provider_options = {
-          gemini = {
-            model = "gemini-3.1-flash-lite",
+          codestral = {
+            model = "codestral-2508",
+            api_key = "MISTRAL_API_KEY",
+            end_point = "https://api.mistral.ai/v1/fim/completions",
             stream = true,
           },
         },

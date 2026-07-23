@@ -88,6 +88,7 @@ in
     tree
     unzip
     wget
+    xclip # for amp clipboard usage
     yq
 
     # Language agnostic tools

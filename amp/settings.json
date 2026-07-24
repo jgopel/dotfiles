@@ -4,5 +4,6 @@
   "amp.defaultVisibility": {
     "github.com/jgopel/dotfiles": "private"
   },
-  "amp.remoteThreadCreation.enabled": false
+  "amp.remoteThreadCreation.enabled": false,
+  "amp.terminal.copyOnSelect": false
 }

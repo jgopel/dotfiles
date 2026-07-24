@@ -30,6 +30,8 @@
       set -s extended-keys on
       set -as terminal-features 'xterm*:extkeys'
 
+      set -s set-clipboard on
+
       ### Bindings ###
 
       # Smart pane switching with awareness of Vim splits

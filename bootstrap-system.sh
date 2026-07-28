@@ -68,14 +68,13 @@ echo "Enabling Docker service..."
 sudo systemctl enable docker
 sudo systemctl start docker
 
-# Install Amp CLI (self-updating, outside Nix)
-echo "Installing Amp CLI..."
-curl -fsSL https://ampcode.com/install.sh | bash
-
 # Install nix garbage collection
 echo "Installing nix garbage collection..."
-sudo cp "${SCRIPT_DIR}/scripts/nix-gc" /etc/cron.daily/nix-gc
-sudo chmod +x /etc/cron.daily/nix-gc
+sudo install --mode=0755 "${SCRIPT_DIR}/scripts/nix-gc" /usr/local/bin/nix-gc
+{
+    crontab -l 2>/dev/null | grep --invert-match --fixed-strings /usr/local/bin/nix-gc || true
+    printf '@daily /usr/local/bin/nix-gc\n'
+} | crontab -
 
 # Install docker garbage collection
 echo "Installing docker garbage collection..."
@@ -135,6 +134,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     "${SCRIPT_DIR}/scripts/disable_app_armor_slack.sh"
     "${SCRIPT_DIR}/scripts/disable_app_armor_signal.sh"
 fi
+
+# Install Amp CLI (self-updating, outside Nix)
+echo "Installing Amp CLI..."
+curl -fsSL https://ampcode.com/install.sh | bash
 
 echo ""
 echo "=== Bootstrap Complete ==="

@@ -1,2 +1,0 @@
-#!/bin/bash
-/nix/var/nix/profiles/default/bin/nix-collect-garbage --delete-older-than 14d

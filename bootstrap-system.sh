@@ -68,19 +68,6 @@ echo "Enabling Docker service..."
 sudo systemctl enable docker
 sudo systemctl start docker
 
-# Install nix garbage collection
-echo "Installing nix garbage collection..."
-sudo install --mode=0755 "${SCRIPT_DIR}/scripts/nix-gc" /usr/local/bin/nix-gc
-{
-    crontab -l 2>/dev/null | grep --invert-match --fixed-strings /usr/local/bin/nix-gc || true
-    printf '@daily /usr/local/bin/nix-gc\n'
-} | crontab -
-
-# Install docker garbage collection
-echo "Installing docker garbage collection..."
-sudo cp "${SCRIPT_DIR}/scripts/docker-gc" /etc/cron.daily/docker-gc
-sudo chmod +x /etc/cron.daily/docker-gc
-
 # Server-specific setup
 echo ""
 read -p "Is this a server system? [y/N] " -n 1 -r

@@ -32,11 +32,6 @@ modules to include. Add new machines by following that pattern with appropriate
 `.bashrc_$(hostname -s)` for per-machine overrides. Put machine-specific shell
 config there, not in the main bashrc.
 
-### Script naming (`scripts/`)
-
-GC utilities (`docker-gc`, `nix-gc`) intentionally omit `.sh` extension. Don't
-"normalize" them.
-
 ### Modules are composable (`modules/`)
 
 Prefer adding focused Nix modules or extending existing ones over growing

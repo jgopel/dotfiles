@@ -6,6 +6,7 @@ in
 {
   imports = [
     ./modules/bash.nix
+    ./modules/docker-gc.nix
     ./modules/fish.nix
     ./modules/git.nix
     ./modules/tmux.nix
@@ -23,6 +24,11 @@ in
   nix = {
     package = pkgs.nix;
     settings.experimental-features = [ "nix-command" "flakes" ];
+    gc = {
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 14d";
+    };
   };
 
   home.activation.report-changes = config.lib.dag.entryAnywhere ''

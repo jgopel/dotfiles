@@ -6,6 +6,61 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+configure_google_drive_oauth() {
+    local token_file="$HOME/.local/share/rclone/google-drive-token.json"
+    local configure_token=false
+
+    echo ""
+    if [[ -f $token_file ]]; then
+        read -p "A Google Drive OAuth token already exists. Re-authenticate? [y/N] " -n 1 -r
+        echo ""
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            configure_token=true
+        fi
+    else
+        read -p "Authenticate Google Drive now? [Y/n] " -n 1 -r
+        echo ""
+        if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+            configure_token=true
+        fi
+    fi
+
+    if [[ $configure_token != true ]]; then
+        return
+    fi
+
+    echo "A browser will open for Google login. If it does not, open the URL printed by rclone."
+    echo "Sign in to the Google account that this desktop should mount."
+
+    nix --extra-experimental-features "nix-command flakes" \
+        shell nixpkgs#rclone nixpkgs#jq \
+        --command bash -s -- "$token_file" <<'OAUTH_SCRIPT'
+set -euo pipefail
+
+token_file=$1
+token_dir=$(dirname "$token_file")
+install -d -m 700 "$token_dir"
+
+temp_dir=$(mktemp -d)
+staged_token=$(mktemp "$token_dir/.google-drive-token.XXXXXX")
+cleanup() {
+    rm -rf "$temp_dir"
+    rm -f "$staged_token"
+}
+trap cleanup EXIT
+
+rclone --config "$temp_dir/rclone.conf" config create bootstrap drive \
+    scope=drive config_is_local=true --no-output
+rclone --config "$temp_dir/rclone.conf" config dump \
+    | jq -cer ".bootstrap.token | fromjson" > "$staged_token"
+
+chmod 600 "$staged_token"
+mv -f "$staged_token" "$token_file"
+OAUTH_SCRIPT
+
+    echo "Google Drive OAuth token saved to $token_file"
+}
+
 echo "=== Bootstrap System ==="
 echo "This script configures binary caches, installs Docker, and adds the current user to the docker group."
 echo "Requires sudo privileges."
@@ -88,6 +143,9 @@ echo ""
 read -p "Is this a desktop system? [y/N] " -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "Installing FUSE 3 for rclone mounts..."
+    sudo apt-get install -y fuse3
+
     echo ""
     read -p "Is this a Nascent desktop system? [y/N] " -n 1 -r
     echo ""
@@ -108,6 +166,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
             sudo tailscale up --accept-routes=true
         fi
     fi
+
+    configure_google_drive_oauth
 
     echo "Installing OpenRazer for Razer peripheral support..."
     sudo add-apt-repository -y ppa:openrazer/stable

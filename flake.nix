@@ -80,6 +80,7 @@
           ./home.nix
 
           ./modules/desktop.nix
+          ./modules/rclone-google-drive.nix
           ./modules/nascent.nix
           ./modules/nascent-desktop.nix
           ./modules/syncthing-nascent.nix
@@ -99,6 +100,7 @@
           ./home.nix
 
           ./modules/desktop.nix
+          ./modules/rclone-google-drive.nix
         ];
         extraSpecialArgs = {
           inherit nixgl rustToolchain cargo-nightly;

@@ -1,7 +1,7 @@
 { config, ... }:
 
 let
-  tokenFile = "${config.xdg.dataHome}/rclone/google-drive-token.json";
+  secretsDir = "${config.xdg.dataHome}/rclone";
 in
 {
   programs.rclone = {
@@ -12,7 +12,11 @@ in
         type = "drive";
         scope = "drive";
       };
-      secrets.token = tokenFile;
+      secrets = {
+        client_id = "${secretsDir}/google-drive-client-id";
+        client_secret = "${secretsDir}/google-drive-client-secret";
+        token = "${secretsDir}/google-drive-token.json";
+      };
 
       mounts."" = {
         enable = true;

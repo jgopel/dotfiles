@@ -38,6 +38,9 @@ in
 {
   targets.genericLinux.nixGL.packages = nixgl.packages;
 
+  home.sessionVariables.LD_LIBRARY_PATH =
+    pkgs.lib.makeLibraryPath [ pkgs.nssmdns ];
+
   home.packages = with pkgs; [
     dropbox
     hack-font

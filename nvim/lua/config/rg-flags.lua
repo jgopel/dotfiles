@@ -1,17 +1,10 @@
 return {
   "--hidden",
   "--no-ignore",
-  -- Generic
-  "--glob=!.git",
-  -- Nix
-  "--glob=!.direnv",
+  -- Exclude all dot directories, but keep dotfiles
+  "--glob=!.*/",
   -- Rust
   "--glob=!target",
-  -- Python
-  "--glob=!.venv",
-  "--glob=!.mypy_cache",
-  "--glob=!.ruff_cache",
-  "--glob=!.pytest_cache",
   -- C++
   "--glob=!build",
   "--glob=!build-*",

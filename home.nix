@@ -72,13 +72,12 @@ in
 
     # General tools
     ack
-    atop
+    btop
     colorized-logs
     curl
     dtrx
     eternal-terminal
     gdb
-    htop
     inetutils
     jq
     less

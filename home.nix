@@ -129,9 +129,9 @@ in
     stylua
 
     # LLMs
+    antigravity-cli
     claude-code
     codex
-    gemini-cli
     nodejs
   ];
 

@@ -38,6 +38,15 @@
         overlays = [
           neovim-nightly-overlay.overlays.default
           rust-overlay.overlays.default
+          (final: prev: {
+            buildFHSEnv = args:
+              prev.buildFHSEnv (args // {
+                # The FHS /usr hides the host zoneinfo targeted by /etc/localtime.
+                targetPkgs = pkgs:
+                  (args.targetPkgs or (_: [ ])) pkgs
+                  ++ [ pkgs.tzdata ];
+              });
+          })
           # TODO: Remove this once nixpkgs has 2.0.15 or later - syncthing
           # 2.0.12-2.0.14 hit a panic due to a QUIC error
           (final: prev: {

@@ -76,11 +76,8 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  # Keep a recovery editor and the GNOME extension available system-wide.
-  environment.systemPackages = with pkgs; [
-    vim
-    gnomeExtensions.appindicator
-  ];
+  # Keep a recovery editor available system-wide.
+  environment.systemPackages = with pkgs; [ vim ];
 
   # Keep this at the release used for the initial installation.
   system.stateVersion = "26.05";

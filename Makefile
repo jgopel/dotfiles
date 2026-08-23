@@ -12,3 +12,11 @@ setup-nix:
 .PHONY: bootstrap
 bootstrap:
 	./bootstrap-system.sh
+
+.PHONY: nixos
+nixos:
+	sudo nixos-rebuild switch --flake .
+
+.PHONY: home-manager
+home-manager:
+	home-manager switch --flake .

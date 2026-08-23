@@ -218,6 +218,16 @@ EOF
     sudo systemctl restart nix-daemon
 fi
 
+# Add Numtide binary cache for pre-built LLM agents
+echo "Adding Numtide LLM agent binary cache..."
+if ! grep -q "cache.numtide.com" /etc/nix/nix.conf 2>/dev/null; then
+    sudo tee -a /etc/nix/nix.conf > /dev/null <<'EOF'
+extra-substituters = https://cache.numtide.com
+extra-trusted-public-keys = niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=
+EOF
+    sudo systemctl restart nix-daemon
+fi
+
 # Check if running as root
 if [[ $EUID -eq 0 ]]; then
     echo "Error: Do not run this script as root. It will use sudo when needed."
@@ -323,10 +333,6 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     "${SCRIPT_DIR}/scripts/disable_app_armor_slack.sh"
     "${SCRIPT_DIR}/scripts/disable_app_armor_signal.sh"
 fi
-
-# Install Amp CLI (self-updating, outside Nix)
-echo "Installing Amp CLI..."
-curl -fsSL https://ampcode.com/install.sh | bash
 
 echo ""
 echo "=== Bootstrap Complete ==="

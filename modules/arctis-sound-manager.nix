@@ -5,5 +5,8 @@
     pulse.enable = true;
   };
 
-  services.arctis-sound-manager.enable = true;
+  services.arctis-sound-manager = {
+    enable = true;
+    autostartTray = true;
+  };
 }

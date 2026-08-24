@@ -106,6 +106,7 @@
           ./home.nix
 
           ./modules/desktop-nixos.nix
+          ./modules/arctis-sound-manager-home.nix
           ./modules/rclone-google-drive.nix
         ];
         extraSpecialArgs = {

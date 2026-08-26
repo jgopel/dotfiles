@@ -17,7 +17,8 @@
         plugin = cpu;
         extraConfig = ''
           # Set status-right BEFORE cpu plugin loads so it can interpolate the format strings
-          set -g status-right 'CPU: #{cpu_icon} #{cpu_percentage} | RAM: #{ram_icon} #{ram_percentage} | %a %h-%d %H:%M '
+          set -g status-right-length 60
+          set -g status-right 'CPU: #{cpu_percentage} | RAM: #{ram_percentage} | Disk: #(df --output=pcent / | tail -n 1 | xargs) | %a %h-%d %H:%M '
         '';
       }
     ];

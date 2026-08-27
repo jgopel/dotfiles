@@ -1,4 +1,4 @@
-{ config, pkgs, username, homeDirectory, rustToolchain, cargo-nightly, ... }:
+{ config, pkgs, username, homeDirectory, llmAgentPackages, rustToolchain, cargo-nightly, ... }:
 
 let
   dotfilesDir = builtins.toString ./.;
@@ -59,7 +59,7 @@ in
     config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/dotfiles/amp/settings.json";
   xdg.configFile."agents/skills".source = ./agents/skills;
 
-  home.sessionPath = [ "$HOME/.cargo/bin" "$HOME/.amp/bin" ];
+  home.sessionPath = [ "$HOME/.cargo/bin" ];
 
   home.sessionVariables = {
     TERMINFO_DIRS = "$HOME/.nix-profile/share/terminfo:/usr/share/terminfo";
@@ -128,11 +128,11 @@ in
     shfmt
     stylua
 
-    # LLMs
-    antigravity-cli
-    claude-code
-    codex
-    nodejs
+    # LLM agents
+    llmAgentPackages.amp
+    llmAgentPackages.antigravity-cli
+    llmAgentPackages.claude-code
+    llmAgentPackages.codex
   ];
 
   home.file."bin".source = "${dotfilesDir}/bin";

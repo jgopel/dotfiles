@@ -1,8 +1,7 @@
 { config, pkgs, nixgl, ... }:
 
+# Desktop applications wrapped for standalone Home Manager on non-NixOS Linux.
 let
-  dotfilesDir = builtins.toString ./..;
-
   wrap = config.lib.nixGL.wrap;
 
   withRuntimeDirTmp = package: pkgs.symlinkJoin {
@@ -36,15 +35,14 @@ let
   wrappedSlack = withRuntimeDirTmp (wrap pkgs.slack);
 in
 {
+  imports = [ ./desktop-common.nix ];
+
   targets.genericLinux.nixGL.packages = nixgl.packages;
 
   home.sessionVariables.LD_LIBRARY_PATH =
     pkgs.lib.makeLibraryPath [ pkgs.nssmdns ];
 
   home.packages = with pkgs; [
-    dropbox
-    hack-font
-    keepassxc
     polychromatic
     wrappedChrome
     wrappedDiscord
@@ -58,8 +56,6 @@ in
     source = "${wrappedDiscord}/share/applications/discord.desktop";
     force = true;
   };
-
-  xdg.configFile."ghostty/config".source = "${dotfilesDir}/ghostty/config";
 
   xdg.desktopEntries.ghostty = {
     name = "Ghostty";
@@ -95,16 +91,5 @@ in
     name = "Google Chrome (unwrapped)";
     exec = "false";
     noDisplay = true;
-  };
-
-  fonts.fontconfig.enable = true;
-
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "x-scheme-handler/http" = "firefox.desktop";
-      "x-scheme-handler/https" = "firefox.desktop";
-      "text/html" = "firefox.desktop";
-    };
   };
 }

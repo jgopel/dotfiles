@@ -36,8 +36,8 @@
     '';
 
     interactiveShellInit = ''
-      # Add ~/bin and ~/.amp/bin to PATH
-      fish_add_path -g $HOME/bin $HOME/.amp/bin
+      # Add ~/bin to PATH
+      fish_add_path -g $HOME/bin
 
       # et (eternal-terminal) completions - wraps ssh for host/user completions
       complete -c et --wraps ssh

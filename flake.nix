@@ -41,10 +41,14 @@
           (final: prev: {
             buildFHSEnv = args:
               prev.buildFHSEnv (args // {
-                # The FHS /usr hides the host zoneinfo targeted by /etc/localtime.
                 targetPkgs = pkgs:
                   (args.targetPkgs or (_: [ ])) pkgs
-                  ++ [ pkgs.tzdata ];
+                  ++ [
+                    # The FHS /usr hides the host zoneinfo targeted by /etc/localtime.
+                    pkgs.tzdata
+                    # Electron uses xdg-open to open external links.
+                    pkgs.xdg-utils
+                  ];
               });
           })
           # TODO: Remove this once nixpkgs has 2.0.15 or later - syncthing

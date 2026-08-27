@@ -7,6 +7,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/razer-windows-vm.nix
   ];
 
   # Bootloader.
@@ -56,6 +57,8 @@
     enable = true;
     users = [ "jonathan" ];
   };
+
+  programs.razerWindowsVm.enable = true;
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;

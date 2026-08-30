@@ -51,6 +51,17 @@
     variant = "";
   };
 
+  services.keyd = {
+    enable = true;
+    keyboards.builtIn = {
+      ids = [ "0001:0001" ];
+      settings.main = {
+        capslock = "esc";
+        esc = "capslock";
+      };
+    };
+  };
+
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;

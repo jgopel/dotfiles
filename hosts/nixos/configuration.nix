@@ -51,6 +51,21 @@
     variant = "";
   };
 
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = true;
+    powerManagement = {
+      enable = true;
+      kernelSuspendNotifier = true;
+    };
+    prime = {
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+      sync.enable = true;
+    };
+  };
+
   services.printing.enable = true;
 
   hardware.openrazer = {

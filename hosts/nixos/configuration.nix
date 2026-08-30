@@ -27,6 +27,7 @@
 
   networking.hostName = "XPS-17-9720-nixos";
   networking.networkmanager.enable = true;
+  services.avahi.nssmdns4 = true;
 
   time.timeZone = "America/Denver";
 

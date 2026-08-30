@@ -17,6 +17,8 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  services.fwupd.enable = true;
+
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     extra-substituters = [ "https://cache.numtide.com" ];

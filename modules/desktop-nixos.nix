@@ -143,7 +143,10 @@ in
       force = true;
     };
     "autostart/steam.desktop" = {
-      source = "${pkgs.steam-unwrapped}/share/applications/steam.desktop";
+      source = pkgs.runCommand "steam-autostart.desktop" { } ''
+        substitute ${pkgs.steam-unwrapped}/share/applications/steam.desktop $out \
+          --replace-fail "Exec=steam %U" "Exec=steam -silent %U"
+      '';
       force = true;
     };
     "autostart/slack.desktop" = {

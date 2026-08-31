@@ -129,7 +129,6 @@
           ./modules/bash-standalone.nix
           ./modules/desktop-standalone.nix
           ./modules/rclone-google-drive.nix
-          ./modules/nascent.nix
           ./modules/nascent-desktop.nix
           ./modules/syncthing-nascent.nix
           { services.syncthing-user.nascent-tunnels = true; }
@@ -167,7 +166,6 @@
           ./modules/bash-standalone.nix
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
-          ./modules/nascent.nix
         ];
         extraSpecialArgs = {
           inherit llmAgentPackages rustToolchain cargo-nightly;
@@ -185,7 +183,6 @@
           ./modules/bash-standalone.nix
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
-          ./modules/nascent.nix
         ];
         extraSpecialArgs = {
           inherit llmAgentPackages rustToolchain cargo-nightly;
@@ -203,7 +200,6 @@
           ./modules/bash-standalone.nix
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
-          ./modules/nascent.nix
         ];
         extraSpecialArgs = {
           inherit llmAgentPackages rustToolchain cargo-nightly;

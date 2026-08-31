@@ -83,6 +83,7 @@ require("lazy").setup({
   -- AI
   {
     "milanglacier/minuet-ai.nvim",
+    enabled = vim.env.MISTRAL_API_KEY ~= nil and vim.env.MISTRAL_API_KEY ~= "",
     event = "InsertEnter",
     cmd = "Minuet",
     dependencies = { "nvim-lua/plenary.nvim" },

@@ -62,6 +62,8 @@ in
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
   home.sessionVariables = {
+    MISTRAL_API_KEY = "<redacted>";
+    GEMINI_API_KEY = "<redacted>";
     TERMINFO_DIRS = "$HOME/.nix-profile/share/terminfo:/usr/share/terminfo";
   };
 

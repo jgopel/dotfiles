@@ -166,6 +166,11 @@
           ./modules/bash-standalone.nix
           ./modules/server.nix
           ./modules/syncthing-nascent.nix
+          {
+            home.file.".bazelrc".text = ''
+              startup --output_user_root=/datapool/jonathan/bazel
+            '';
+          }
         ];
         extraSpecialArgs = {
           inherit llmAgentPackages rustToolchain cargo-nightly;

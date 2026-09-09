@@ -111,7 +111,6 @@
 
           ./modules/desktop-nixos.nix
           ./modules/arctis-sound-manager-home.nix
-          ./modules/rclone-google-drive.nix
         ];
         extraSpecialArgs = {
           inherit llmAgentPackages rustToolchain cargo-nightly;
@@ -128,7 +127,6 @@
 
           ./modules/bash-standalone.nix
           ./modules/desktop-standalone.nix
-          ./modules/rclone-google-drive.nix
           ./modules/nascent-desktop.nix
           ./modules/syncthing-nascent.nix
           { services.syncthing-user.nascent-tunnels = true; }
@@ -148,7 +146,6 @@
 
           ./modules/bash-standalone.nix
           ./modules/desktop-standalone.nix
-          ./modules/rclone-google-drive.nix
         ];
         extraSpecialArgs = {
           inherit llmAgentPackages nixgl rustToolchain cargo-nightly;

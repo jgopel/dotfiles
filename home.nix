@@ -125,6 +125,7 @@ in
     # LSP servers and formatters
     clang-tools
     lua-language-server
+    (mdformat.withPlugins (ps: with ps; [ mdformat-gfm mdformat-frontmatter ]))
     prettier
     shellcheck
     shfmt

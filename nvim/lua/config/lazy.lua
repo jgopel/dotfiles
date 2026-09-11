@@ -545,21 +545,23 @@ require("lazy").setup({
         c = { "clang_format" },
         cpp = { "clang_format" },
         bash = { "beautysh" },
-        markdown = { "prettier" },
+        markdown = { "mdformat" },
         json = { "prettier" },
         yaml = { "prettier" },
         toml = { "prettier" },
       },
       formatters = {
-        prettier = function(bufnr)
-          if vim.bo[bufnr].filetype == "markdown" then
-            -- Prettier's Markdown parser ignores range formatting; use Conform's diff filtering.
-            local formatter = vim.deepcopy(require("conform.formatters.prettier"))
-            formatter.inherit = false
-            formatter.range_args = nil
-            return formatter
-          end
-        end,
+        mdformat = {
+          -- mdformat discovers config from cwd when reading stdin.
+          cwd = function(_, ctx)
+            return ctx.dirname
+          end,
+          append_args = function(_, ctx)
+            local config = vim.fs.find(".mdformat.toml", { path = ctx.dirname, upward = true, type = "file" })[1]
+            -- CLI options override config, so only supply a fallback when none exists.
+            return config and {} or { "--wrap=80" }
+          end,
+        },
       },
     },
   },

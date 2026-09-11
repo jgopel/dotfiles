@@ -525,6 +525,9 @@ require("lazy").setup({
   {
     "stevearc/conform.nvim",
     cmd = "ConformInfo",
+    init = function()
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+    end,
     keys = {
       {
         "<leader>cf",
@@ -546,6 +549,17 @@ require("lazy").setup({
         json = { "prettier" },
         yaml = { "prettier" },
         toml = { "prettier" },
+      },
+      formatters = {
+        prettier = function(bufnr)
+          if vim.bo[bufnr].filetype == "markdown" then
+            -- Prettier's Markdown parser ignores range formatting; use Conform's diff filtering.
+            local formatter = vim.deepcopy(require("conform.formatters.prettier"))
+            formatter.inherit = false
+            formatter.range_args = nil
+            return formatter
+          end
+        end,
       },
     },
   },

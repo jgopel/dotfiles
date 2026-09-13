@@ -1,4 +1,4 @@
-{ inputs, nixpkgs, home-manager, system, pkgs, nix-index-database, rustToolchain, cargo-nightly }:
+{ inputs, nixpkgs, home-manager, system, pkgs, nix-index-database }:
 
 let
   inherit (nixpkgs) lib;
@@ -22,9 +22,7 @@ in
             nix-index-database.homeModules.nix-index
             (./. + "/${host}/home.nix")
           ];
-          extraSpecialArgs = {
-            inherit inputs rustToolchain cargo-nightly;
-          };
+          extraSpecialArgs = { inherit inputs; };
         };
       in
       lib.nameValuePair "${home.config.home.username}@${host}" home)

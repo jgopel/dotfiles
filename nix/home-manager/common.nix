@@ -1,4 +1,4 @@
-{ config, pkgs, rustToolchain, cargo-nightly, ... }:
+{ config, pkgs, ... }:
 
 let
   dotfilesDir = builtins.toString ../..;
@@ -10,6 +10,7 @@ in
     ./docker-gc.nix
     ./fish.nix
     ./git.nix
+    ./rust.nix
     ./tmux.nix
     ./nvim.nix
   ];
@@ -53,9 +54,6 @@ in
   };
 
   xdg.configFile."starship.toml".source = ../../starship.toml;
-  xdg.configFile."bacon/prefs.toml".source = ../../bacon/prefs.toml;
-
-  home.sessionPath = [ "$HOME/.cargo/bin" ];
 
   home.sessionVariables = {
     MISTRAL_API_KEY = "<redacted>";
@@ -111,12 +109,6 @@ in
     ruff
     ty
     uv
-
-    # Rust tools
-    bacon
-    cargo-nextest
-    cargo-nightly
-    rustToolchain
 
     # LSP servers and formatters
     clang-tools

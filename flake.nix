@@ -37,14 +37,13 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, neovim-nightly-overlay, rust-overlay, nix-index-database, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, neovim-nightly-overlay, nix-index-database, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
           neovim-nightly-overlay.overlays.default
-          rust-overlay.overlays.default
           (final: prev: {
             buildFHSEnv = args:
               prev.buildFHSEnv (args // {
@@ -61,18 +60,8 @@
         ];
         config.allowUnfree = true;
       };
-      rustToolchain = pkgs.rust-bin.stable.latest.default.override {
-        extensions = [ "rust-src" "rust-analyzer" "clippy" "rustfmt" ];
-      };
-      rustNightly = pkgs.rust-bin.nightly.latest.default;
-      cargo-nightly = pkgs.writeShellScriptBin "cargo-nightly" ''
-        export RUSTC="${rustNightly}/bin/rustc"
-        export RUSTDOC="${rustNightly}/bin/rustdoc"
-        exec ${rustNightly}/bin/cargo "$@"
-      '';
     in
     import ./nix/hosts {
-      inherit nixpkgs home-manager system pkgs nix-index-database;
-      inherit inputs rustToolchain cargo-nightly;
+      inherit inputs nixpkgs home-manager system pkgs nix-index-database;
     };
 }

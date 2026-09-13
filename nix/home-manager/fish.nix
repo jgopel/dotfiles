@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  home.packages = with pkgs.fishPlugins; [
+    done
+    fzf-fish
+  ];
+
   xdg.configFile."fish/completions/bazel.fish".source =
     "${pkgs.bazel_9}/share/fish/vendor_completions.d/bazel.fish";
 

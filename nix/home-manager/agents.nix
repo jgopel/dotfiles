@@ -6,6 +6,7 @@
     antigravity-cli
     claude-code
     codex
+    pkgs.xclip # for amp clipboard usage
   ];
 
   xdg.configFile."amp/settings.json".source =

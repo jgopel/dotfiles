@@ -7,30 +7,24 @@ in
   imports = [
     ./agents.nix
     ./bash.nix
+    ./direnv.nix
     ./docker-gc.nix
     ./fish.nix
     ./git.nix
+    ./nix.nix
     ./nix-index.nix
     ./rust.nix
+    ./ssh.nix
+    ./starship.nix
+    ./terminfo.nix
     ./tmux.nix
     ./nvim.nix
   ];
 
   home.stateVersion = "26.05";
 
+  programs.fzf.enable = true;
   programs.home-manager.enable = true;
-
-  services.ssh-agent.enable = true;
-
-  nix = {
-    package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
-    gc = {
-      automatic = true;
-      dates = "daily";
-      options = "--delete-older-than 3d";
-    };
-  };
 
   home.activation.report-changes = config.lib.dag.entryAnywhere ''
     if [[ -n "''${oldGenPath:-}" ]]; then
@@ -38,33 +32,12 @@ in
     fi
   '';
 
-  programs.fzf = {
-    enable = true;
-  };
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    config.global.log_format = builtins.fromJSON ''"\u001b[2mdirenv: %s\u001b[0m"'';
-  };
-
-  programs.starship = {
-    enable = true;
-  };
-
-  xdg.configFile."starship.toml".source = ../../starship.toml;
-
   home.sessionVariables = {
     MISTRAL_API_KEY = "<redacted>";
     GEMINI_API_KEY = "<redacted>";
-    TERMINFO_DIRS = "$HOME/.nix-profile/share/terminfo:/usr/share/terminfo";
   };
 
   home.packages = with pkgs; [
-    fishPlugins.done
-    fishPlugins.fzf-fish
-    ghostty.terminfo
-
     # General tools
     ack
     btop
@@ -77,7 +50,6 @@ in
     jq
     less
     mosh
-    openssh_gssapi
     perf
     plocate
     ripgrep
@@ -88,7 +60,6 @@ in
     tree
     unzip
     wget
-    xclip # for amp clipboard usage
     yq
 
     # Language agnostic tools

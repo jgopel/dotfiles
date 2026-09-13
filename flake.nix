@@ -37,10 +37,9 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, llm-agents, neovim-nightly-overlay, rust-overlay, nix-index-database, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, neovim-nightly-overlay, rust-overlay, nix-index-database, ... }:
     let
       system = "x86_64-linux";
-      llmAgentPackages = llm-agents.packages.${system};
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
@@ -74,6 +73,6 @@
     in
     import ./nix/hosts {
       inherit nixpkgs home-manager system pkgs nix-index-database;
-      inherit inputs llmAgentPackages rustToolchain cargo-nightly;
+      inherit inputs rustToolchain cargo-nightly;
     };
 }

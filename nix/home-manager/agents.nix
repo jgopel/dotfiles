@@ -1,0 +1,20 @@
+{ config, pkgs, inputs, ... }:
+
+{
+  home.packages = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+    amp
+    antigravity-cli
+    claude-code
+    codex
+  ];
+
+  xdg.configFile."amp/settings.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/amp/settings.json";
+  xdg.configFile."agents/skills".source = ../../agents/skills;
+
+  home.file.".claude/statusline.sh" = {
+    source = ../../claude/statusline.sh;
+    executable = true;
+  };
+  home.file.".claude/settings.json".source = ../../claude/settings.json;
+}

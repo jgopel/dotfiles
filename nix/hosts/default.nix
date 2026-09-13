@@ -1,4 +1,4 @@
-{ inputs, nixpkgs, home-manager, system, pkgs, nix-index-database, llmAgentPackages, rustToolchain, cargo-nightly }:
+{ inputs, nixpkgs, home-manager, system, pkgs, nix-index-database, rustToolchain, cargo-nightly }:
 
 let
   inherit (nixpkgs) lib;
@@ -23,7 +23,7 @@ in
             (./. + "/${host}/home.nix")
           ];
           extraSpecialArgs = {
-            inherit inputs llmAgentPackages rustToolchain cargo-nightly;
+            inherit inputs rustToolchain cargo-nightly;
           };
         };
       in

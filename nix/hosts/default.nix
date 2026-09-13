@@ -1,4 +1,4 @@
-{ inputs, nixpkgs, home-manager, system, pkgs, arctis-sound-manager, nix-index-database, llmAgentPackages, rustToolchain, cargo-nightly }:
+{ inputs, nixpkgs, home-manager, system, pkgs, nix-index-database, llmAgentPackages, rustToolchain, cargo-nightly }:
 
 let
   inherit (nixpkgs) lib;
@@ -9,7 +9,7 @@ in
   nixosConfigurations = lib.genAttrs (hostsWith "configuration.nix") (host:
     lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit arctis-sound-manager; };
+      specialArgs = { inherit inputs; };
       modules = [ (./. + "/${host}/configuration.nix") ];
     });
 

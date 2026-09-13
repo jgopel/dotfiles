@@ -1,7 +1,7 @@
-{ arctis-sound-manager, ... }:
+{ inputs, ... }:
 
 {
-  imports = [ arctis-sound-manager.nixosModules.default ];
+  imports = [ inputs.arctis-sound-manager.nixosModules.default ];
 
   services.pipewire = {
     enable = true;

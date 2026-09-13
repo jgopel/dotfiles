@@ -37,13 +37,12 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, neovim-nightly-overlay, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
-          neovim-nightly-overlay.overlays.default
           (final: prev: {
             buildFHSEnv = args:
               prev.buildFHSEnv (args // {

@@ -1,7 +1,7 @@
-{ inputs, nixpkgs, home-manager, system, pkgs }:
+{ inputs, system, pkgs }:
 
 let
-  inherit (nixpkgs) lib;
+  inherit (inputs.nixpkgs) lib;
   directories = lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./.));
   hostsWith = file: builtins.filter (host: builtins.pathExists (./. + "/${host}/${file}")) directories;
 in
@@ -16,7 +16,7 @@ in
   homeConfigurations = builtins.listToAttrs (map
     (host:
       let
-        home = home-manager.lib.homeManagerConfiguration {
+        home = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [ (./. + "/${host}/home.nix") ];
           extraSpecialArgs = { inherit inputs; };

@@ -37,7 +37,7 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -61,6 +61,6 @@
       };
     in
     import ./nix/hosts {
-      inherit inputs nixpkgs home-manager system pkgs;
+      inherit inputs system pkgs;
     };
 }

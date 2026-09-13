@@ -1,4 +1,8 @@
+{ arctis-sound-manager, ... }:
+
 {
+  imports = [ arctis-sound-manager.nixosModules.default ];
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;

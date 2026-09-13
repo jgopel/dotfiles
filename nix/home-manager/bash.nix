@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  dotfilesDir = builtins.toString ./..;
+  dotfilesDir = builtins.toString ../..;
 in
 {
   programs.bash = {

@@ -1,20 +1,18 @@
-{ config, pkgs, username, homeDirectory, llmAgentPackages, rustToolchain, cargo-nightly, ... }:
+{ config, pkgs, llmAgentPackages, rustToolchain, cargo-nightly, ... }:
 
 let
-  dotfilesDir = builtins.toString ./.;
+  dotfilesDir = builtins.toString ../..;
 in
 {
   imports = [
-    ./modules/bash.nix
-    ./modules/docker-gc.nix
-    ./modules/fish.nix
-    ./modules/git.nix
-    ./modules/tmux.nix
-    ./modules/nvim.nix
+    ./bash.nix
+    ./docker-gc.nix
+    ./fish.nix
+    ./git.nix
+    ./tmux.nix
+    ./nvim.nix
   ];
 
-  home.username = username;
-  home.homeDirectory = homeDirectory;
   home.stateVersion = "26.05";
 
   programs.home-manager.enable = true;
@@ -53,11 +51,11 @@ in
     enable = true;
   };
 
-  xdg.configFile."starship.toml".source = ./starship.toml;
-  xdg.configFile."bacon/prefs.toml".source = ./bacon/prefs.toml;
+  xdg.configFile."starship.toml".source = ../../starship.toml;
+  xdg.configFile."bacon/prefs.toml".source = ../../bacon/prefs.toml;
   xdg.configFile."amp/settings.json".source =
-    config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/dotfiles/amp/settings.json";
-  xdg.configFile."agents/skills".source = ./agents/skills;
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/amp/settings.json";
+  xdg.configFile."agents/skills".source = ../../agents/skills;
 
   home.sessionPath = [ "$HOME/.cargo/bin" ];
 
@@ -140,8 +138,8 @@ in
 
   home.file."bin".source = "${dotfilesDir}/bin";
   home.file.".claude/statusline.sh" = {
-    source = ./claude/statusline.sh;
+    source = ../../claude/statusline.sh;
     executable = true;
   };
-  home.file.".claude/settings.json".source = ./claude/settings.json;
+  home.file.".claude/settings.json".source = ../../claude/settings.json;
 }

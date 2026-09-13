@@ -1,4 +1,4 @@
-{ config, pkgs, nixgl, ... }:
+{ config, pkgs, inputs, ... }:
 
 # Desktop applications wrapped for standalone Home Manager on non-NixOS Linux.
 let
@@ -37,7 +37,7 @@ in
 {
   imports = [ ./desktop-common.nix ];
 
-  targets.genericLinux.nixGL.packages = nixgl.packages;
+  targets.genericLinux.nixGL.packages = inputs.nixgl.packages;
 
   home.sessionVariables.LD_LIBRARY_PATH =
     pkgs.lib.makeLibraryPath [ pkgs.nssmdns ];

@@ -24,7 +24,7 @@ in
     folders = [
       {
         path = "~/work";
-        stignore = ../syncthing/stignore-nascent-work;
+        stignore = ../../syncthing/stignore-nascent-work;
       }
     ];
     tunnels = lib.mkIf cfg.nascent-tunnels [

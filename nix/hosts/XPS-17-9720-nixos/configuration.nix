@@ -1,16 +1,13 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running `nixos-help`).
-
 { pkgs, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/razer-windows-vm.nix
+    ../../nixos/arctis-sound-manager.nix
+    ../../nixos/gnome.nix
+    ../../nixos/razer-windows-vm.nix
   ];
 
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -51,10 +48,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.xserver.enable = true;
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-  services.orca.enable = false;
   services.xserver.xkb = {
     layout = "us";
     variant = "";
@@ -115,14 +108,11 @@
   programs.fish.enable = true;
   programs.steam.enable = true;
 
-  # Home Manager tools such as prek install generic Linux executables.
   programs.nix-ld.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
-  # Keep a recovery editor available system-wide.
   environment.systemPackages = with pkgs; [ vim ];
 
-  # Keep this at the release used for the initial installation.
   system.stateVersion = "26.05";
 }

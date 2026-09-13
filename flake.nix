@@ -37,7 +37,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, arctis-sound-manager, llm-agents, neovim-nightly-overlay, nixgl, rust-overlay, nix-index-database, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, arctis-sound-manager, llm-agents, neovim-nightly-overlay, rust-overlay, nix-index-database, ... }:
     let
       system = "x86_64-linux";
       llmAgentPackages = llm-agents.packages.${system};
@@ -72,121 +72,8 @@
         exec ${rustNightly}/bin/cargo "$@"
       '';
     in
-    {
-      nixosConfigurations."XPS-17-9720-nixos" = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          arctis-sound-manager.nixosModules.default
-          ./modules/arctis-sound-manager.nix
-          ./hosts/nixos/configuration.nix
-        ];
-      };
-
-      homeConfigurations."jonathan@XPS-17-9720-nixos" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          nix-index-database.homeModules.nix-index
-          ./home.nix
-
-          ./modules/desktop-nixos.nix
-          ./modules/arctis-sound-manager-home.nix
-        ];
-        extraSpecialArgs = {
-          inherit llmAgentPackages rustToolchain cargo-nightly;
-          username = "jonathan";
-          homeDirectory = "/home/jonathan";
-        };
-      };
-
-      homeConfigurations."jonathan@jonathan-ThinkPad-X1-Carbon-Gen-12" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          nix-index-database.homeModules.nix-index
-          ./home.nix
-
-          ./modules/bash-standalone.nix
-          ./modules/desktop-standalone.nix
-          ./modules/nascent-desktop.nix
-          ./modules/syncthing-nascent.nix
-          { services.syncthing-user.nascent-tunnels = true; }
-        ];
-        extraSpecialArgs = {
-          inherit llmAgentPackages nixgl rustToolchain cargo-nightly;
-          username = "jonathan";
-          homeDirectory = "/home/jonathan";
-        };
-      };
-
-      homeConfigurations."jonathan@jonathan-XPS-17-9720" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          nix-index-database.homeModules.nix-index
-          ./home.nix
-
-          ./modules/bash-standalone.nix
-          ./modules/desktop-standalone.nix
-        ];
-        extraSpecialArgs = {
-          inherit llmAgentPackages nixgl rustToolchain cargo-nightly;
-          username = "jonathan";
-          homeDirectory = "/home/jonathan";
-        };
-      };
-
-      homeConfigurations."jonathan@sov-cpu-srv" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          nix-index-database.homeModules.nix-index
-          ./home.nix
-
-          ./modules/bash-standalone.nix
-          ./modules/server.nix
-          ./modules/syncthing-nascent.nix
-          {
-            home.file.".bazelrc".text = ''
-              startup --output_user_root=/datapool/jonathan/bazel
-            '';
-          }
-        ];
-        extraSpecialArgs = {
-          inherit llmAgentPackages rustToolchain cargo-nightly;
-          username = "jonathan";
-          homeDirectory = "/home/jonathan";
-        };
-      };
-
-      homeConfigurations."jonathan@ip-172-31-2-254" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          nix-index-database.homeModules.nix-index
-          ./home.nix
-
-          ./modules/bash-standalone.nix
-          ./modules/server.nix
-          ./modules/syncthing-nascent.nix
-        ];
-        extraSpecialArgs = {
-          inherit llmAgentPackages rustToolchain cargo-nightly;
-          username = "jonathan";
-          homeDirectory = "/home/jonathan";
-        };
-      };
-
-      homeConfigurations."jonathan@ip-172-31-96-20" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          nix-index-database.homeModules.nix-index
-          ./home.nix
-
-          ./modules/bash-standalone.nix
-          ./modules/server.nix
-          ./modules/syncthing-nascent.nix
-        ];
-        extraSpecialArgs = {
-          inherit llmAgentPackages rustToolchain cargo-nightly;
-          username = "jonathan";
-          homeDirectory = "/home/jonathan";
-        };
-      };
+    import ./nix/hosts {
+      inherit nixpkgs home-manager system pkgs arctis-sound-manager nix-index-database;
+      inherit inputs llmAgentPackages rustToolchain cargo-nightly;
     };
 }

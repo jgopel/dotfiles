@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  dotfilesDir = builtins.toString ./..;
+  dotfilesDir = builtins.toString ../..;
 in
 {
   home.packages = with pkgs; [

@@ -21,7 +21,7 @@ in
     ./nvim.nix
   ];
 
-  home.stateVersion = "26.05";
+  home.stateVersion = (import ../platform.nix).stateVersion;
 
   programs.fzf.enable = true;
   programs.home-manager.enable = true;

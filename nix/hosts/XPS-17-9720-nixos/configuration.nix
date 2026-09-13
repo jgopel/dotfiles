@@ -114,5 +114,5 @@
 
   environment.systemPackages = with pkgs; [ vim ];
 
-  system.stateVersion = "26.05";
+  system.stateVersion = (import ../../platform.nix).stateVersion;
 }

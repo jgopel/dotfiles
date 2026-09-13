@@ -39,7 +39,7 @@
 
   outputs = inputs@{ nixpkgs, ... }:
     let
-      system = "x86_64-linux";
+      inherit (import ./nix/platform.nix) system;
       pkgs = import nixpkgs {
         inherit system;
         overlays = [

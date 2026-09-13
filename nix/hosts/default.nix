@@ -1,4 +1,4 @@
-{ inputs, nixpkgs, home-manager, system, pkgs, nix-index-database }:
+{ inputs, nixpkgs, home-manager, system, pkgs }:
 
 let
   inherit (nixpkgs) lib;
@@ -18,10 +18,7 @@ in
       let
         home = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [
-            nix-index-database.homeModules.nix-index
-            (./. + "/${host}/home.nix")
-          ];
+          modules = [ (./. + "/${host}/home.nix") ];
           extraSpecialArgs = { inherit inputs; };
         };
       in

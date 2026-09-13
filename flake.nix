@@ -37,7 +37,7 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, neovim-nightly-overlay, nix-index-database, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, neovim-nightly-overlay, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -62,6 +62,6 @@
       };
     in
     import ./nix/hosts {
-      inherit inputs nixpkgs home-manager system pkgs nix-index-database;
+      inherit inputs nixpkgs home-manager system pkgs;
     };
 }

@@ -10,6 +10,7 @@ in
     ./docker-gc.nix
     ./fish.nix
     ./git.nix
+    ./nix-index.nix
     ./rust.nix
     ./tmux.nix
     ./nvim.nix
@@ -36,8 +37,6 @@ in
       ${pkgs.nvd}/bin/nvd diff "$oldGenPath" "$newGenPath" || true
     fi
   '';
-
-  programs.nix-index-database.comma.enable = true;
 
   programs.fzf = {
     enable = true;

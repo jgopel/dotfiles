@@ -1,8 +1,9 @@
 { config, pkgs, inputs, ... }:
 
 {
+  home.shellAliases.amp = "nix run github:numtide/llm-agents.nix#amp --";
+
   home.packages = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
-    amp
     antigravity-cli
     claude-code
     codex

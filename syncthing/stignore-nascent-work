@@ -1,6 +1,27 @@
+(?d)**/.devenv
 (?d)**/.direnv
 (?d)**/.mypy_cache
+(?d)**/.pytest_cache
 (?d)**/.ruff_cache
+(?d)**/.terraform
 (?d)**/.venv
 
+(?d)**/__pycache__
+(?d)**/*.pyc
+(?d)**/*.pyo
+
+(?d)**/.coverage
+(?d)**/.coverage.*
+(?d)**/htmlcov
+
+(?d)**/.DS_Store
+(?d)**/._*
+(?d)**/Thumbs.db
+(?d)**/Desktop.ini
+
+(?d)**/devenv/
 (?d)**/target/
+
+(?d)**/bazel-*
+(?d)**/result
+(?d)**/result-*

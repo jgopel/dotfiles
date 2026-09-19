@@ -22,7 +22,7 @@ jobs:
       - run: nix flake update
 
       # Prek
-      - run: nix run nixpkgs#prek -- auto-update
+      - run: nix run --inputs-from . nixpkgs#prek -- update
 
       - uses: peter-evans/create-pull-request@v8
         with:

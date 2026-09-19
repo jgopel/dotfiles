@@ -84,7 +84,7 @@
     users = [ "jonathan" ];
   };
 
-  programs.razerWindowsVm.enable = true;
+  programs.razerWindowsVm.enable = false;
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;

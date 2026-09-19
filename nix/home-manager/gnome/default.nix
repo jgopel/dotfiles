@@ -22,6 +22,8 @@
       show-battery-percentage = true;
     };
 
+    "org/gnome/desktop/peripherals/touchpad".natural-scroll = false;
+
     "org/gnome/desktop/wm/keybindings" = {
       switch-applications = [ "<Super>Tab" ];
       switch-applications-backward = [ "<Shift><Super>Tab" ];

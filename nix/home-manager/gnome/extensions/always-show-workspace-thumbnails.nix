@@ -1,8 +1,7 @@
 { lib, pkgs, ... }:
 
 let
-  nixpkgsAlwaysShowWorkspaceThumbnails =
-    pkgs.gnomeExtensions.always-show-workspace-thumbnails;
+  nixpkgsAlwaysShowWorkspaceThumbnails = pkgs.gnomeExtensions.always-show-workspace-thumbnails;
   alwaysShowWorkspaceThumbnails =
     if lib.versionAtLeast nixpkgsAlwaysShowWorkspaceThumbnails.version "12" then
       nixpkgsAlwaysShowWorkspaceThumbnails
@@ -18,7 +17,5 @@ let
       });
 in
 {
-  programs.gnome-shell.extensions = [
-    { package = alwaysShowWorkspaceThumbnails; }
-  ];
+  programs.gnome-shell.extensions = [ { package = alwaysShowWorkspaceThumbnails; } ];
 }

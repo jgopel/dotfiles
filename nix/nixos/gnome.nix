@@ -1,6 +1,8 @@
 {
-  services.xserver.enable = true;
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-  services.orca.enable = false;
+  services = {
+    xserver.enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    orca.enable = false;
+  };
 }

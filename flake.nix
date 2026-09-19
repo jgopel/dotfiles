@@ -37,30 +37,45 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, ... }:
+  outputs =
+    inputs@{ nixpkgs, ... }:
     let
       inherit (import ./nix/platform.nix) system;
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
-          (final: prev: {
-            buildFHSEnv = args:
-              prev.buildFHSEnv (args // {
-                targetPkgs = pkgs:
-                  (args.targetPkgs or (_: [ ])) pkgs
-                  ++ [
-                    # The FHS /usr hides the host zoneinfo targeted by /etc/localtime.
-                    pkgs.tzdata
-                    # Electron uses xdg-open to open external links.
-                    pkgs.xdg-utils
-                  ];
-              });
+          (_final: prev: {
+            buildFHSEnv =
+              args:
+              prev.buildFHSEnv (
+                args
+                // {
+                  targetPkgs =
+                    pkgs:
+                    (args.targetPkgs or (_: [ ])) pkgs
+                    ++ [
+                      # The FHS /usr hides the host zoneinfo targeted by /etc/localtime.
+                      pkgs.tzdata
+                      # Electron uses xdg-open to open external links.
+                      pkgs.xdg-utils
+                    ];
+                }
+              );
           })
         ];
         config.allowUnfree = true;
       };
     in
-    import ./nix/hosts {
-      inherit inputs system pkgs;
+    (import ./nix/hosts { inherit inputs system pkgs; })
+    // {
+      devShells.${system}.default = pkgs.mkShellNoCC {
+        packages = with pkgs; [
+          gnumake
+          prek
+          nixfmt
+          statix
+          deadnix
+        ];
+      };
     };
 }

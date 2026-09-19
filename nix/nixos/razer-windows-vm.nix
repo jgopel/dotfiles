@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.razerWindowsVm;
@@ -203,8 +208,7 @@ let
   };
 in
 {
-  options.programs.razerWindowsVm.enable =
-    lib.mkEnableOption "a disposable Windows VM for Razer device pairing";
+  options.programs.razerWindowsVm.enable = lib.mkEnableOption "a disposable Windows VM for Razer device pairing";
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ razerWindowsVm ];

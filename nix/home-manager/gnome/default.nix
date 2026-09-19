@@ -10,9 +10,7 @@
 
   programs.gnome-shell = {
     enable = true;
-    extensions = [
-      { package = pkgs.gnomeExtensions.appindicator; }
-    ];
+    extensions = [ { package = pkgs.gnomeExtensions.appindicator; } ];
   };
 
   dconf.settings = {

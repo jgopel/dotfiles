@@ -1,20 +1,28 @@
-{ inputs, system, pkgs }:
+{
+  inputs,
+  system,
+  pkgs,
+}:
 
 let
   inherit (inputs.nixpkgs) lib;
   directories = lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./.));
-  hostsWith = file: builtins.filter (host: builtins.pathExists (./. + "/${host}/${file}")) directories;
+  hostsWith =
+    file: builtins.filter (host: builtins.pathExists (./. + "/${host}/${file}")) directories;
 in
 {
-  nixosConfigurations = lib.genAttrs (hostsWith "configuration.nix") (host:
+  nixosConfigurations = lib.genAttrs (hostsWith "configuration.nix") (
+    host:
     lib.nixosSystem {
       inherit system;
       specialArgs = { inherit inputs; };
       modules = [ (./. + "/${host}/configuration.nix") ];
-    });
+    }
+  );
 
-  homeConfigurations = builtins.listToAttrs (map
-    (host:
+  homeConfigurations = builtins.listToAttrs (
+    map (
+      host:
       let
         home = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
@@ -22,6 +30,7 @@ in
           extraSpecialArgs = { inherit inputs; };
         };
       in
-      lib.nameValuePair "${home.config.home.username}@${host}" home)
-    (hostsWith "home.nix"));
+      lib.nameValuePair "${home.config.home.username}@${host}" home
+    ) (hostsWith "home.nix")
+  );
 }

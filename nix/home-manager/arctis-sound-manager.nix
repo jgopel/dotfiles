@@ -80,7 +80,11 @@ in
     exec = "${openArctisManager}/bin/open-arctis-manager %u";
     icon = "arctis-manager";
     terminal = false;
-    categories = [ "AudioVideo" "Audio" "Utility" ];
+    categories = [
+      "AudioVideo"
+      "Audio"
+      "Utility"
+    ];
     mimeType = [ "x-scheme-handler/arctis-asm" ];
   };
 }

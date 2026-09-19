@@ -18,7 +18,7 @@
 
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # Keep upstream's nixpkgs pin to match its binary cache builds.
     };
 
     rust-overlay = {

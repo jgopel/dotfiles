@@ -16,7 +16,6 @@
       };
 
       shared-ib-fix-dev = {
-        HostName = "ec2-44-205-76-128.compute-1.amazonaws.com";
         User = "jonathan";
       };
 

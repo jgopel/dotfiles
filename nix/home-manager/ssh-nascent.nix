@@ -4,7 +4,7 @@
     enableDefaultConfig = false;
 
     settings = {
-      japan_dev_box = {
+      platform-tokyo-dev = {
         HostName = "platform-tokyo-dev";
         IdentityFile = "~/.ssh/ec2-dev-machine.pem";
         Compression = true;
@@ -15,7 +15,7 @@
         User = "jonathan";
       };
 
-      ib_fix_dev_box = {
+      shared-ib-fix-dev = {
         HostName = "ec2-44-205-76-128.compute-1.amazonaws.com";
         User = "jonathan";
       };

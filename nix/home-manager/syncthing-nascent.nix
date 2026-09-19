@@ -34,13 +34,13 @@ in
         localPort = 8385;
       }
       {
-        name = "japan_dev_box";
-        host = "japan_dev_box";
+        name = "platform-tokyo-dev";
+        host = "platform-tokyo-dev";
         localPort = 8386;
       }
       {
-        name = "ib_fix_dev_box";
-        host = "ib_fix_dev_box";
+        name = "shared-ib-fix-dev";
+        host = "shared-ib-fix-dev";
         localPort = 8387;
       }
     ];

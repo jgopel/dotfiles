@@ -86,15 +86,7 @@
 
   programs.razerWindowsVm.enable = false;
 
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
   security.sudo.extraConfig = "Defaults pwfeedback";
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   users.users.jonathan = {
     isNormalUser = true;

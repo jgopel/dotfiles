@@ -51,3 +51,24 @@ repos:
     rev: v2.5.2
     hooks:
       - id: stylua
+
+  - repo: local
+    hooks:
+      - id: nixfmt
+        name: nixfmt
+        entry: nixfmt
+        args: [--strict, --verify]
+        language: system
+        types: [nix]
+      - id: statix
+        name: statix
+        entry: statix check
+        language: system
+        types: [nix]
+        pass_filenames: false
+      - id: deadnix
+        name: deadnix
+        entry: deadnix
+        args: [--fail, --warn-used-underscore]
+        language: system
+        types: [nix]

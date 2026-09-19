@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+_:
 
 {
   programs.git = {
@@ -52,16 +52,16 @@
         ack = ''-c color.grep.linenumber="bold yellow" -c color.grep.filename="bold green" -c color.grep.match="reverse yellow" grep --break --heading --line-number'';
         cane = "commit --amend --no-edit";
         co = "checkout";
-        default-branch = ''!git symbolic-ref refs/remotes/upstream/HEAD --short 2> /dev/null || git symbolic-ref refs/remotes/origin/HEAD --short 2> /dev/null'';
+        default-branch = "!git symbolic-ref refs/remotes/upstream/HEAD --short 2> /dev/null || git symbolic-ref refs/remotes/origin/HEAD --short 2> /dev/null";
         delete-merged = ''!git branch --merged $(git default-branch) | egrep -v "(^\\*|master|main)" | xargs git branch -d 2> /dev/null'';
-        fa = ''!git fetch --all --prune --tags --jobs=$(nproc)'';
-        git = ''!sh -c 'echo You are an idiot' && git'';
+        fa = "!git fetch --all --prune --tags --jobs=$(nproc)";
+        git = "!sh -c 'echo You are an idiot' && git";
         graph = "log --color --graph --decorate --oneline";
-        nwadd = ''!git diff -w --no-color | git apply --cached --ignore-whitespace'';
+        nwadd = "!git diff -w --no-color | git apply --cached --ignore-whitespace";
         push-ci = "push -o ci.variable=PUSH_RUN_CI=1";
         rb = "rebase --rebase-merges --autosquash --autostash --interactive";
         root = "rev-parse --show-toplevel";
-        todo = ''! git --no-pager diff --unified=0 $(git default-branch) --color-words --no-color | grep 'TODO' | git grep -f - --fixed-strings --line-number 2> /dev/null'';
+        todo = "! git --no-pager diff --unified=0 $(git default-branch) --color-words --no-color | grep 'TODO' | git grep -f - --fixed-strings --line-number 2> /dev/null";
         wip = ''commit -m "wip"'';
       };
     };

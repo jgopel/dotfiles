@@ -28,9 +28,21 @@ in
       }
     ];
     tunnels = lib.mkIf cfg.nascent-tunnels [
-      { name = "montreal_dev_box"; host = "montreal_dev_box"; localPort = 8385; }
-      { name = "japan_dev_box"; host = "japan_dev_box"; localPort = 8386; }
-      { name = "ib_fix_dev_box"; host = "ib_fix_dev_box"; localPort = 8387; }
+      {
+        name = "sov-cpu-srv";
+        host = "sov-cpu-srv";
+        localPort = 8385;
+      }
+      {
+        name = "japan_dev_box";
+        host = "japan_dev_box";
+        localPort = 8386;
+      }
+      {
+        name = "ib_fix_dev_box";
+        host = "ib_fix_dev_box";
+        localPort = 8387;
+      }
     ];
   };
 }

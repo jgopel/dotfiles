@@ -1,9 +1,19 @@
-{ lib, pkgs, inputs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
   rust-bin = inputs.rust-overlay.lib.mkRustBin { } pkgs;
   rustToolchain = rust-bin.stable.latest.default.override {
-    extensions = [ "rust-src" "rust-analyzer" "clippy" "rustfmt" ];
+    extensions = [
+      "rust-src"
+      "rust-analyzer"
+      "clippy"
+      "rustfmt"
+    ];
   };
   rustNightly = rust-bin.nightly.latest.default;
   cargo-nightly = pkgs.writeShellScriptBin "cargo-nightly" ''

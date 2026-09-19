@@ -10,9 +10,7 @@
 
   programs.gnome-shell = {
     enable = true;
-    extensions = [
-      { package = pkgs.gnomeExtensions.appindicator; }
-    ];
+    extensions = [ { package = pkgs.gnomeExtensions.appindicator; } ];
   };
 
   dconf.settings = {
@@ -21,6 +19,8 @@
       clock-format = "12h";
       show-battery-percentage = true;
     };
+
+    "org/gnome/desktop/peripherals/touchpad".natural-scroll = false;
 
     "org/gnome/desktop/wm/keybindings" = {
       switch-applications = [ "<Super>Tab" ];

@@ -6,10 +6,12 @@
     ../../home-manager/syncthing-nascent.nix
   ];
 
-  home.username = "jonathan";
-  home.homeDirectory = "/home/jonathan";
+  home = {
+    username = "jonathan";
+    homeDirectory = "/home/jonathan";
 
-  home.file.".bazelrc".text = ''
-    startup --output_user_root=/datapool/jonathan/bazel
-  '';
+    file.".bazelrc".text = ''
+      startup --output_user_root=/datapool/jonathan/bazel
+    '';
+  };
 }

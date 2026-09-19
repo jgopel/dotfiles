@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   imports = [
     ../../nixos/profiles/desktop.nix
@@ -5,6 +7,8 @@
     ../../nixos/boot/systemd-boot.nix
     ./hardware-configuration.nix
   ];
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "ThinkPad-X1-Carbon-Gen-12-nixos";
 

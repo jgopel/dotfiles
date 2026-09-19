@@ -79,8 +79,6 @@
     };
   };
 
-  services.printing.enable = true;
-
   hardware.openrazer = {
     enable = true;
     users = [ "jonathan" ];

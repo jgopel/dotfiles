@@ -29,8 +29,8 @@ in
     ];
     tunnels = lib.mkIf cfg.nascent-tunnels [
       {
-        name = "montreal_dev_box";
-        host = "montreal_dev_box";
+        name = "sov-cpu-srv";
+        host = "sov-cpu-srv";
         localPort = 8385;
       }
       {

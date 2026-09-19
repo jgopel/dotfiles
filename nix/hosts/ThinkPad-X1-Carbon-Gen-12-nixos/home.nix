@@ -4,6 +4,7 @@
     ../../home-manager/desktop-nixos.nix
     ../../home-manager/arctis-sound-manager.nix
     ../../home-manager/nascent-desktop.nix
+    ../../home-manager/ssh-nascent.nix
     ../../home-manager/syncthing-nascent.nix
   ];
 

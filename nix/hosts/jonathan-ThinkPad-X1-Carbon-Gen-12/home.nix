@@ -4,6 +4,7 @@
     ../../home-manager/bash-standalone.nix
     ../../home-manager/desktop-standalone.nix
     ../../home-manager/nascent-desktop.nix
+    ../../home-manager/ssh-nascent.nix
     ../../home-manager/syncthing-nascent.nix
   ];
 

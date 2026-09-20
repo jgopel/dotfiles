@@ -6,9 +6,17 @@
     ./gnome
   ];
 
+  programs.firefox = {
+    enable = true;
+    policies.Preferences."widget.gtk.native-emoji-dialog" = {
+      # Keep Ctrl+. available for 1Password in every profile.
+      Value = false;
+      Status = "locked";
+    };
+  };
+
   home.packages = with pkgs; [
     discord
-    firefox
     ghostty
     google-chrome
     polychromatic

@@ -9,6 +9,7 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.loader.systemd-boot.prioritizeNixOS = true;
 
   hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
 

@@ -10,6 +10,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
+
   networking.hostName = "ThinkPad-X1-Carbon-Gen-12-nixos";
 
   services.tailscale.enable = true;

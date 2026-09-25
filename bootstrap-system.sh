@@ -1,13 +1,13 @@
 #!/bin/bash
 set -euo pipefail
 
-# Bootstrap script for privileged operations that Home Manager cannot perform.
-# Run this once on a new system before running make switch.
+# Bootstrap system prerequisites, activate Home Manager, then set the login shell.
+# Run this as your regular user after installing Nix and adding a host configuration.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "=== Bootstrap System ==="
-echo "This script configures binary caches, installs Docker, and adds the current user to the docker group."
+echo "This script configures binary caches, installs Docker, activates Home Manager, and configures Fish as the login shell."
 echo "Requires sudo privileges."
 echo ""
 
@@ -37,13 +37,14 @@ if [[ $EUID -eq 0 ]]; then
     exit 1
 fi
 
-# Install Docker prerequisites
+# Install Docker prerequisites and make for the Home Manager setup target.
 echo "Installing prerequisites..."
 sudo apt-get update
 sudo apt-get install -y \
     ca-certificates \
     curl \
-    gnupg
+    gnupg \
+    make
 
 # Add Docker's official GPG key
 echo "Adding Docker GPG key..."
@@ -132,7 +133,25 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     "${SCRIPT_DIR}/scripts/disable_app_armor_signal.sh"
 fi
 
+# Activate as the current user before selecting Home Manager's Fish as the shell.
+echo "Activating Home Manager..."
+make -C "$SCRIPT_DIR" setup-nix
+
+# Keep the profile path so the login shell follows Home Manager upgrades.
+FISH_SHELL="$HOME/.nix-profile/bin/fish"
+if [[ ! -x "$FISH_SHELL" ]]; then
+    echo "Error: Home Manager did not install an executable Fish at $FISH_SHELL."
+    exit 1
+fi
+
+echo "Configuring Fish as the login shell..."
+if ! grep -Fxq "$FISH_SHELL" /etc/shells; then
+    printf '%s\n' "$FISH_SHELL" | sudo tee -a /etc/shells > /dev/null
+fi
+if [[ "$(getent passwd "$USER" | cut -d: -f7)" != "$FISH_SHELL" ]]; then
+    sudo chsh -s "$FISH_SHELL" "$USER"
+fi
+
 echo ""
 echo "=== Bootstrap Complete ==="
-echo "NOTE: Log out and back in for docker group membership to take effect."
-echo "Then run: make switch"
+echo "NOTE: Log out and back in for docker group membership and login shell changes to take effect."

@@ -9,6 +9,9 @@
   xdg.configFile."fish/completions/bazel.fish".source =
     "${pkgs.bazel_9}/share/fish/vendor_completions.d/bazel.fish";
 
+  xdg.configFile."fish/completions/devenv.fish".source =
+    "${pkgs.devenv}/share/fish/vendor_completions.d/devenv.fish";
+
   programs.fish = {
     enable = true;
 

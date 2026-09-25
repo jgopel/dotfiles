@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -8,6 +8,8 @@
     ../../nixos/razer-windows-vm.nix
     ./hardware-configuration.nix
   ];
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Run `sudo nix run nixpkgs#keyd -- monitor` and find the built-in keyboard
   # in the initial device list; copy its ID, then exit with Ctrl+C.

@@ -6,11 +6,19 @@
     fzf-fish
   ];
 
-  xdg.configFile."fish/completions/bazel.fish".source =
-    "${pkgs.bazel_9}/share/fish/vendor_completions.d/bazel.fish";
+  xdg.configFile = {
+    # Direct Fish logins skip /etc/profile. Initialize Nix before plugin snippets.
+    "fish/conf.d/00-nix-daemon.fish".text = ''
+      if test -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+        source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+      end
+    '';
 
-  xdg.configFile."fish/completions/devenv.fish".source =
-    "${pkgs.devenv}/share/fish/vendor_completions.d/devenv.fish";
+    "fish/completions/bazel.fish".source = "${pkgs.bazel_9}/share/fish/vendor_completions.d/bazel.fish";
+
+    "fish/completions/devenv.fish".source =
+      "${pkgs.devenv}/share/fish/vendor_completions.d/devenv.fish";
+  };
 
   programs.fish = {
     enable = true;

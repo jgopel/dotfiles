@@ -29,6 +29,11 @@
       switch-windows-backward = [ "<Shift><Alt>Tab" ];
     };
 
+    "org/gnome/shell/keybindings".show-screenshot-ui = [
+      "Print"
+      "<Super><Shift>s"
+    ];
+
     "org/gnome/shell/window-switcher".current-workspace-only = true;
 
     "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";

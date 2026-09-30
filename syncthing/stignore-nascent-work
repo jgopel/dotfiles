@@ -19,7 +19,6 @@
 (?d)**/Thumbs.db
 (?d)**/Desktop.ini
 
-(?d)**/devenv/
 (?d)**/target/
 
 (?d)**/bazel-*

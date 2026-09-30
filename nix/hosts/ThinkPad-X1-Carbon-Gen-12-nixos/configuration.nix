@@ -5,6 +5,7 @@
     ../../nixos/profiles/desktop.nix
     ../../nixos/users/jonathan.nix
     ../../nixos/boot/systemd-boot.nix
+    ../../system-nascent.nix
     ./hardware-configuration.nix
   ];
 

@@ -23,6 +23,7 @@ _:
       help.autocorrect = "prompt";
       color.ui = true;
       rerere.enabled = true;
+      worktree.useRelativePaths = true;
 
       status = {
         showuntrackedfiles = "normal";

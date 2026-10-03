@@ -8,3 +8,6 @@
 (?d)**/*.pyo
 
 (?d)**/target/
+
+(?d)**/build
+(?d)**/build-*

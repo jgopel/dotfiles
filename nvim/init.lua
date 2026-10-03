@@ -62,7 +62,7 @@ vim.keymap.set("x", "<leader>sp", '"+P', { desc = "Paste from system clipboard -
 
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
-vim.cmd("autocmd FileType gitcommit setlocal spell")
+vim.cmd("autocmd FileType gitcommit setlocal spell formatexpr=")
 vim.cmd("autocmd FileType markdown setlocal spell")
 
 -- Enable treesitter highlighting for languages with installed parsers

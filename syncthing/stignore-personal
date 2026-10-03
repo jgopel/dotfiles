@@ -1,0 +1,10 @@
+(?d)**/.direnv
+(?d)**/result
+(?d)**/result-*
+
+(?d)**/.venv
+(?d)**/__pycache__
+(?d)**/*.pyc
+(?d)**/*.pyo
+
+(?d)**/target/

@@ -5,11 +5,11 @@
     ../../nixos/profiles/desktop.nix
     ../../nixos/users/jonathan.nix
     ../../nixos/boot/systemd-boot.nix
+    ../../nixos/kernel-testing.nix
     ../../system-nascent.nix
     ./hardware-configuration.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.prioritizeNixOS = true;
 
   hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];

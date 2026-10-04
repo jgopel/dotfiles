@@ -1,3 +1,5 @@
+/fosbury-tick-data-cache
+
 (?d)**/.devenv
 (?d)**/.direnv
 (?d)**/.mypy_cache

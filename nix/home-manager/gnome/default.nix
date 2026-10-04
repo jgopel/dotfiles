@@ -29,6 +29,8 @@
       switch-windows-backward = [ "<Shift><Alt>Tab" ];
     };
 
+    "org/gnome/mutter".workspaces-only-on-primary = false;
+
     "org/gnome/shell/keybindings".show-screenshot-ui = [
       "Print"
       "<Super><Shift>s"

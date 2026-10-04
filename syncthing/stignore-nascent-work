@@ -1,28 +1,44 @@
-/fosbury-tick-data-cache
+// Rust
+(?d)**/target/
 
-(?d)**/.devenv
-(?d)**/.direnv
+// Python
+(?d)**/.venv
 (?d)**/.mypy_cache
 (?d)**/.pytest_cache
 (?d)**/.ruff_cache
-(?d)**/.terraform
-(?d)**/.venv
-
 (?d)**/__pycache__
 (?d)**/*.pyc
 (?d)**/*.pyo
 
+// Terraform
+(?d)**/.terraform
+
+// Bazel
+(?d)**/bazel-bin
+(?d)**/bazel-out
+(?d)**/bazel-testlogs
+
+// Nix
+(?d)**/.direnv
+(?d)**/.devenv
+(?d)**/result
+(?d)**/result-bin
+(?d)**/result-debug
+(?d)**/result-dev
+(?d)**/result-doc
+(?d)**/result-info
+(?d)**/result-lib
+(?d)**/result-man
+
+// Coverage
 (?d)**/.coverage
 (?d)**/.coverage.*
 (?d)**/htmlcov
 
+// Mac
 (?d)**/.DS_Store
 (?d)**/._*
 (?d)**/Thumbs.db
 (?d)**/Desktop.ini
 
-(?d)**/target/
-
-(?d)**/bazel-*
-(?d)**/result
-(?d)**/result-*
+/fosbury-tick-data-cache

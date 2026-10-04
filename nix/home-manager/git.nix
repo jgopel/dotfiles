@@ -19,6 +19,13 @@ _:
         pager = "less";
       };
 
+      sendemail = {
+        smtpserver = "smtp.gmail.com";
+        smtpserverport = 587;
+        smtpencryption = "tls";
+        smtpuser = "jgopel@gmail.com";
+      };
+
       init.defaultBranch = "main";
       help.autocorrect = "prompt";
       color.ui = true;

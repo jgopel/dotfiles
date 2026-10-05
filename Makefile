@@ -15,7 +15,7 @@ bootstrap:
 
 .PHONY: nixos
 nixos:
-	sudo nixos-rebuild switch --flake .
+	sudo nixos-rebuild switch --flake . --option extra-sandbox-paths /var/cache/ccache
 
 .PHONY: home-manager
 home-manager:

@@ -1,1 +1,8 @@
-{ pkgs, ... }: { environment.systemPackages = [ pkgs.osquery ]; }
+
+{ pkgs, ... }:
+{
+  environment.systemPackages = [ 
+    pkgs.osquery
+  ];
+}
+	

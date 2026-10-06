@@ -6,7 +6,10 @@
 }:
 
 {
-  imports = [ ./nix.nix ];
+  imports = [
+    ./btop.nix
+    ./nix.nix
+  ];
 
   time.timeZone = lib.mkDefault "America/Denver";
 

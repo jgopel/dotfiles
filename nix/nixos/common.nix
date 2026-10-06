@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ ./nix.nix ];
@@ -20,6 +25,12 @@
 
   security.sudo.extraConfig = "Defaults pwfeedback";
   nixpkgs.config.allowUnfree = true;
+
+  virtualisation.docker.enable = true;
+  # NOTE: Docker group membership grants root-equivalent access via the root-owned daemon.
+  users.groups.docker.members = lib.attrNames (
+    lib.filterAttrs (_: user: user.isNormalUser) config.users.users
+  );
 
   programs.nix-ld.enable = true;
 

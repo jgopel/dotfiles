@@ -6,7 +6,7 @@
     ../../nixos/users/jonathan.nix
     ../../nixos/boot/systemd-boot.nix
     ../../nixos/kernel-testing.nix
-    ../../nixos/swifteam.nix
+    # ../../nixos/swifteam.nix
     ../../system-nascent.nix
     ./hardware-configuration.nix
   ];

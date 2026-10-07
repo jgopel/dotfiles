@@ -29,6 +29,9 @@
   security.sudo.extraConfig = "Defaults pwfeedback";
   nixpkgs.config.allowUnfree = true;
 
+  # Allow Oryx browser flashing and live training for ZSA keyboards.
+  hardware.keyboard.zsa.enable = true;
+
   virtualisation.docker.enable = true;
   # NOTE: Docker group membership grants root-equivalent access via the root-owned daemon.
   users.groups.docker.members = lib.attrNames (

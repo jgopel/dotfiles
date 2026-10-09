@@ -10,4 +10,9 @@
 
   home.username = "jonathan";
   home.homeDirectory = "/home/jonathan";
+
+  services.arctis-settings = {
+    fallbackOutput = "alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Speaker__sink";
+    fallbackInput = "alsa_input.usb-046d_Logitech_BRIO_5BDF971A-03.iec958-stereo";
+  };
 }

@@ -1,6 +1,29 @@
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
+  cfg = config.services.arctis-settings;
+  preferences = import ./arctis-settings.nix { inherit (cfg) fallbackOutput fallbackInput; };
+  applySettings = pkgs.writeShellScript "apply-arctis-settings" ''
+    set -e
+    ${lib.concatMapAttrsStringSep "\n" (
+      name: contents:
+      let
+        source = pkgs.writeText (builtins.baseNameOf name) contents;
+        destination = "${config.xdg.configHome}/arctis_manager/${name}";
+      in
+      ''
+        ${pkgs.coreutils}/bin/install -Dm600 \
+          ${source} \
+          ${lib.escapeShellArg destination}
+      ''
+    ) preferences}
+  '';
+
   openArctisManager = pkgs.writeShellApplication {
     name = "open-arctis-manager";
     runtimeInputs = with pkgs; [
@@ -73,18 +96,51 @@ let
   };
 in
 {
-  # Override the package's launcher so opening the app activates the
-  # Nix-managed login tray instead of starting another GUI process.
-  xdg.desktopEntries.ArctisManager = {
-    name = "Arctis Sound Manager";
-    exec = "${openArctisManager}/bin/open-arctis-manager %u";
-    icon = "arctis-manager";
-    terminal = false;
-    categories = [
-      "AudioVideo"
-      "Audio"
-      "Utility"
-    ];
-    mimeType = [ "x-scheme-handler/arctis-asm" ];
+  options.services.arctis-settings = {
+    fallbackOutput = lib.mkOption {
+      type = lib.types.nonEmptyStr;
+      description = "PipeWire sink node.name used when the headset disconnects and for external output routes.";
+    };
+    fallbackInput = lib.mkOption {
+      type = lib.types.nonEmptyStr;
+      description = "PipeWire source node.name used as the alternative to the headset microphone.";
+    };
+  };
+
+  config = {
+    xdg = {
+      # ASM rewrites settings, so copy them before startup instead of symlinking.
+      # After a Home Manager switch, apply with:
+      #   systemctl --user restart arctis-manager.service
+      configFile = {
+        "systemd/user/arctis-manager.service.d/settings.conf".text = ''
+          [Service]
+          ExecStartPre=${applySettings}
+        '';
+
+        # The router already starts After=arctis-manager.service. Stop its
+        # background route writer during the copy, then restart it with the daemon.
+        # Leave the GUI running: its shutdown handler stops the audio services.
+        "systemd/user/arctis-video-router.service.d/settings.conf".text = ''
+          [Unit]
+          PartOf=arctis-manager.service
+        '';
+      };
+
+      # Override the package's launcher so opening the app activates the
+      # Nix-managed login tray instead of starting another GUI process.
+      desktopEntries.ArctisManager = {
+        name = "Arctis Sound Manager";
+        exec = "${openArctisManager}/bin/open-arctis-manager %u";
+        icon = "arctis-manager";
+        terminal = false;
+        categories = [
+          "AudioVideo"
+          "Audio"
+          "Utility"
+        ];
+        mimeType = [ "x-scheme-handler/arctis-asm" ];
+      };
+    };
   };
 }

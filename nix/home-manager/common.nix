@@ -49,7 +49,7 @@ in
       colorized-logs
       curl
       dtrx
-      eternal-terminal
+      # eternal-terminal
       gdb
       inetutils
       jq

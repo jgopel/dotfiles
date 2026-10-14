@@ -314,7 +314,7 @@ require("lazy").setup({
         select.select_textobject("@parameter.inner", "textobjects")
       end)
       vim.keymap.set({ "x", "o" }, "af", function()
-        select.select_textobject("@function.outer", "textobjects")
+        select.select_textobject("@function.outer", vim.bo.filetype == "rust" and "functions" or "textobjects")
       end)
       vim.keymap.set({ "x", "o" }, "if", function()
         select.select_textobject("@function.inner", "textobjects")

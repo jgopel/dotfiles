@@ -11,12 +11,17 @@
     ./hardware-configuration.nix
   ];
 
-  # Run `sudo nix run nixpkgs#keyd -- monitor` and find the built-in keyboard
-  # in the initial device list; copy its ID, then exit with Ctrl+C.
-  # No typing is required.
-  services.keyd.keyboards.builtIn.ids = [ "0001:0001" ];
+  services = {
+    tailscale.enable = true;
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+    # Run `sudo nix run nixpkgs#keyd -- monitor` and find the built-in keyboard
+    # in the initial device list; copy its ID, then exit with Ctrl+C.
+    # No typing is required.
+    keyd.keyboards.builtIn.ids = [ "0001:0001" ];
+
+    xserver.videoDrivers = [ "nvidia" ];
+  };
+
   hardware.nvidia = {
     modesetting.enable = true;
     open = true;

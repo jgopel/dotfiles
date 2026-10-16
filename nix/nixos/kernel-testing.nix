@@ -22,6 +22,8 @@
   programs.ccache.enable = true;
   nix.settings.extra-sandbox-paths = [ config.programs.ccache.cacheDir ];
 
+  security.wrappers.nix-ccache.enable = false;
+
   # Bootstrap before the first rebuild (the new tmpfiles/nix.conf aren't active yet):
   # sudo install -d -m 0770 -o root -g nixbld /var/cache/ccache
   # sudo nixos-rebuild switch --flake . --option extra-sandbox-paths /var/cache/ccache

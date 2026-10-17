@@ -1,5 +1,20 @@
 { pkgs, ... }:
 
+let
+  cpuPercentage = pkgs.writeShellApplication {
+    name = "tmux-cpu-percentage";
+    runtimeInputs = [
+      pkgs.sysstat
+      pkgs.gawk
+    ];
+    text = ''
+      # Sample one second, excluding both idle and I/O wait (as btop does).
+      LC_ALL=C iostat -y -c 1 1 | awk '
+        NF == 6 && $1 ~ /^[0-9]/ { printf "%.1f%%", 100 - $4 - $6 }
+      '
+    '';
+  };
+in
 {
   programs.tmux = {
     enable = true;
@@ -16,9 +31,9 @@
       {
         plugin = cpu;
         extraConfig = ''
-          # Set status-right BEFORE cpu plugin loads so it can interpolate the format strings
+          # Set status-right BEFORE cpu plugin loads so it can interpolate RAM usage.
           set -g status-right-length 60
-          set -g status-right 'CPU: #{cpu_percentage} | RAM: #{ram_percentage} | Disk: #(df --output=pcent / | tail -n 1 | xargs) | %a %h-%d %H:%M '
+          set -g status-right 'CPU: #(${cpuPercentage}/bin/tmux-cpu-percentage) | RAM: #{ram_percentage} | Disk: #(df --output=pcent / | tail -n 1 | xargs) | %a %h-%d %H:%M '
         '';
       }
     ];

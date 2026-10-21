@@ -115,6 +115,12 @@ require("lazy").setup({
 
   -- Git Integration
   {
+    "sindrets/diffview.nvim",
+    keys = {
+      { "<leader>dvo", "<cmd>DiffviewOpen<CR>", desc = "Open Diff View" },
+    },
+  },
+  {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -126,6 +132,10 @@ require("lazy").setup({
             opts.buffer = bufnr
             vim.keymap.set(mode, l, r, opts)
           end
+          map("n", "<leader>hs", gs.stage_hunk, { desc = "Stage Git Hunk" })
+          map("v", "<leader>hs", function()
+            gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+          end, { desc = "Stage Selected Git Lines" })
           map("n", "]c", function()
             if vim.wo.diff then
               return "]c"

@@ -1,5 +1,9 @@
 { pkgs, ... }:
 
+let
+  signal = pkgs.callPackage ./signal-package.nix { };
+  slack = pkgs.callPackage ./slack-package.nix { };
+in
 {
   imports = [
     ./desktop-common.nix
@@ -20,7 +24,7 @@
     ghostty
     google-chrome
     polychromatic
-    signal-desktop
+    signal
     slack
   ];
 
@@ -41,11 +45,11 @@
       force = true;
     };
     "autostart/slack.desktop" = {
-      source = "${pkgs.slack}/share/applications/slack.desktop";
+      source = "${slack}/share/applications/slack.desktop";
       force = true;
     };
     "autostart/signal.desktop" = {
-      source = "${pkgs.signal-desktop}/share/applications/signal.desktop";
+      source = "${signal}/share/applications/signal.desktop";
       force = true;
     };
   };

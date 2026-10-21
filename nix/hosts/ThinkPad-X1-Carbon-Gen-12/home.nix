@@ -2,6 +2,8 @@
   imports = [
     ../../home-manager/common.nix
     ../../home-manager/desktop-nixos.nix
+    ../../home-manager/hyprland
+    ../../home-manager/noctalia
     ../../home-manager/neomutt.nix
     ../../home-manager/arctis-sound-manager.nix
     ../../home-manager/nascent-desktop.nix

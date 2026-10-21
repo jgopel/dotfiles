@@ -283,6 +283,54 @@
         "type": "github"
       }
     },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1792094642,
+        "narHash": "sha256-LPFRbrCWWyNsdQLO3SX1B/5UMkFK0hfe7bZR6lENvpc=",
+        "rev": "fe13242281a67641c0102cdb1087f0ebe586c7df",
+        "type": "tarball",
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1093333.fe13242281a6/nixexprs.tar.zst"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst"
+      }
+    },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1792502223,
+        "narHash": "sha256-sVeO0/25+P2l8JGIeJSChSNl0jj3EgNrKTDsRXyOQKo=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia",
+        "rev": "ee75f7adcc012f2b02852b655769758cce7eb721",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "ref": "cachix",
+        "repo": "noctalia",
+        "type": "github"
+      }
+    },
+    "noctalia-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792500240,
+        "narHash": "sha256-j+C7wbVVFZEMEK8QnYMqKCRw451ZY1KCIXJICqJi+FY=",
+        "owner": "noctalia-dev",
+        "repo": "community-plugins",
+        "rev": "8e00f292c6024b6be6c2c9cc74158bbf6f23ea53",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "community-plugins",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "arctis-sound-manager": "arctis-sound-manager",
@@ -292,6 +340,8 @@
         "nix-index-database": "nix-index-database",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs_3",
+        "noctalia": "noctalia",
+        "noctalia-plugins": "noctalia-plugins",
         "rust-overlay": "rust-overlay",
         "swifteam": "swifteam"
       }

@@ -39,7 +39,7 @@ let
   wrappedFirefox = wrap pkgs.firefox;
   wrappedGhostty = wrap pkgs.ghostty;
   wrappedSignal = withRuntimeDirTmp (wrap pkgs.signal-desktop);
-  wrappedSlack = withRuntimeDirTmp (wrap pkgs.slack);
+  wrappedSlack = withRuntimeDirTmp (wrap (pkgs.callPackage ./slack-package.nix { }));
 in
 {
   imports = [ ./desktop-common.nix ];

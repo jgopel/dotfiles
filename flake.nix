@@ -9,6 +9,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
+    noctalia-plugins = {
+      url = "github:noctalia-dev/community-plugins";
+      flake = false;
+    };
+
     arctis-sound-manager = {
       url = "github:loteran/Arctis-Sound-Manager?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -73,6 +79,10 @@
     in
     (import ./nix/hosts { inherit inputs system pkgs; })
     // {
+      packages.${system}.hyprland-preview = pkgs.callPackage ./nix/home-manager/hyprland/preview {
+        inherit inputs;
+      };
+
       devShells.${system}.default = pkgs.mkShellNoCC {
         packages = with pkgs; [
           gnumake

@@ -19,8 +19,6 @@
 
   networking.hostName = "ThinkPad-X1-Carbon-Gen-12";
 
-  programs.hyprland.enable = true;
-
   services = {
     tailscale.enable = true;
 

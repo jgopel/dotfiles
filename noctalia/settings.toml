@@ -6,12 +6,12 @@ end = ["media", "spacer_7", "tray", "syncthing", "spacer_6", "clipboard", "netwo
 start = ["launcher", "workspaces", "spacer_3", "cpu", "spacer_4", "ram"]
 
 [idle.behavior.lock]
-timeout = 300
 action = "lock"
+timeout = 300
 
 [idle.behavior.screen-off]
-timeout = 330
 action = "screen_off"
+timeout = 330
 
 [location]
 auto_locate = true
@@ -62,11 +62,11 @@ history_retention_hours = 168
 position = "top_center"
 width = 500
 
-[plugins]
-enabled = ["michael-retunzew/hyprland-settings", "rylos/syncthing"]
-
 [plugin_settings."rylos/syncthing"]
 notify_events = false
+
+[plugins]
+enabled = ["michael-retunzew/hyprland-settings", "rylos/syncthing"]
 
 [shell]
 time_format = "{:%I:%M %p}"
@@ -117,5 +117,5 @@ show_label = false
 
 [widget.workspaces]
 hide_when_empty = true
-show_labels = false
 show_all_outputs = true
+show_labels = false

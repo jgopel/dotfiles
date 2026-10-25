@@ -1,0 +1,15 @@
+diff --git a/src/state/FallbackState.cpp b/src/state/FallbackState.cpp
+index f68c4468..bd5a4c99 100644
+--- a/src/state/FallbackState.cpp
++++ b/src/state/FallbackState.cpp
+@@ -92,10 +92,8 @@ void CFallbackStateKeeper::initSignals() {
+
+         g_pEventLoopManager->removeTimer(m_launchTimer);
+         m_launchTimer = nullptr;
+-
+-        g_pEventLoopManager->doLater([this] { setFallbackActive(false); });
+     });
+ }
+
+ void CFallbackStateKeeper::initOutput() {
+     SP<Aquamarine::IBackendImplementation> headless;

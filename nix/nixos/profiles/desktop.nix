@@ -4,6 +4,7 @@
     ../gnome.nix
     ../audio.nix
     ../keyboard.nix
+    ../hyprland-testing.nix
   ];
 
   hardware.openrazer.enable = true;

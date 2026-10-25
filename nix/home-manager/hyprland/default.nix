@@ -46,9 +46,6 @@ in
         local monitor_generation = 0
         -- A new event supersedes pending retries while dock outputs settle.
         function reconcile_monitors()
-          if not hl.get_active_workspace() then
-            return
-          end
           monitor_generation = monitor_generation + 1
           local generation = monitor_generation
           for _, delay in ipairs({ 1, 1000, 3000, 7000 }) do

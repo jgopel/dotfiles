@@ -56,6 +56,21 @@
         "type": "github"
       }
     },
+    "den": {
+      "locked": {
+        "lastModified": 1792618207,
+        "narHash": "sha256-iBpvVBVBnynNWW9sLX5oKVigXU28oO2oiMPXgcLO1HI=",
+        "owner": "denful",
+        "repo": "den",
+        "rev": "0f7675b0b789eabe1a62f8a31b5323a7ad3ca5c4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "denful",
+        "repo": "den",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -334,6 +349,7 @@
     "root": {
       "inputs": {
         "arctis-sound-manager": "arctis-sound-manager",
+        "den": "den",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
         "neovim-nightly-overlay": "neovim-nightly-overlay",

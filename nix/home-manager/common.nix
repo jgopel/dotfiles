@@ -45,7 +45,6 @@ in
     packages = with pkgs; [
       # General tools
       ack
-      btop
       colorized-logs
       curl
       dtrx

@@ -5,7 +5,6 @@
     ../../home-manager/neomutt.nix
     ../../home-manager/ssh-personal.nix
     ../../home-manager/arctis-sound-manager.nix
-    ../../home-manager/syncthing/personal.nix
   ];
 
   home.username = "jonathan";

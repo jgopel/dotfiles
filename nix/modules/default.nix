@@ -6,7 +6,10 @@
 }:
 
 {
-  imports = [ ./btop.nix ];
+  imports = [
+    ./btop.nix
+    ./syncthing
+  ];
 
   den = {
     default.includes = [ den.aspects.btop ];

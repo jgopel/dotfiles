@@ -15,6 +15,7 @@
 
   den = {
     default.includes = [
+      den.batteries.define-user
       den.aspects.btop
       den.aspects.mosh
     ];

@@ -8,11 +8,16 @@
 {
   imports = [
     ./btop.nix
+    ./mosh.nix
+    ./server.nix
     ./syncthing
   ];
 
   den = {
-    default.includes = [ den.aspects.btop ];
+    default.includes = [
+      den.aspects.btop
+      den.aspects.mosh
+    ];
 
     # Preserve legacy modules' inputs argument and the standalone HM package set.
     schema = {

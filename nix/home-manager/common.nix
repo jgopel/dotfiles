@@ -53,7 +53,6 @@ in
       inetutils
       jq
       less
-      mosh
       perf
       plocate
       ripgrep

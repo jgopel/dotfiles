@@ -1,8 +1,5 @@
 {
-  imports = [
-    ../../home-manager/common.nix
-    ../../home-manager/server.nix
-  ];
+  imports = [ ../../home-manager/common.nix ];
 
   home = {
     username = "jonathan";

@@ -14,8 +14,6 @@
       end
     '';
 
-    "fish/completions/bazel.fish".source = "${pkgs.bazel_9}/share/fish/vendor_completions.d/bazel.fish";
-
     "fish/completions/devenv.fish".source =
       "${pkgs.devenv}/share/fish/vendor_completions.d/devenv.fish";
   };
@@ -60,9 +58,6 @@
 
       # et (eternal-terminal) completions - wraps ssh for host/user completions
       complete -c et --wraps ssh
-
-      # Bazelisk uses Bazel's completions
-      complete -c bazelisk --wraps bazel
 
       # Environment settings
       set -gx VISUAL nvim

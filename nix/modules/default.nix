@@ -7,6 +7,7 @@
 
 {
   imports = [
+    ./bazel.nix
     ./btop.nix
     ./mosh.nix
     ./server.nix

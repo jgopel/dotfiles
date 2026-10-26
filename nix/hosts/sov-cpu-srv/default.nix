@@ -6,6 +6,7 @@
     aspects."jonathan@sov-cpu-srv" = {
       includes = [
         den.aspects.server
+        (den.aspects.bazel { outputUserRoot = "/datapool/jonathan/bazel"; })
         (den.aspects.syncthing {
           category = "nascent";
           path = "~/work";

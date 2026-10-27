@@ -5,13 +5,9 @@
   ...
 }:
 
-let
-  dotfilesDir = builtins.toString ../..;
-in
 {
   imports = [
     ./agents.nix
-    ./bash.nix
     ./direnv.nix
     ./docker-gc.nix
     ./fish.nix
@@ -45,6 +41,7 @@ in
     packages = with pkgs; [
       # General tools
       ack
+      bash
       colorized-logs
       curl
       dtrx
@@ -97,7 +94,5 @@ in
       shfmt
       stylua
     ];
-
-    file."bin".source = "${dotfilesDir}/bin";
   };
 }

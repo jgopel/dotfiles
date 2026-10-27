@@ -13,6 +13,7 @@
     ./bazel.nix
     ./btop.nix
     ./claude-code.nix
+    ./cli-tools.nix
     ./codex.nix
     ./docker.nix
     ./mosh.nix
@@ -25,6 +26,7 @@
       den.batteries.define-user
       den.aspects.agents
       den.aspects.btop
+      den.aspects.cli-tools
       den.aspects.mosh
     ];
 

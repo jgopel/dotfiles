@@ -6,7 +6,6 @@
     settings = {
       platform-tokyo-dev = {
         HostName = "platform-tokyo-dev";
-        IdentityFile = "~/.ssh/ec2-dev-machine.pem";
         Compression = true;
         ForwardX11 = false;
       };

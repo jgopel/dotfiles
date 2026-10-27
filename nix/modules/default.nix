@@ -7,8 +7,13 @@
 
 {
   imports = [
+    ./agents.nix
+    ./amp.nix
+    ./antigravity-cli.nix
     ./bazel.nix
     ./btop.nix
+    ./claude-code.nix
+    ./codex.nix
     ./mosh.nix
     ./server.nix
     ./syncthing
@@ -17,6 +22,7 @@
   den = {
     default.includes = [
       den.batteries.define-user
+      den.aspects.agents
       den.aspects.btop
       den.aspects.mosh
     ];

@@ -7,7 +7,6 @@
 
 {
   imports = [
-    ./agents.nix
     ./direnv.nix
     ./docker-gc.nix
     ./fish.nix

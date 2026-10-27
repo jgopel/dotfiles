@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    den.url = "github:denful/den";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -52,6 +53,14 @@
     inputs@{ nixpkgs, ... }:
     let
       inherit (import ./nix/platform.nix) system;
+      configurations =
+        (nixpkgs.lib.evalModules {
+          specialArgs = { inherit inputs pkgs; };
+          modules = [
+            inputs.den.flakeModule
+            ./nix
+          ];
+        }).config.flake;
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
@@ -77,7 +86,7 @@
         config.allowUnfree = true;
       };
     in
-    (import ./nix/hosts { inherit inputs system pkgs; })
+    configurations
     // {
       packages.${system}.hyprland-preview = pkgs.callPackage ./nix/home-manager/hyprland/preview {
         inherit inputs;

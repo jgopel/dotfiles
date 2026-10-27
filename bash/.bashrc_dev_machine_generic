@@ -1,4 +1,0 @@
-include_if_exists /etc/profile.d/bash_completion.sh
-
-pathappend $HOME/bin $HOME/.local/bin
-export PATH

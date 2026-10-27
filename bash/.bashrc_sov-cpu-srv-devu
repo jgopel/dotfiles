@@ -1,6 +1,0 @@
-[ -f /etc/profile.d/bash_completion.sh ] && . /etc/profile.d/bash_completion.sh
-
-source /usr/share/doc/fzf/examples/key-bindings.bash
-
-pathappend $HOME/bin $HOME/.local/bin
-export PATH

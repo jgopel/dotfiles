@@ -1,36 +1,9 @@
 {
-  inputs,
-  system,
-  pkgs,
-}:
-
-let
-  inherit (inputs.nixpkgs) lib;
-  directories = lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./.));
-  hostsWith =
-    file: builtins.filter (host: builtins.pathExists (./. + "/${host}/${file}")) directories;
-in
-{
-  nixosConfigurations = lib.genAttrs (hostsWith "configuration.nix") (
-    host:
-    lib.nixosSystem {
-      inherit system;
-      specialArgs = { inherit inputs; };
-      modules = [ (./. + "/${host}/configuration.nix") ];
-    }
-  );
-
-  homeConfigurations = builtins.listToAttrs (
-    map (
-      host:
-      let
-        home = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ (./. + "/${host}/home.nix") ];
-          extraSpecialArgs = { inherit inputs; };
-        };
-      in
-      lib.nameValuePair "${home.config.home.username}@${host}" home
-    ) (hostsWith "home.nix")
-  );
+  imports = [
+    ./ThinkPad-X1-Carbon-Gen-12
+    ./XPS-17-9720
+    ./ip-172-31-2-254
+    ./ip-172-31-96-20
+    ./sov-cpu-srv
+  ];
 }

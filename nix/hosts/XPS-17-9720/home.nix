@@ -5,11 +5,7 @@
     ../../home-manager/neomutt.nix
     ../../home-manager/ssh-personal.nix
     ../../home-manager/arctis-sound-manager.nix
-    ../../home-manager/syncthing/personal.nix
   ];
-
-  home.username = "jonathan";
-  home.homeDirectory = "/home/jonathan";
 
   services.arctis-settings = {
     fallbackOutput = "alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Speaker__sink";

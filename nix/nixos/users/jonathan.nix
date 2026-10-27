@@ -13,8 +13,5 @@
     shell = pkgs.fish;
   };
 
-  # OpenRazer applies this membership only when its support is enabled.
-  hardware.openrazer.users = [ "jonathan" ];
-
   programs.fish.enable = true;
 }

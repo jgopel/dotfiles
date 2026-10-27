@@ -3,11 +3,9 @@
 {
   imports = [
     ../../nixos/profiles/desktop.nix
-    ../../nixos/arctis-sound-manager.nix
     ../../nixos/users/jonathan.nix
     ../../nixos/boot/systemd-boot.nix
     ../../nixos/kernel-testing.nix
-    ../../nixos/razer-windows-vm.nix
     ./hardware-configuration.nix
   ];
 
@@ -39,7 +37,6 @@
   networking.hostName = "XPS-17-9720";
 
   programs.steam.enable = true;
-  programs.razerWindowsVm.enable = false;
 
   system.stateVersion = (import ../../platform.nix).stateVersion;
 }

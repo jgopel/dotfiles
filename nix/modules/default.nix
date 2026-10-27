@@ -10,9 +10,11 @@
     ./agents.nix
     ./amp.nix
     ./antigravity-cli.nix
+    ./arctis-sound-manager.nix
     ./bazel.nix
     ./btop.nix
     ./cachix.nix
+    ./canopy-desk.nix
     ./claude-code.nix
     ./cli-tools.nix
     ./codex.nix

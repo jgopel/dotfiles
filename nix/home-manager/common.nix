@@ -8,7 +8,6 @@
 {
   imports = [
     ./direnv.nix
-    ./docker-gc.nix
     ./fish.nix
     ./git.nix
     ./nix.nix

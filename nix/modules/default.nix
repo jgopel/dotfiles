@@ -14,6 +14,7 @@
     ./btop.nix
     ./claude-code.nix
     ./codex.nix
+    ./docker.nix
     ./mosh.nix
     ./server.nix
     ./syncthing

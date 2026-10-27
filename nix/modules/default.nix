@@ -12,6 +12,7 @@
     ./antigravity-cli.nix
     ./bazel.nix
     ./btop.nix
+    ./cachix.nix
     ./claude-code.nix
     ./cli-tools.nix
     ./codex.nix
@@ -32,6 +33,7 @@
       den.batteries.define-user
       den.aspects.agents
       den.aspects.btop
+      den.aspects.cachix
       den.aspects.cli-tools
       den.aspects.dev-tools
       den.aspects.mosh

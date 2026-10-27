@@ -31,6 +31,17 @@ EOF
     sudo systemctl restart nix-daemon
 fi
 
+# Provision /etc/nix/netrc separately with private-cache credentials (root-owned, mode 0600).
+echo "Adding Jonathan's private binary cache..."
+if ! grep -Fq "https://jonathan.cachix.org" /etc/nix/nix.conf 2>/dev/null; then
+    sudo tee -a /etc/nix/nix.conf > /dev/null <<'EOF'
+extra-substituters = https://jonathan.cachix.org
+extra-trusted-public-keys = jonathan.cachix.org-1:aCu0qEoqdLs+Qmq9udXYcB5YISRuipb0XVxlpUx0PnE=
+netrc-file = /etc/nix/netrc
+EOF
+    sudo systemctl restart nix-daemon
+fi
+
 # Check if running as root
 if [[ $EUID -eq 0 ]]; then
     echo "Error: Do not run this script as root. It will use sudo when needed."

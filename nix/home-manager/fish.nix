@@ -38,7 +38,6 @@
       ll = "ls -l";
       la = "LC_COLLATE=C ls -A";
       lla = "la -l";
-      gdb = "gdb -silent";
       refresh = "source ~/.config/fish/config.fish";
       tmux = "tmux -u";
       sudol = "sudo -E";
@@ -60,21 +59,10 @@
       complete -c et --wraps ssh
 
       # Environment settings
-      set -gx VISUAL nvim
-      set -gx EDITOR nvim
       set -gx TZ 'America/Denver'
-
-      # Python cache directory
-      set -gx PYTHONPYCACHEPREFIX "$HOME/.cache/cpython/"
 
       # Continuation prompt
       set -g fish_prompt_pwd_dir_length 0
     '';
-
-    functions = {
-      ct = ''
-        command cargo test --color always $argv -- --color always 2>&1 | sed 's/\//g' | less -RFX
-      '';
-    };
   };
 }

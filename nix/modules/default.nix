@@ -15,8 +15,14 @@
     ./claude-code.nix
     ./cli-tools.nix
     ./codex.nix
+    ./cpp.nix
+    ./dev-tools.nix
     ./docker.nix
+    ./editor-tools.nix
     ./mosh.nix
+    ./nvim.nix
+    ./python.nix
+    ./rust.nix
     ./server.nix
     ./syncthing
   ];
@@ -27,6 +33,7 @@
       den.aspects.agents
       den.aspects.btop
       den.aspects.cli-tools
+      den.aspects.dev-tools
       den.aspects.mosh
     ];
 

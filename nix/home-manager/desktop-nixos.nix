@@ -8,8 +8,6 @@ in
   imports = [
     ./desktop-common.nix
     ./gnome
-    ./hyprland
-    ./noctalia
   ];
 
   programs.firefox = {

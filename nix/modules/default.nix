@@ -17,10 +17,14 @@
     ./cli-tools.nix
     ./codex.nix
     ./cpp.nix
+    ./desktop.nix
     ./dev-tools.nix
     ./docker.nix
     ./editor-tools.nix
+    ./hyprland.nix
+    ./hyprland-testing.nix
     ./mosh.nix
+    ./noctalia.nix
     ./nvim.nix
     ./python.nix
     ./rust.nix

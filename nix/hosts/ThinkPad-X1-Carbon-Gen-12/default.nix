@@ -6,9 +6,16 @@
     homes.x86_64-linux."jonathan@ThinkPad-X1-Carbon-Gen-12" = { };
 
     aspects = {
-      ThinkPad-X1-Carbon-Gen-12.nixos.imports = [ ./configuration.nix ];
+      ThinkPad-X1-Carbon-Gen-12 = {
+        includes = [
+          den.aspects.desktop
+          den.aspects.hyprland-testing
+        ];
+        nixos.imports = [ ./configuration.nix ];
+      };
       "jonathan@ThinkPad-X1-Carbon-Gen-12" = {
         includes = [
+          (den.aspects.desktop { noctaliaSettingsFile = ./noctalia/settings.toml; })
           (den.aspects.syncthing {
             category = "nascent";
             path = "~/work";

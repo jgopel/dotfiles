@@ -88,10 +88,6 @@
     in
     configurations
     // {
-      packages.${system}.hyprland-preview = pkgs.callPackage ./nix/home-manager/hyprland/preview {
-        inherit inputs;
-      };
-
       devShells.${system}.default = pkgs.mkShellNoCC {
         packages = with pkgs; [
           gnumake

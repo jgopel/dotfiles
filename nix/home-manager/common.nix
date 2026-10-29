@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, ... }:
 
 {
   imports = [
@@ -17,16 +12,8 @@
     ./tmux.nix
   ];
 
-  programs.home-manager.enable = true;
-
   home = {
     inherit (import ../platform.nix) stateVersion;
-
-    activation.report-changes = config.lib.dag.entryAnywhere ''
-      if [[ -n "''${oldGenPath:-}" ]]; then
-        ${pkgs.nvd}/bin/nvd diff "$oldGenPath" "$newGenPath" || true
-      fi
-    '';
 
     sessionVariables = lib.mapAttrs (
       name: _: lib.removeSuffix "\n" (builtins.readFile (../../secrets + "/${name}"))

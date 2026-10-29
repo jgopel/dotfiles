@@ -39,6 +39,7 @@
     ./rust.nix
     ./server.nix
     ./ssh.nix
+    ./starship.nix
     ./syncthing
   ];
 
@@ -58,6 +59,7 @@
       den.aspects.mosh
       den.aspects.nix
       den.aspects.ssh
+      den.aspects.starship
     ];
 
     # Preserve legacy modules' inputs argument and select packages per home.

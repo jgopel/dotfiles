@@ -1,10 +1,7 @@
 { lib, ... }:
 
 {
-  imports = [
-    ./starship.nix
-    ./tmux.nix
-  ];
+  imports = [ ./tmux.nix ];
 
   home.sessionVariables = lib.mapAttrs (
     name: _: lib.removeSuffix "\n" (builtins.readFile (../../secrets + "/${name}"))

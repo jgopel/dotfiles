@@ -1,16 +1,11 @@
 { pkgs, ... }:
 
-let
-  dotfilesDir = builtins.toString ../..;
-in
 {
   home.packages = with pkgs; [
     dropbox
     hack-font
     keepassxc
   ];
-
-  xdg.configFile."ghostty/config".source = "${dotfilesDir}/ghostty/config";
 
   fonts.fontconfig.enable = true;
 

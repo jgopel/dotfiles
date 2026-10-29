@@ -1,3 +1,5 @@
+{ repoRoot, ... }:
+
 {
   den.aspects.rust.homeManager =
     {
@@ -35,6 +37,6 @@
 
       home.sessionPath = lib.mkAfter [ "$HOME/.cargo/bin" ];
 
-      xdg.configFile."bacon/prefs.toml".source = ../../bacon/prefs.toml;
+      xdg.configFile."bacon/prefs.toml".source = repoRoot + /bacon/prefs.toml;
     };
 }

@@ -1,3 +1,5 @@
+{ repoRoot, ... }:
+
 {
   den.aspects.noctalia.__functor =
     _:
@@ -32,7 +34,7 @@
             "${config.xdg.stateHome}/noctalia/settings.toml".source =
               let
                 # Target the live checkout so Noctalia can save settings from its UI.
-                relativePath = lib.removePrefix "${toString ../..}/" (toString settingsFile);
+                relativePath = lib.removePrefix "${toString repoRoot}/" (toString settingsFile);
               in
               config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
           };

@@ -8,6 +8,9 @@
     }:
     {
       name = "desktop";
-      includes = [ (den.aspects.hyprland { settingsFile = noctaliaSettingsFile; }) ];
+      includes = [
+        den.aspects.ghostty
+        (den.aspects.hyprland { settingsFile = noctaliaSettingsFile; })
+      ];
     };
 }

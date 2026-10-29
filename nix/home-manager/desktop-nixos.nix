@@ -21,7 +21,6 @@ in
 
   home.packages = with pkgs; [
     discord
-    ghostty
     google-chrome
     polychromatic
     signal

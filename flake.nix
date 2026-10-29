@@ -55,7 +55,10 @@
       inherit (import ./nix/platform.nix) system;
       configurations =
         (nixpkgs.lib.evalModules {
-          specialArgs = { inherit inputs pkgs; };
+          specialArgs = {
+            inherit inputs pkgs;
+            repoRoot = ./.;
+          };
           modules = [
             inputs.den.flakeModule
             ./nix

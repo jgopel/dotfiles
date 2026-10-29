@@ -1,4 +1,4 @@
-{ den, ... }:
+{ den, repoRoot, ... }:
 
 {
   den.aspects.nascent.includes = [
@@ -6,7 +6,7 @@
     (den.aspects.syncthing {
       category = "nascent";
       path = "~/work";
-      stignore = ../../syncthing/work/nascent/stignore;
+      stignore = repoRoot + /syncthing/work/nascent/stignore;
     })
   ];
 }

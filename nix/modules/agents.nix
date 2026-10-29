@@ -1,4 +1,4 @@
-{ den, ... }:
+{ den, repoRoot, ... }:
 
 {
   den.aspects.agents = {
@@ -9,6 +9,6 @@
       den.aspects.codex
     ];
 
-    homeManager.xdg.configFile."agents/skills".source = ../../agents/skills;
+    homeManager.xdg.configFile."agents/skills".source = repoRoot + /agents/skills;
   };
 }

@@ -1,4 +1,4 @@
-{ den, ... }:
+{ den, repoRoot, ... }:
 
 {
   den = {
@@ -27,7 +27,7 @@
           (den.aspects.syncthing {
             category = "personal";
             path = "~/personal";
-            stignore = ../../../syncthing/personal/stignore;
+            stignore = repoRoot + /syncthing/personal/stignore;
           })
         ];
         homeManager = {

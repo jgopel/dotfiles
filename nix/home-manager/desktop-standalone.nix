@@ -37,7 +37,6 @@ let
   wrappedChrome = withRuntimeDirTmp (wrap pkgs.google-chrome);
   wrappedDiscord = withRuntimeDirTmp (wrap pkgs.discord);
   wrappedFirefox = wrap pkgs.firefox;
-  wrappedGhostty = wrap pkgs.ghostty;
   wrappedSignal = withRuntimeDirTmp (wrap pkgs.signal-desktop);
   wrappedSlack = withRuntimeDirTmp (wrap (pkgs.callPackage ./slack-package.nix { }));
 in
@@ -53,7 +52,6 @@ in
     wrappedChrome
     wrappedDiscord
     wrappedFirefox
-    wrappedGhostty
     wrappedSignal
     wrappedSlack
   ];
@@ -65,29 +63,6 @@ in
     };
 
     desktopEntries = {
-      ghostty = {
-        name = "Ghostty";
-        exec = "${wrappedGhostty}/bin/ghostty --gtk-single-instance=true";
-        icon = "com.mitchellh.ghostty";
-        terminal = false;
-        categories = [
-          "System"
-          "TerminalEmulator"
-        ];
-        comment = "A terminal emulator";
-        settings = {
-          StartupNotify = "true";
-          StartupWMClass = "com.mitchellh.ghostty";
-        };
-      };
-
-      # Hide the original unwrapped .desktop file from the ghostty package
-      "com.mitchellh.ghostty" = {
-        name = "Ghostty (unwrapped)";
-        exec = "false";
-        noDisplay = true;
-      };
-
       google-chrome = {
         name = "Google Chrome";
         exec = "google-chrome-stable %U";

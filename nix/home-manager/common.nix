@@ -5,7 +5,6 @@
     ./git.nix
     ./ssh.nix
     ./starship.nix
-    ./terminfo.nix
     ./tmux.nix
   ];
 

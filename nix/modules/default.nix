@@ -25,6 +25,7 @@
     ./editor-tools.nix
     ./fish.nix
     ./fzf.nix
+    ./ghostty.nix
     ./home-manager.nix
     ./hyprland.nix
     ./hyprland-testing.nix
@@ -49,6 +50,7 @@
       den.aspects.dev-tools
       den.aspects.fish
       den.aspects.fzf
+      den.aspects.ghostty.terminfo
       den.aspects.home-manager
       den.aspects.mosh
       den.aspects.nix

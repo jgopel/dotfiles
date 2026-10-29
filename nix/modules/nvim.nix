@@ -1,4 +1,4 @@
-{ den, ... }:
+{ den, repoRoot, ... }:
 
 {
   den.aspects.nvim = {
@@ -16,10 +16,6 @@
         inputs,
         ...
       }:
-
-      let
-        dotfilesDir = builtins.toString ../..;
-      in
       {
         programs.neovim = {
           enable = true;
@@ -44,7 +40,7 @@
           set -gx EDITOR nvim
         '';
 
-        xdg.configFile."nvim".source = "${dotfilesDir}/nvim";
+        xdg.configFile."nvim".source = repoRoot + /nvim;
       };
   };
 }

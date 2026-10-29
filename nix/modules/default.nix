@@ -1,7 +1,7 @@
 {
   den,
   inputs,
-  pkgs,
+  mkPkgs,
   ...
 }:
 
@@ -56,12 +56,12 @@
       den.aspects.nix
     ];
 
-    # Preserve legacy modules' inputs argument and the standalone HM package set.
+    # Preserve legacy modules' inputs argument and select packages per home.
     schema = {
       host.instantiate =
         args: inputs.nixpkgs.lib.nixosSystem (args // { specialArgs = { inherit inputs; }; });
-      home = {
-        inherit pkgs;
+      home = { config, ... }: {
+        pkgs = mkPkgs config.system;
         instantiate =
           args:
           inputs.home-manager.lib.homeManagerConfiguration (

@@ -5,4 +5,6 @@
     ../../home-manager/neomutt.nix
     ../../home-manager/ssh-personal.nix
   ];
+
+  home.stateVersion = "26.05";
 }

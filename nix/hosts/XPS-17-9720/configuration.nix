@@ -38,5 +38,5 @@
 
   programs.steam.enable = true;
 
-  system.stateVersion = (import ../../platform.nix).stateVersion;
+  system.stateVersion = "26.05";
 }

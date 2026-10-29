@@ -52,53 +52,61 @@
   outputs =
     inputs@{ nixpkgs, ... }:
     let
-      inherit (import ./nix/platform.nix) system;
-      configurations =
-        (nixpkgs.lib.evalModules {
-          specialArgs = {
-            inherit inputs pkgs;
-            repoRoot = ./.;
-          };
-          modules = [
-            inputs.den.flakeModule
-            ./nix
+      fhsRuntimeOverlay = _final: prev: {
+        buildFHSEnv =
+          args:
+          let
+            targetPkgs =
+              pkgs:
+              (args.targetPkgs or (_: [ ])) pkgs
+              ++ [
+                # The FHS /usr hides the host zoneinfo targeted by /etc/localtime.
+                pkgs.tzdata
+                # Electron uses xdg-open to open external links.
+                pkgs.xdg-utils
+              ];
+          in
+          prev.buildFHSEnv (args // { inherit targetPkgs; });
+      };
+
+      mkPkgs =
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ fhsRuntimeOverlay ];
+          config.allowUnfree = true;
+        };
+
+      mkDevShell =
+        system:
+        let
+          pkgs = mkPkgs system;
+        in
+        pkgs.mkShellNoCC {
+          packages = with pkgs; [
+            gnumake
+            prek
+            nixfmt
+            statix
+            deadnix
           ];
-        }).config.flake;
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-          (_final: prev: {
-            buildFHSEnv =
-              args:
-              prev.buildFHSEnv (
-                args
-                // {
-                  targetPkgs =
-                    pkgs:
-                    (args.targetPkgs or (_: [ ])) pkgs
-                    ++ [
-                      # The FHS /usr hides the host zoneinfo targeted by /etc/localtime.
-                      pkgs.tzdata
-                      # Electron uses xdg-open to open external links.
-                      pkgs.xdg-utils
-                    ];
-                }
-              );
-          })
+        };
+
+      evaluation = nixpkgs.lib.evalModules {
+        specialArgs = {
+          inherit inputs mkPkgs;
+          repoRoot = ./.;
+        };
+        modules = [
+          inputs.den.flakeModule
+          ./nix
         ];
-        config.allowUnfree = true;
       };
     in
-    configurations
+    evaluation.config.flake
     // {
-      devShells.${system}.default = pkgs.mkShellNoCC {
-        packages = with pkgs; [
-          gnumake
-          prek
-          nixfmt
-          statix
-          deadnix
-        ];
-      };
+      devShells = nixpkgs.lib.genAttrs evaluation.config.den.systems (system: {
+        default = mkDevShell system;
+      });
     };
 }

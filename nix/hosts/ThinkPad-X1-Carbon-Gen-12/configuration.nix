@@ -34,5 +34,5 @@
   # authentication from DNS or fix the underlying resolver delay.
   systemd.services.nscd.environment.NSNCD_WORKER_COUNT = "32";
 
-  system.stateVersion = (import ../../platform.nix).stateVersion;
+  system.stateVersion = "26.05";
 }

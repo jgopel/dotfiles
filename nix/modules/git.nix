@@ -1,7 +1,5 @@
-_:
-
 {
-  programs.git = {
+  den.aspects.git.homeManager.programs.git = {
     enable = true;
 
     lfs.enable = true;

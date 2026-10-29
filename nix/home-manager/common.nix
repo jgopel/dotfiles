@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./git.nix
     ./ssh.nix
     ./starship.nix
     ./tmux.nix

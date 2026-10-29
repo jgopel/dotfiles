@@ -17,6 +17,7 @@
       "jonathan@ThinkPad-X1-Carbon-Gen-12" = {
         includes = [
           den.aspects.nascent
+          den.aspects.ssh.nascent
           (den.aspects.canopy-desk {
             noctaliaSettingsFile = ./noctalia/settings.toml;
             arctisSettings = {

@@ -15,6 +15,7 @@
       };
       "jonathan@XPS-17-9720" = {
         includes = [
+          den.aspects.ssh.personal
           (den.aspects.canopy-desk {
             noctaliaSettingsFile = ./noctalia/settings.toml;
             arctisSettings = {

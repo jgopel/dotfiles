@@ -4,7 +4,6 @@
     ../../home-manager/desktop-nixos.nix
     ../../home-manager/neomutt.nix
     ../../home-manager/nascent-desktop.nix
-    ../../home-manager/ssh-nascent.nix
   ];
 
   home.stateVersion = "26.05";

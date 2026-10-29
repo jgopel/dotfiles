@@ -38,6 +38,7 @@
     ./python.nix
     ./rust.nix
     ./server.nix
+    ./ssh.nix
     ./syncthing
   ];
 
@@ -56,6 +57,7 @@
       den.aspects.home-manager
       den.aspects.mosh
       den.aspects.nix
+      den.aspects.ssh
     ];
 
     # Preserve legacy modules' inputs argument and select packages per home.

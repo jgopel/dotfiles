@@ -1,4 +1,4 @@
-{ den, ... }:
+{ den, inputs, ... }:
 
 let
   caches = import ../cache-settings.nix;
@@ -25,6 +25,34 @@ in
     includes = [ den.aspects.nix.single-user ];
 
     nixos.nix.settings = caches.common;
+
+    homeManager = { pkgs, ... }: {
+      imports = [ inputs.nix-index-database.homeModules.nix-index ];
+
+      nix = {
+        package = pkgs.nix;
+        settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        gc = {
+          automatic = true;
+          dates = "daily";
+          options = "--delete-older-than 3d";
+        };
+      };
+
+      programs = {
+        nix-index-database.comma.enable = true;
+
+        direnv = {
+          enable = true;
+          nix-direnv.enable = true;
+          config.global.log_format = builtins.fromJSON ''"\u001b[2mdirenv: %s\u001b[0m"'';
+        };
+      };
+    };
+
     single-user = { home, ... }: {
       homeManager = { config, lib, ... }: {
         nix.settings = lib.mkIf (home.nixInstallation == "single-user") (

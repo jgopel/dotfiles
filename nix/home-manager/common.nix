@@ -2,10 +2,7 @@
 
 {
   imports = [
-    ./direnv.nix
     ./git.nix
-    ./nix.nix
-    ./nix-index.nix
     ./ssh.nix
     ./starship.nix
     ./terminfo.nix

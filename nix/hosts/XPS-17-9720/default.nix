@@ -3,7 +3,7 @@
 {
   den = {
     hosts.x86_64-linux.XPS-17-9720 = { };
-    homes.x86_64-linux."jonathan@XPS-17-9720" = { };
+    homes.x86_64-linux."jonathan@XPS-17-9720".nixInstallation = "nixos";
 
     aspects = {
       XPS-17-9720 = {

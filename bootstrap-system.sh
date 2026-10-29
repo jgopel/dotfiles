@@ -11,35 +11,22 @@ echo "This script configures binary caches, installs Docker, activates Home Mana
 echo "Requires sudo privileges."
 echo ""
 
-# Add nix-community binary cache for pre-built packages (e.g., neovim-nightly)
-echo "Adding nix-community binary cache..."
-if ! grep -q "nix-community.cachix.org" /etc/nix/nix.conf 2>/dev/null; then
-    sudo tee -a /etc/nix/nix.conf > /dev/null <<'EOF'
-extra-substituters = https://nix-community.cachix.org
-extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-EOF
+# Only daemon installations need system-level cache configuration. Single-user
+# homes declare nixInstallation = "single-user" in den.homes instead.
+if systemctl cat nix-daemon.service > /dev/null 2>&1; then
+    echo "Configuring Nix daemon binary caches..."
+    cache_config=$(nix --extra-experimental-features nix-command eval --raw \
+            --file "$SCRIPT_DIR/nix/cache-settings.nix" \
+        --apply 'caches: builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs (name: values: name + " = " + builtins.concatStringsSep " " values) caches.common))')
+    # Provision /etc/nix/netrc separately (root-owned, mode 0600).
+    printf '%s\n' "$cache_config" \
+        | sudo tee /etc/nix/dotfiles-caches.conf > /dev/null
+    if ! grep -Fxq 'include /etc/nix/dotfiles-caches.conf' /etc/nix/nix.conf; then
+        echo 'include /etc/nix/dotfiles-caches.conf' | sudo tee -a /etc/nix/nix.conf > /dev/null
+    fi
     sudo systemctl restart nix-daemon
-fi
-
-# Add Numtide binary cache for pre-built LLM agents
-echo "Adding Numtide LLM agent binary cache..."
-if ! grep -q "cache.numtide.com" /etc/nix/nix.conf 2>/dev/null; then
-    sudo tee -a /etc/nix/nix.conf > /dev/null <<'EOF'
-extra-substituters = https://cache.numtide.com
-extra-trusted-public-keys = niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=
-EOF
-    sudo systemctl restart nix-daemon
-fi
-
-# Provision /etc/nix/netrc separately with private-cache credentials (root-owned, mode 0600).
-echo "Adding Jonathan's private binary cache..."
-if ! grep -Fq "https://jonathan.cachix.org" /etc/nix/nix.conf 2>/dev/null; then
-    sudo tee -a /etc/nix/nix.conf > /dev/null <<'EOF'
-extra-substituters = https://jonathan.cachix.org
-extra-trusted-public-keys = jonathan.cachix.org-1:aCu0qEoqdLs+Qmq9udXYcB5YISRuipb0XVxlpUx0PnE=
-netrc-file = /etc/nix/netrc
-EOF
-    sudo systemctl restart nix-daemon
+else
+    echo 'No Nix daemon service; Home Manager owns single-user cache settings.'
 fi
 
 # Check if running as root

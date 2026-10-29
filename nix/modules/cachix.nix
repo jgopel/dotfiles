@@ -1,19 +1,7 @@
-let
-  cacheSettings = {
-    extra-substituters = [ "https://jonathan.cachix.org" ];
-    extra-trusted-public-keys = [
-      "jonathan.cachix.org-1:aCu0qEoqdLs+Qmq9udXYcB5YISRuipb0XVxlpUx0PnE="
-    ];
-    netrc-file = "/etc/nix/netrc";
-  };
-in
 {
   den.aspects.cachix = {
-    nixos.nix.settings = cacheSettings;
-
     homeManager = { config, pkgs, ... }: {
       home.packages = [ pkgs.cachix ];
-      nix.settings = cacheSettings;
       systemd.user.services.cachix-watch-store = {
         Unit.Description = "Upload new Nix store paths to Jonathan's Cachix cache";
         Service = {

@@ -2,16 +2,12 @@
 
 {
   den = {
-    homes.x86_64-linux."jonathan@sov-cpu-srv" = { };
+    homes.x86_64-linux."jonathan@sov-cpu-srv".nixInstallation = "multi-user";
     aspects."jonathan@sov-cpu-srv" = {
       includes = [
+        den.aspects.nascent
         den.aspects.server
         (den.aspects.bazel { outputUserRoot = "/datapool/jonathan/bazel"; })
-        (den.aspects.syncthing {
-          category = "nascent";
-          path = "~/work";
-          stignore = ../../../syncthing/work/nascent/stignore;
-        })
         (den.aspects.syncthing {
           category = "personal";
           path = "~/personal";

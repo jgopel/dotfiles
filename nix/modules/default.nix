@@ -26,6 +26,8 @@
     ./hyprland.nix
     ./hyprland-testing.nix
     ./mosh.nix
+    ./nascent.nix
+    ./nix.nix
     ./noctalia.nix
     ./nvim.nix
     ./python.nix
@@ -43,6 +45,7 @@
       den.aspects.cli-tools
       den.aspects.dev-tools
       den.aspects.mosh
+      den.aspects.nix
     ];
 
     # Preserve legacy modules' inputs argument and the standalone HM package set.

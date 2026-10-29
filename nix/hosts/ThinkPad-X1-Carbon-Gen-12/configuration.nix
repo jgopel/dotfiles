@@ -6,7 +6,6 @@
     ../../nixos/users/jonathan.nix
     ../../nixos/boot/systemd-boot.nix
     # ../../nixos/swifteam.nix
-    ../../system-nascent.nix
     ./hardware-configuration.nix
   ];
 

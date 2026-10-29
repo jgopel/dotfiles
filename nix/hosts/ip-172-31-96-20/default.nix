@@ -2,15 +2,11 @@
 
 {
   den = {
-    homes.x86_64-linux."jonathan@ip-172-31-96-20" = { };
+    homes.x86_64-linux."jonathan@ip-172-31-96-20".nixInstallation = "multi-user";
     aspects."jonathan@ip-172-31-96-20" = {
       includes = [
+        den.aspects.nascent
         den.aspects.server
-        (den.aspects.syncthing {
-          category = "nascent";
-          path = "~/work";
-          stignore = ../../../syncthing/work/nascent/stignore;
-        })
       ];
       homeManager.imports = [ ./home.nix ];
     };

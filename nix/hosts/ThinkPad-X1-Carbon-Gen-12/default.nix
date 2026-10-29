@@ -3,18 +3,20 @@
 {
   den = {
     hosts.x86_64-linux.ThinkPad-X1-Carbon-Gen-12 = { };
-    homes.x86_64-linux."jonathan@ThinkPad-X1-Carbon-Gen-12" = { };
+    homes.x86_64-linux."jonathan@ThinkPad-X1-Carbon-Gen-12".nixInstallation = "nixos";
 
     aspects = {
       ThinkPad-X1-Carbon-Gen-12 = {
         includes = [
           den.aspects.canopy-desk
           den.aspects.hyprland-testing
+          den.aspects.nascent
         ];
         nixos.imports = [ ./configuration.nix ];
       };
       "jonathan@ThinkPad-X1-Carbon-Gen-12" = {
         includes = [
+          den.aspects.nascent
           (den.aspects.canopy-desk {
             noctaliaSettingsFile = ./noctalia/settings.toml;
             arctisSettings = {
@@ -23,34 +25,31 @@
             };
           })
           (den.aspects.syncthing {
-            category = "nascent";
-            path = "~/work";
-            stignore = ../../../syncthing/work/nascent/stignore;
-            tunnels = [
-              {
-                name = "sov-cpu-srv";
-                host = "sov-cpu-srv";
-                localPort = 8385;
-              }
-              {
-                name = "platform-tokyo-dev";
-                host = "platform-tokyo-dev";
-                localPort = 8386;
-              }
-              {
-                name = "shared-ib-fix-dev";
-                host = "shared-ib-fix-dev";
-                localPort = 8387;
-              }
-            ];
-          })
-          (den.aspects.syncthing {
             category = "personal";
             path = "~/personal";
             stignore = ../../../syncthing/personal/stignore;
           })
         ];
-        homeManager.imports = [ ./home.nix ];
+        homeManager = {
+          imports = [ ./home.nix ];
+          services.syncthing-user.tunnels = [
+            {
+              name = "sov-cpu-srv";
+              host = "sov-cpu-srv";
+              localPort = 8385;
+            }
+            {
+              name = "platform-tokyo-dev";
+              host = "platform-tokyo-dev";
+              localPort = 8386;
+            }
+            {
+              name = "shared-ib-fix-dev";
+              host = "shared-ib-fix-dev";
+              localPort = 8387;
+            }
+          ];
+        };
       };
     };
   };

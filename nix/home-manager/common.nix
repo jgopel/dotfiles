@@ -18,7 +18,6 @@
     ./tmux.nix
   ];
 
-  programs.fzf.enable = true;
   programs.home-manager.enable = true;
 
   home = {

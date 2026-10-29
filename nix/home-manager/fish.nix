@@ -1,10 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs.fishPlugins; [
-    done
-    fzf-fish
-  ];
+  home.packages = with pkgs.fishPlugins; [ done ];
 
   xdg.configFile = {
     # Direct Fish logins skip /etc/profile. Initialize Nix before plugin snippets.

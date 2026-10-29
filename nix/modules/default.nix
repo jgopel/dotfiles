@@ -23,6 +23,7 @@
     ./dev-tools.nix
     ./docker.nix
     ./editor-tools.nix
+    ./fish.nix
     ./fzf.nix
     ./hyprland.nix
     ./hyprland-testing.nix
@@ -45,6 +46,7 @@
       den.aspects.cachix
       den.aspects.cli-tools
       den.aspects.dev-tools
+      den.aspects.fish
       den.aspects.fzf
       den.aspects.mosh
       den.aspects.nix

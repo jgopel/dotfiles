@@ -41,6 +41,7 @@
     ./ssh.nix
     ./starship.nix
     ./syncthing
+    ./tmux.nix
   ];
 
   den = {
@@ -60,6 +61,7 @@
       den.aspects.nix
       den.aspects.ssh
       den.aspects.starship
+      den.aspects.tmux
     ];
 
     # Preserve legacy modules' inputs argument and select packages per home.

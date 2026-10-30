@@ -8,7 +8,7 @@
         den.aspects.nascent
         den.aspects.server
       ];
-      homeManager.imports = [ ./home.nix ];
+      homeManager.home.stateVersion = "26.05";
     };
   };
 }

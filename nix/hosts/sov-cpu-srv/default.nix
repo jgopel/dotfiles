@@ -14,7 +14,7 @@
           stignore = repoRoot + /syncthing/personal/stignore;
         })
       ];
-      homeManager.imports = [ ./home.nix ];
+      homeManager.home.stateVersion = "26.05";
     };
   };
 }

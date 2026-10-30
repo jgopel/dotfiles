@@ -37,6 +37,7 @@
     ./nvim.nix
     ./python.nix
     ./rust.nix
+    ./secrets.nix
     ./server.nix
     ./ssh.nix
     ./starship.nix
@@ -59,6 +60,7 @@
       den.aspects.home-manager
       den.aspects.mosh
       den.aspects.nix
+      den.aspects.secrets
       den.aspects.ssh
       den.aspects.starship
       den.aspects.tmux

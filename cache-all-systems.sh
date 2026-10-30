@@ -21,7 +21,7 @@ NIX_BIN="$(command -v nix)"
 
 # Keep cache trust and credentials local to this run, including on failure.
 umask 077
-CACHE_DIR=$(mktemp -d /tmp/cache-nixos-builds.XXXXXXXX)
+CACHE_DIR=$(mktemp -d /tmp/cache-all-systems.XXXXXXXX)
 trap 'rm -rf -- "$CACHE_DIR"' EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM

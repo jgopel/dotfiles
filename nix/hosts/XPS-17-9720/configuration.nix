@@ -7,6 +7,7 @@
     ../../nixos/boot/systemd-boot.nix
     ../../nixos/kernel-testing.nix
     ./hardware-configuration.nix
+    ./suspend-tracing.nix
   ];
 
   services = {

@@ -1,6 +1,9 @@
 {
   den.aspects.amp.homeManager = { config, pkgs, ... }: {
-    home.shellAliases.amp = "nix run github:numtide/llm-agents.nix#amp --";
+    home.shellAliases = {
+      amp = "nix run --option tarball-ttl 86400 github:numtide/llm-agents.nix#amp --";
+      amp-update = "nix run --refresh github:numtide/llm-agents.nix#amp --";
+    };
     home.packages = [ pkgs.xclip ];
 
     xdg.configFile."amp/settings.json".source =

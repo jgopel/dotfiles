@@ -5,10 +5,7 @@ let
   wrappedTelegram = wrap pkgs.telegram-desktop;
 in
 {
-  home.packages = [
-    pkgs.tailscale
-    wrappedTelegram
-  ];
+  home.packages = [ wrappedTelegram ];
 
   home.file.".local/share/dbus-1/services/org.telegram.desktop.service".text = ''
     [D-BUS Service]

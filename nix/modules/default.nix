@@ -42,6 +42,7 @@
     ./ssh.nix
     ./starship.nix
     ./syncthing
+    ./tailscale.nix
     ./tmux.nix
   ];
 
@@ -63,6 +64,7 @@
       den.aspects.secrets
       den.aspects.ssh
       den.aspects.starship
+      den.aspects.tailscale
       den.aspects.tmux
     ];
 

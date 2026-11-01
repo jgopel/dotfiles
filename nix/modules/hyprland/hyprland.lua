@@ -89,7 +89,7 @@ for key, direction in pairs({ H = "prev", L = "next" }) do
     end
   end)
 end
-for key, amount in pairs({ minus = "-0.05", equal = "+0.05", R = "+conf" }) do
+for key, amount in pairs({ minus = "-0.05", equal = "+0.05", E = "-conf", R = "+conf" }) do
   hl.bind("SUPER + " .. key, function()
     if workspace_layout() == "scrolling" then
       hl.dispatch(hl.dsp.layout("colresize " .. amount))

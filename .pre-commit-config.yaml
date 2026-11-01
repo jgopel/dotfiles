@@ -1,5 +1,3 @@
-exclude: ^nix/swifteam/
-
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -61,7 +59,6 @@ repos:
       - id: statix
         name: statix
         entry: statix check
-        args: [--ignore, 'nix/swifteam/**']
         language: system
         types: [nix]
         pass_filenames: false

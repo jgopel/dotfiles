@@ -358,8 +358,7 @@
         "nixpkgs": "nixpkgs_3",
         "noctalia": "noctalia",
         "noctalia-plugins": "noctalia-plugins",
-        "rust-overlay": "rust-overlay",
-        "swifteam": "swifteam"
+        "rust-overlay": "rust-overlay"
       }
     },
     "rust-overlay": {
@@ -380,19 +379,6 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "type": "github"
-      }
-    },
-    "swifteam": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1780501271,
-        "narHash": "sha256-weNBBnRX+caRKpy6r/Sj44J97X+6y9dMqMp++gQLK1o=",
-        "type": "tarball",
-        "url": "https://cdn.swifteam.com/st-agent-linux/v1.357.0/nixos/swifteam.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://cdn.swifteam.com/st-agent-linux/v1.357.0/nixos/swifteam.tar.gz"
       }
     },
     "systems": {

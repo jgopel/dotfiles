@@ -5,7 +5,6 @@
     ../../nixos/profiles/desktop.nix
     ../../nixos/users/jonathan.nix
     ../../nixos/boot/systemd-boot.nix
-    # ../../nixos/swifteam.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;

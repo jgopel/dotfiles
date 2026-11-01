@@ -33,11 +33,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    swifteam = {
-      url = "https://cdn.swifteam.com/st-agent-linux/v1.357.0/nixos/swifteam.tar.gz";
-      flake = false;
-    };
-
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";

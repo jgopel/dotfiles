@@ -30,5 +30,7 @@
           users = lib.attrNames (lib.filterAttrs (_: user: user.isNormalUser) config.users.users);
         };
       };
+
+      homeManager = { pkgs, ... }: { home.packages = [ pkgs.polychromatic ]; };
     };
 }

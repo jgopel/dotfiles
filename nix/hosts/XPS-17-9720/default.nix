@@ -21,6 +21,8 @@
             ../../kernel-testing/thunderbolt.nix
           ];
 
+          programs.steam.enable = true;
+
           services = {
             xserver.videoDrivers = [ "nvidia" ];
           };
@@ -59,7 +61,7 @@
             stignore = repoRoot + /syncthing/personal/stignore;
           })
         ];
-        homeManager.imports = [ ./home.nix ];
+        homeManager.home.stateVersion = "26.05";
       };
     };
   };

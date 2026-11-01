@@ -24,10 +24,12 @@
     ./dev-tools.nix
     ./docker.nix
     ./editor-tools.nix
+    ./firefox.nix
     ./fish.nix
     ./fzf.nix
     ./ghostty.nix
     ./git.nix
+    ./gnome.nix
     ./home-manager.nix
     ./hyprland.nix
     ./hyprland-testing.nix
@@ -40,6 +42,8 @@
     ./rust.nix
     ./secrets.nix
     ./server.nix
+    ./signal.nix
+    ./slack.nix
     ./ssh.nix
     ./starship.nix
     ./syncthing

@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-  # Preserve the existing extension order after module merging.
   imports = [
     ./extensions/always-show-workspace-thumbnails.nix
     ./extensions/vitals.nix

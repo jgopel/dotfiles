@@ -2,7 +2,7 @@ config_version = 16
 
 [bar.default]
 center = ["notifications", "spacer_5", "clock", "spacer_2", "weather"]
-end = ["media", "spacer_7", "tray", "syncthing", "spacer_6", "clipboard", "network", "brightness", "battery"]
+end = ["media", "spacer_7", "tray", "syncthing", "spacer_6", "clipboard", "network", "battery"]
 start = ["launcher", "workspaces", "spacer_3", "cpu", "spacer_4", "ram"]
 
 [idle.behavior.lock]
@@ -19,7 +19,7 @@ auto_locate = true
 [lockscreen_widgets]
 enabled = false
 schema_version = 2
-widget_order = ["lockscreen-login-box@DP-1", "lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-5"]
+widget_order = ["lockscreen-login-box@DP-1", "lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-5", "lockscreen-login-box@FALLBACK"]
 
 [lockscreen_widgets.grid]
 cell_size = 16
@@ -82,14 +82,42 @@ show_session_buttons = true
 show_unlock_hint = true
 show_weather = true
 
+[lockscreen_widgets.widget."lockscreen-login-box@FALLBACK"]
+box_height = 196.0
+box_width = 810.0
+cx = 960.0
+cy = 898.0
+output = "FALLBACK"
+placement_height = 1080.0
+placement_width = 1920.0
+rotation = 0.0
+type = "login_box"
+
+[lockscreen_widgets.widget."lockscreen-login-box@FALLBACK".settings]
+background_color = "surface_container"
+background_opacity = 0.88
+background_radius = 12.0
+center_password_text = false
+input_opacity = 1.0
+input_radius = 6.0
+layout = "regular"
+show_caps_lock = true
+show_keyboard_layout = true
+show_login_button = true
+show_media = true
+show_password_reveal = true
+show_session_buttons = true
+show_unlock_hint = true
+show_weather = true
+
 [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
 box_height = 196.0
 box_width = 810.0
-cx = 1280.0
-cy = 1418.0
+cx = 960.0
+cy = 1063.5
 output = "eDP-1"
-placement_height = 1600.0
-placement_width = 2560.0
+placement_height = 1200.0
+placement_width = 1920.0
 rotation = 0.0
 type = "login_box"
 

@@ -9,16 +9,29 @@
   # Keep the latest stable kernel while testing the Thunderbolt patch below.
   boot.kernelPackages = pkgs.linuxPackages_latest.extend (
     _final: prev: {
-      kernel = prev.kernel.override {
-        stdenv = pkgs.ccacheStdenv.override {
-          extraConfig = ''
-            export CCACHE_DIR="${config.programs.ccache.cacheDir}"
-            export CCACHE_UMASK=007
-            export CCACHE_SLOPPINESS=random_seed
-            export CCACHE_MAXSIZE=20G
-          '';
-        };
-      };
+      kernel =
+        (prev.kernel.override {
+          stdenv = pkgs.ccacheStdenv.override {
+            extraConfig = ''
+              export CCACHE_DIR="${config.programs.ccache.cacheDir}"
+              export CCACHE_UMASK=007
+              export CCACHE_SLOPPINESS=random_seed
+              export CCACHE_MAXSIZE=20G
+            '';
+          };
+        }).overrideAttrs
+          (old: {
+            # Nixpkgs unpacks into $dev, whose hash changes with every patch.
+            # Compile in /build/source instead so paths (including debug info)
+            # stay stable without weakening ccache's input checks.
+            preUnpack = "";
+            postInstall = ''
+              mkdir -p "$dev/lib/modules/${prev.kernel.modDirVersion}"
+              mv "$NIX_BUILD_TOP/source" "$dev/lib/modules/${prev.kernel.modDirVersion}/source"
+              cd "$dev/lib/modules/${prev.kernel.modDirVersion}/source"
+            ''
+            + old.postInstall;
+          });
     }
   );
 

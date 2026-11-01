@@ -25,6 +25,9 @@
           }
         ];
 
+        # Allow Oryx browser flashing and live training for the ZSA Moonlander.
+        hardware.keyboard.zsa.enable = true;
+
         hardware.openrazer = {
           enable = true;
           users = lib.attrNames (lib.filterAttrs (_: user: user.isNormalUser) config.users.users);

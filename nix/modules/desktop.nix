@@ -13,14 +13,21 @@
         den.aspects.ghostty
         den.aspects.gnome
         (den.aspects.hyprland { settingsFile = noctaliaSettingsFile; })
+        den.aspects.pipewire
         den.aspects.signal
         den.aspects.slack
       ];
 
       nixos = { lib, ... }: {
-        services.xserver.xkb = {
-          layout = lib.mkDefault "us";
-          variant = lib.mkDefault "";
+        networking.networkmanager.enable = true;
+
+        services = {
+          avahi.nssmdns4 = true;
+          fwupd.enable = true;
+          xserver.xkb = {
+            layout = lib.mkDefault "us";
+            variant = lib.mkDefault "";
+          };
         };
       };
 

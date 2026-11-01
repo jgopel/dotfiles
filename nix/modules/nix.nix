@@ -24,7 +24,24 @@ in
   den.aspects.nix = {
     includes = [ den.aspects.nix.single-user ];
 
-    nixos.nix.settings = caches.common;
+    nixos = {
+      nixpkgs.config.allowUnfree = true;
+
+      nix = {
+        settings = caches.common // {
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
+        };
+
+        gc = {
+          automatic = true;
+          dates = "daily";
+          options = "--delete-older-than 14d";
+        };
+      };
+    };
 
     homeManager = { pkgs, ... }: {
       imports = [ inputs.nix-index-database.homeModules.nix-index ];

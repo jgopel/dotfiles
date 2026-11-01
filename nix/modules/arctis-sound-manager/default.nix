@@ -1,3 +1,5 @@
+{ den, ... }:
+
 {
   den.aspects.arctis-sound-manager.__functor =
     _:
@@ -7,6 +9,8 @@
     }:
     {
       name = "arctis-sound-manager";
+      includes = [ den.aspects.pipewire ];
+
       nixos = { inputs, lib, ... }: {
         imports = [ inputs.arctis-sound-manager.nixosModules.default ];
 

@@ -15,6 +15,7 @@
     ./btop.nix
     ./cachix.nix
     ./canopy-desk.nix
+    ./caps-escape-swap.nix
     ./claude-code.nix
     ./cli-tools.nix
     ./codex.nix

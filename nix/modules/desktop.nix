@@ -12,5 +12,12 @@
         den.aspects.ghostty
         (den.aspects.hyprland { settingsFile = noctaliaSettingsFile; })
       ];
+
+      nixos = { lib, ... }: {
+        services.xserver.xkb = {
+          layout = lib.mkDefault "us";
+          variant = lib.mkDefault "";
+        };
+      };
     };
 }

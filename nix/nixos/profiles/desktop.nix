@@ -3,7 +3,6 @@
     ../common.nix
     ../gnome.nix
     ../audio.nix
-    ../keyboard.nix
   ];
 
   networking.networkmanager.enable = true;

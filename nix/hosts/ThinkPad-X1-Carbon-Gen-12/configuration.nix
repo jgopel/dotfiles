@@ -17,13 +17,6 @@
 
   networking.hostName = "ThinkPad-X1-Carbon-Gen-12";
 
-  services = {
-    # Run `sudo nix run nixpkgs#keyd -- monitor` and find the built-in keyboard
-    # in the initial device list; copy its ID, then exit with Ctrl+C.
-    # No typing is required.
-    keyd.keyboards.builtIn.ids = [ "0001:0001" ];
-  };
-
   # After resume, DNS waits on Tailscale's resolvers exhaust nsncd's eight shared
   # NSS workers, starving local account lookups despite authentication needing
   # no DNS. Observed as ~10s Noctalia "Authorizing" delays and resume UI stalls;

@@ -11,6 +11,7 @@
           den.aspects.canopy-desk
           den.aspects.hyprland-testing
           den.aspects.nascent
+          (den.aspects.caps-escape-swap { builtInIds = [ "0001:0001" ]; })
         ];
         nixos.imports = [ ./configuration.nix ];
       };

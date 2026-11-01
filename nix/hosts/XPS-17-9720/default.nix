@@ -56,7 +56,10 @@
             };
           })
         ];
-        homeManager.home.stateVersion = "26.05";
+        homeManager = {
+          home.stateVersion = "26.05";
+          programs.btop.settings.selected_battery = "BAT0";
+        };
       };
     };
   };

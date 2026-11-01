@@ -1,8 +1,6 @@
 {
   den.aspects.btop = {
     provides.to-hosts.nixos = { pkgs, ... }: {
-      environment.systemPackages = [ pkgs.btop ];
-
       security.wrappers.btop = {
         owner = "root";
         group = "root";
@@ -11,6 +9,9 @@
       };
     };
 
-    homeManager = { pkgs, ... }: { home.packages = [ pkgs.btop ]; };
+    homeManager.programs.btop = {
+      enable = true;
+      settings.update_ms = 500;
+    };
   };
 }

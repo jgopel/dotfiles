@@ -10,6 +10,8 @@
     }:
     {
       name = "noctalia";
+      provides.to-hosts.nixos.services.upower.enable = true;
+
       homeManager =
         {
           config,

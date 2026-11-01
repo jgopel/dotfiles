@@ -8,7 +8,6 @@
     aspects = {
       ThinkPad-X1-Carbon-Gen-12 = {
         includes = [
-          den.aspects.boot-nixos-first
           den.aspects.hyprland-testing
           (den.aspects.caps-escape-swap { builtInIds = [ "0001:0001" ]; })
         ];

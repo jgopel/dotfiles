@@ -22,7 +22,7 @@
           programs.noctalia = {
             enable = true;
             systemd.enable = true;
-            settings = import ./noctalia/settings.nix { inherit inputs; };
+            settings = import ./settings.nix { inherit inputs; };
           };
 
           home.packages = [

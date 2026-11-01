@@ -50,7 +50,7 @@
           && fallbackInput != ""
         ) "arctis-sound-manager requires non-empty fallbackOutput and fallbackInput for Home Manager";
         let
-          preferences = import ./arctis-sound-manager/settings.nix { inherit fallbackOutput fallbackInput; };
+          preferences = import ./settings.nix { inherit fallbackOutput fallbackInput; };
           applySettings = pkgs.writeShellScript "apply-arctis-settings" ''
             set -e
             ${lib.concatMapAttrsStringSep "\n" (

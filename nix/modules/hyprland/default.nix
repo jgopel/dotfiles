@@ -22,7 +22,7 @@
         }:
 
         let
-          desktop = pkgs.callPackage ./hyprland/package.nix { inherit inputs; };
+          desktop = pkgs.callPackage ./package.nix { inherit inputs; };
           monitors = pkgs.writeShellApplication {
             name = "hyprland-monitors";
             runtimeInputs = with pkgs; [
@@ -30,7 +30,7 @@
               hyprland
               jq
             ];
-            text = builtins.readFile ./hyprland/monitors.sh;
+            text = builtins.readFile ./monitors.sh;
           };
         in
         {

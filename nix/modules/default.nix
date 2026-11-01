@@ -10,7 +10,7 @@
     ./agents.nix
     ./amp.nix
     ./antigravity-cli.nix
-    ./arctis-sound-manager.nix
+    ./arctis-sound-manager
     ./bazel.nix
     ./btop.nix
     ./cachix.nix
@@ -29,14 +29,14 @@
     ./fzf.nix
     ./ghostty.nix
     ./git.nix
-    ./gnome.nix
+    ./gnome
     ./home-manager.nix
-    ./hyprland.nix
+    ./hyprland
     ./hyprland-testing.nix
     ./mosh.nix
     ./nascent.nix
     ./nix.nix
-    ./noctalia.nix
+    ./noctalia
     ./nvim.nix
     ./python.nix
     ./rust.nix

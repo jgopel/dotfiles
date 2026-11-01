@@ -1,57 +1,66 @@
-{ pkgs, ... }:
-
 {
-  imports = [
-    ./extensions/always-show-workspace-thumbnails.nix
-    ./extensions/vitals.nix
-    ./extensions/tactile.nix
-    ./extensions/dash-to-dock.nix
-  ];
-
-  programs.gnome-shell = {
-    enable = true;
-    extensions = [ { package = pkgs.gnomeExtensions.appindicator; } ];
-  };
-
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-      clock-format = "12h";
-      show-battery-percentage = true;
+  den.aspects.gnome = {
+    nixos.services = {
+      xserver.enable = true;
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+      orca.enable = false;
     };
 
-    "org/gnome/desktop/peripherals/touchpad".natural-scroll = false;
+    homeManager = { pkgs, ... }: {
+      imports = [
+        ./extensions/always-show-workspace-thumbnails.nix
+        ./extensions/vitals.nix
+        ./extensions/tactile.nix
+        ./extensions/dash-to-dock.nix
+      ];
 
-    "org/gnome/desktop/wm/keybindings" = {
-      switch-applications = [ "<Super>Tab" ];
-      switch-applications-backward = [ "<Shift><Super>Tab" ];
-      switch-windows = [ "<Alt>Tab" ];
-      switch-windows-backward = [ "<Shift><Alt>Tab" ];
-    };
+      programs.gnome-shell = {
+        enable = true;
+        extensions = [ { package = pkgs.gnomeExtensions.appindicator; } ];
+      };
 
-    "org/gnome/mutter".workspaces-only-on-primary = false;
+      dconf.settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          clock-format = "12h";
+          show-battery-percentage = true;
+        };
 
-    "org/gnome/shell/keybindings".show-screenshot-ui = [
-      "Print"
-      "<Super><Shift>s"
-    ];
+        "org/gnome/desktop/peripherals/touchpad".natural-scroll = false;
 
-    "org/gnome/shell/window-switcher".current-workspace-only = true;
+        "org/gnome/desktop/wm/keybindings" = {
+          switch-applications = [ "<Super>Tab" ];
+          switch-applications-backward = [ "<Shift><Super>Tab" ];
+          switch-windows = [ "<Alt>Tab" ];
+          switch-windows-backward = [ "<Shift><Alt>Tab" ];
+        };
 
-    "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
+        "org/gnome/mutter".workspaces-only-on-primary = false;
 
-    "org/gnome/nautilus/preferences".sort-directories-first = true;
+        "org/gnome/shell/keybindings".show-screenshot-ui = [
+          "Print"
+          "<Super><Shift>s"
+        ];
 
-    "org/gtk/gtk4/settings/file-chooser".sort-directories-first = true;
-    "org/gtk/settings/file-chooser".sort-directories-first = true;
+        "org/gnome/shell/window-switcher".current-workspace-only = true;
 
-    "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
-      "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ghostty/"
-    ];
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ghostty" = {
-      binding = "<Control><Alt>t";
-      command = "${pkgs.ghostty}/bin/ghostty";
-      name = "Ghostty";
+        "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
+
+        "org/gnome/nautilus/preferences".sort-directories-first = true;
+
+        "org/gtk/gtk4/settings/file-chooser".sort-directories-first = true;
+        "org/gtk/settings/file-chooser".sort-directories-first = true;
+
+        "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ghostty/"
+        ];
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ghostty" = {
+          binding = "<Control><Alt>t";
+          command = "${pkgs.ghostty}/bin/ghostty";
+          name = "Ghostty";
+        };
+      };
     };
   };
 }

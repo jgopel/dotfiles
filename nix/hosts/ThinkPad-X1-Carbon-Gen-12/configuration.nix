@@ -1,10 +1,5 @@
 {
-  imports = [
-    ../../nixos/users/jonathan.nix
-    ../../nixos/boot/systemd-boot.nix
-  ];
-
-  boot.loader.systemd-boot.prioritizeNixOS = true;
+  imports = [ ../../nixos/users/jonathan.nix ];
 
   # After resume, DNS waits on Tailscale's resolvers exhaust nsncd's eight shared
   # NSS workers, starving local account lookups despite authentication needing

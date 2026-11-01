@@ -12,6 +12,7 @@
     ./antigravity-cli.nix
     ./arctis-sound-manager
     ./bazel.nix
+    ./boot-nixos-first.nix
     ./btop.nix
     ./cachix.nix
     ./canopy-desk.nix
@@ -76,6 +77,13 @@
 
     default.nixos = { lib, pkgs, ... }: {
       boot.kernelPackages = lib.mkDefault pkgs.linuxPackages;
+      boot.loader = {
+        systemd-boot = {
+          enable = lib.mkDefault true;
+          configurationLimit = lib.mkDefault 10;
+        };
+        efi.canTouchEfiVariables = lib.mkDefault true;
+      };
 
       time.timeZone = lib.mkDefault "America/Denver";
 

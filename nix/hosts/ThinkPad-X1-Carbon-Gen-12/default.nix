@@ -8,6 +8,7 @@
     aspects = {
       ThinkPad-X1-Carbon-Gen-12 = {
         includes = [
+          den.aspects.boot-nixos-first
           den.aspects.canopy-desk
           den.aspects.hyprland-testing
           den.aspects.nascent

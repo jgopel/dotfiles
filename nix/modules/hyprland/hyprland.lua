@@ -65,13 +65,11 @@ hl.window_rule({
 hl.window_rule({ match = { class = "^com\\.mitchellh\\.ghostty$" }, focus_on_activate = false })
 
 -- Keyboard shortcuts - largely stolen from Omarchy or Gnome muscle memory
-local function only_for(layouts, action)
+local function by_layout(actions)
   return function()
-    local current = workspace_layout()
-    for _, layout in ipairs(layouts) do
-      if current == layout then
-        return hl.dispatch(action)
-      end
+    local action = actions[workspace_layout()] or actions.default
+    if action then
+      return hl.dispatch(action)
     end
   end
 end
@@ -85,20 +83,29 @@ hl.bind("SUPER + ALT + S", hl.dsp.window.move({ workspace = "special:scratchpad"
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
 for key, direction in pairs({ H = "l", J = "d", K = "u", L = "r" }) do
   hl.bind("SUPER + " .. key, hl.dsp.focus({ direction = direction }))
-  hl.bind("SUPER + SHIFT + " .. key, function()
-    if (direction == "l" or direction == "r") and workspace_layout() == "scrolling" then
-      hl.dispatch(hl.dsp.layout("swapcol " .. direction))
-    else
-      hl.dispatch(hl.dsp.window.swap({ direction = direction }))
-    end
-  end)
 end
-hl.bind("SUPER + CTRL + H", only_for({ "scrolling" }, hl.dsp.layout("consume_or_expel prev")))
-hl.bind("SUPER + CTRL + L", only_for({ "scrolling" }, hl.dsp.layout("consume_or_expel next")))
-hl.bind("SUPER + minus", only_for({ "scrolling" }, hl.dsp.layout("colresize -0.05")))
-hl.bind("SUPER + equal", only_for({ "scrolling" }, hl.dsp.layout("colresize +0.05")))
-hl.bind("SUPER + R", only_for({ "scrolling" }, hl.dsp.layout("colresize +conf")))
-hl.bind("SUPER + E", only_for({ "scrolling" }, hl.dsp.layout("colresize -conf")))
+hl.bind(
+  "SUPER + SHIFT + H",
+  by_layout({
+    scrolling = hl.dsp.layout("swapcol l"),
+    default = hl.dsp.window.swap({ direction = "l" }),
+  })
+)
+hl.bind(
+  "SUPER + SHIFT + L",
+  by_layout({
+    scrolling = hl.dsp.layout("swapcol r"),
+    default = hl.dsp.window.swap({ direction = "r" }),
+  })
+)
+hl.bind("SUPER + SHIFT + J", hl.dsp.window.swap({ direction = "d" }))
+hl.bind("SUPER + SHIFT + K", hl.dsp.window.swap({ direction = "u" }))
+hl.bind("SUPER + CTRL + H", by_layout({ scrolling = hl.dsp.layout("consume_or_expel prev") }))
+hl.bind("SUPER + CTRL + L", by_layout({ scrolling = hl.dsp.layout("consume_or_expel next") }))
+hl.bind("SUPER + minus", by_layout({ scrolling = hl.dsp.layout("colresize -0.05") }))
+hl.bind("SUPER + equal", by_layout({ scrolling = hl.dsp.layout("colresize +0.05") }))
+hl.bind("SUPER + R", by_layout({ scrolling = hl.dsp.layout("colresize +conf") }))
+hl.bind("SUPER + E", by_layout({ scrolling = hl.dsp.layout("colresize -conf") }))
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 

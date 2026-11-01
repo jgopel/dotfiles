@@ -9,8 +9,9 @@
 local layouts = {}
 local presets = {
   ["two-column"] = { engine = "master", orientation = "left", ratio = 2 / 3 },
-  ["three-column"] = { engine = "master", orientation = "center", ratio = 1 / 3 },
   scrolling = { engine = "scrolling" },
+  dwindle = { engine = "dwindle" },
+  monocle = { engine = "monocle" },
 }
 
 local runtime = os.getenv("XDG_RUNTIME_DIR")

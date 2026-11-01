@@ -31,7 +31,7 @@ hl.config({
   },
   cursor = { enable_hyprcursor = false },
   misc = { focus_on_activate = true },
-  master = { new_status = "slave", slave_count_for_center_master = 2, center_master_fallback = "right" },
+  master = { new_status = "slave" },
 })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 3, bezier = "default", style = "slidevert" })
 

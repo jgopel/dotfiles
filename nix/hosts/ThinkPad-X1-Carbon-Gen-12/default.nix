@@ -17,6 +17,7 @@
           imports = [
             ./configuration.nix
             ./hardware-configuration.nix
+            ../../kernel-testing/thunderbolt.nix
           ];
 
           hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];

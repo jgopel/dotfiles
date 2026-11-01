@@ -1,13 +1,9 @@
-{ pkgs, ... }:
-
 {
   imports = [
     ../../nixos/profiles/desktop.nix
     ../../nixos/users/jonathan.nix
     ../../nixos/boot/systemd-boot.nix
   ];
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.loader.systemd-boot.prioritizeNixOS = true;
 

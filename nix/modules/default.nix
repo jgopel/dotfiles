@@ -69,6 +69,8 @@
       den.aspects.tmux
     ];
 
+    default.nixos = { lib, pkgs, ... }: { boot.kernelPackages = lib.mkDefault pkgs.linuxPackages; };
+
     # Preserve legacy modules' inputs argument and select packages per home.
     schema = {
       host.instantiate =

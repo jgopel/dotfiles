@@ -17,6 +17,8 @@
             ./configuration.nix
             ./hardware-configuration.nix
             ./suspend-tracing.nix
+            ../../kernel-testing/suspend-diagnostics.nix
+            ../../kernel-testing/thunderbolt.nix
           ];
 
           services = {

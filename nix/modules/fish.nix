@@ -1,6 +1,6 @@
 {
   den.aspects.fish = {
-    nixos.programs.fish.enable = true;
+    provides.to-hosts.nixos.programs.fish.enable = true;
 
     homeManager = { pkgs, ... }: {
       home.packages = with pkgs.fishPlugins; [ done ];
@@ -56,9 +56,6 @@
 
           # et (eternal-terminal) completions - wraps ssh for host/user completions
           complete -c et --wraps ssh
-
-          # Environment settings
-          set -gx TZ 'America/Denver'
 
           # Continuation prompt
           set -g fish_prompt_pwd_dir_length 0

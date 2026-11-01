@@ -1,6 +1,6 @@
 {
   den.aspects.tailscale = {
-    nixos.services.tailscale.enable = true;
+    provides.to-hosts.nixos.services.tailscale.enable = true;
     homeManager = { pkgs, ... }: { home.packages = [ pkgs.tailscale ]; };
   };
 }

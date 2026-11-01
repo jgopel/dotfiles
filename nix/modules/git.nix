@@ -5,23 +5,11 @@
     lfs.enable = true;
 
     settings = {
-      user = {
-        name = "Jonathan Gopel";
-        email = "jgopel@gmail.com";
-      };
-
       core = {
         autocrlf = false;
         whitespace = "blank-at-eol,space-before-tab,tab-in-indent,-blank-at-eof,tabwidth=8";
         logAllRefUpdates = true;
         pager = "less";
-      };
-
-      sendemail = {
-        smtpserver = "smtp.gmail.com";
-        smtpserverport = 587;
-        smtpencryption = "tls";
-        smtpuser = "jgopel@gmail.com";
       };
 
       init.defaultBranch = "main";

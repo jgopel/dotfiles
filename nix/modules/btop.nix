@@ -1,6 +1,6 @@
 {
   den.aspects.btop = {
-    nixos = { pkgs, ... }: {
+    provides.to-hosts.nixos = { pkgs, ... }: {
       environment.systemPackages = [ pkgs.btop ];
 
       security.wrappers.btop = {

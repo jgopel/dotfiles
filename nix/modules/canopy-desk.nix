@@ -4,17 +4,13 @@
   den.aspects.canopy-desk.__functor =
     _:
     {
-      noctaliaSettingsFile ? null,
       arctisSettings ? { },
     }:
     {
       name = "canopy-desk";
-      includes = [
-        (den.aspects.desktop { inherit noctaliaSettingsFile; })
-        (den.aspects.arctis-sound-manager arctisSettings)
-      ];
+      includes = [ (den.aspects.arctis-sound-manager arctisSettings) ];
 
-      nixos = { config, lib, ... }: {
+      provides.to-hosts.nixos = { config, lib, ... }: {
         assertions = [
           {
             # Nix recognizes "pre", but not "rc", as older than the final release.

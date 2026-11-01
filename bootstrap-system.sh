@@ -17,7 +17,7 @@ if systemctl cat nix-daemon.service > /dev/null 2>&1; then
     echo "Configuring Nix daemon binary caches..."
     cache_config=$(nix --extra-experimental-features nix-command eval --raw \
             --file "$SCRIPT_DIR/nix/cache-settings.nix" \
-        --apply 'caches: builtins.concatStringsSep "\n" (builtins.attrValues (builtins.mapAttrs (name: values: name + " = " + builtins.concatStringsSep " " values) caches.common))')
+        --apply 'caches: builtins.concatStringsSep "\n" (builtins.attrValues (builtins.zipAttrsWith (name: lists: name + " = " + builtins.concatStringsSep " " (builtins.concatLists lists)) [ caches.common caches.jonathan ]))')
     # Provision /etc/nix/netrc separately (root-owned, mode 0600).
     printf '%s\n' "$cache_config" \
         | sudo tee /etc/nix/dotfiles-caches.conf > /dev/null

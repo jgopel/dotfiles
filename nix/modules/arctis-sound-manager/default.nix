@@ -11,7 +11,7 @@
       name = "arctis-sound-manager";
       includes = [ den.aspects.pipewire ];
 
-      nixos = { inputs, lib, ... }: {
+      provides.to-hosts.nixos = { inputs, lib, ... }: {
         imports = [ inputs.arctis-sound-manager.nixosModules.default ];
 
         # GDM also starts graphical-session.target; its ASM instance must not compete

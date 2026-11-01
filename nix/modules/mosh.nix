@@ -1,10 +1,10 @@
 {
   den.aspects.mosh = {
-    nixos = { pkgs, ... }: { environment.systemPackages = [ pkgs.mosh ]; };
+    provides.to-hosts.nixos = { pkgs, ... }: { environment.systemPackages = [ pkgs.mosh ]; };
     homeManager = { pkgs, ... }: { home.packages = [ pkgs.mosh ]; };
 
     server = {
-      nixos.programs.mosh.enable = true;
+      provides.to-hosts.nixos.programs.mosh.enable = true;
 
       homeManager = { pkgs, ... }: {
         # Add mosh-server to PATH so SSH can spawn it.

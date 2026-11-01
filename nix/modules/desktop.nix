@@ -9,16 +9,12 @@
     {
       name = "desktop";
       includes = [
-        den.aspects.firefox
-        den.aspects.ghostty
         den.aspects.gnome
         (den.aspects.hyprland { settingsFile = noctaliaSettingsFile; })
         den.aspects.pipewire
-        den.aspects.signal
-        den.aspects.slack
       ];
 
-      nixos = { lib, ... }: {
+      provides.to-hosts.nixos = { lib, ... }: {
         networking.networkmanager.enable = true;
 
         services = {
@@ -31,16 +27,6 @@
         };
       };
 
-      homeManager = { pkgs, ... }: {
-        home.packages = with pkgs; [
-          discord
-          dropbox
-          google-chrome
-          hack-font
-          keepassxc
-        ];
-
-        fonts.fontconfig.enable = true;
-      };
+      homeManager.fonts.fontconfig.enable = true;
     };
 }

@@ -1,5 +1,5 @@
 {
-  den.aspects.pipewire.nixos = {
+  den.aspects.pipewire.provides.to-hosts.nixos = {
     security.rtkit.enable = true;
     services = {
       pulseaudio.enable = false;

@@ -23,18 +23,14 @@ xdg.configFile."starship.toml".source = ./starship.toml;
 ### Host configuration and module selection
 
 Each `nix/hosts/<hostname>/default.nix` declares den entities and their aspects.
-NixOS machines declare `den.hosts` and import `./configuration.nix` through
-their `nixos` aspect. That configuration imports the tracked
-`hardware-configuration.nix`; keep hardware settings and machine-specific
-workarounds in the host directory.
+NixOS machines declare `den.hosts.<system>.<hostname>.users.jonathan = { };` and
+import the tracked `hardware-configuration.nix` through their host's `nixos`
+aspect. Keep hardware settings and machine-specific workarounds in the host
+directory.
 
 Home Manager remains standalone, including on NixOS: each machine declares
-`den.homes.<system>."user@hostname"` and imports `./home.nix` through its
-host-qualified `homeManager` aspect. Existing `home.nix` files select modules,
-identity, and host-specific settings. HM-only machines have `default.nix` and
-`home.nix`, without a `den.hosts` entry.
-
-### Modules are in the process of being made dendratic
-
-Legacy modules live in `nix/nixos` and `nix/home-manager`. The new dendratic
-modules live in `nix/modules`.
+`den.homes.<system>."user@hostname"`. Den selects both the user's base aspect
+and `user@hostname` for host users and standalone homes. Select optional aspects
+and set home state versions in that host-qualified aspect. HM-only machines have
+no `den.hosts` entry. Leave host-user `classes` at its default `[ "user" ]` so
+Home Manager is not also activated through NixOS.

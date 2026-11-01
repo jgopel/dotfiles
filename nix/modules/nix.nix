@@ -1,4 +1,4 @@
-{ den, inputs, ... }:
+{ den, ... }:
 
 let
   caches = import ../cache-settings.nix;
@@ -44,8 +44,6 @@ in
     };
 
     homeManager = { pkgs, ... }: {
-      imports = [ inputs.nix-index-database.homeModules.nix-index ];
-
       nix = {
         package = pkgs.nix;
         settings.experimental-features = [
@@ -56,16 +54,6 @@ in
           automatic = true;
           dates = "daily";
           options = "--delete-older-than 3d";
-        };
-      };
-
-      programs = {
-        nix-index-database.comma.enable = true;
-
-        direnv = {
-          enable = true;
-          nix-direnv.enable = true;
-          config.global.log_format = builtins.fromJSON ''"\u001b[2mdirenv: %s\u001b[0m"'';
         };
       };
     };
@@ -80,7 +68,7 @@ in
 
     nascent = {
       includes = [ den.aspects.nix.nascent.single-user ];
-      nixos.nix.settings = caches.nascent;
+      provides.to-hosts.nixos.nix.settings = caches.nascent;
       single-user = { home, ... }: {
         homeManager = { lib, ... }: {
           nix.settings = lib.mkIf (home.nixInstallation == "single-user") caches.nascent;

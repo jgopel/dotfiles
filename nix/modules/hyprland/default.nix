@@ -10,7 +10,7 @@
       name = "hyprland";
       includes = [ (den.aspects.noctalia { inherit settingsFile; }) ];
 
-      nixos.programs.hyprland.enable = true;
+      provides.to-hosts.nixos.programs.hyprland.enable = true;
 
       homeManager =
         {

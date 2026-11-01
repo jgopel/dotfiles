@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Keep the latest stable kernel while testing the Thunderbolt patch below.
@@ -32,6 +37,13 @@
     {
       name = "thunderbolt-rpm-subtree";
       patch = ./thunderbolt-rpm-subtree.patch;
+    }
+  ]
+  # Temporary diagnostics for the XPS's intermittent s2idle hang.
+  ++ lib.optionals (config.networking.hostName == "XPS-17-9720") [
+    {
+      name = "suspend-diagnostics";
+      patch = ./suspend-diagnostics.patch;
     }
   ];
 }

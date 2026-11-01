@@ -1,0 +1,409 @@
+Subject: [PATCH] PM: add opt-in XPS suspend phase diagnostics
+
+Local diagnostic patch, enabled by pm_debug_messages. Record suspend phase
+boundaries, PM notifier callbacks, rollback, and the first s2idle all-CPU
+barrier and exit. Existing pm_print_times supplies device callback details.
+Sample s2idle loop iterations to avoid an unbounded spurious-wakeup log.
+
+The idle-barrier messages use printk_deferred so they do not invoke console
+drivers under tick_freeze_lock. This barrier does not prove hardware S0ix
+residency. Printk records are not durable while journald is frozen.
+
+---
+diff --git a/include/linux/suspend.h b/include/linux/suspend.h
+--- a/include/linux/suspend.h
++++ b/include/linux/suspend.h
+@@ -146,6 +146,7 @@
+ extern suspend_state_t pm_suspend_target_state;
+ extern suspend_state_t mem_sleep_current;
+ extern suspend_state_t mem_sleep_default;
++void pm_debug_s2idle_barrier(bool entering);
+
+ /**
+  * suspend_set_ops - set platform dependent suspend operations
+@@ -449,6 +450,7 @@
+ /* kernel/power/main.c */
+ extern int register_pm_notifier(struct notifier_block *nb);
+ extern int unregister_pm_notifier(struct notifier_block *nb);
++bool pm_debug_notifier_chain(struct notifier_block **head);
+ extern void ksys_sync_helper(void);
+ extern void pm_report_hw_sleep_time(u64 t);
+ extern void pm_report_max_hw_sleep(u64 t);
+@@ -498,6 +500,11 @@
+ 	return 0;
+ }
+
++static inline bool pm_debug_notifier_chain(struct notifier_block **head)
++{
++	return false;
++}
++
+ static inline void pm_report_hw_sleep_time(u64 t) {};
+ static inline void pm_report_max_hw_sleep(u64 t) {};
+
+--- a/kernel/notifier.c
++++ b/kernel/notifier.c
+@@ -4,6 +4,7 @@
+ #include <linux/export.h>
+ #include <linux/notifier.h>
+ #include <linux/rcupdate.h>
++#include <linux/suspend.h>
+ #include <linux/vmalloc.h>
+
+ #define CREATE_TRACE_POINTS
+@@ -68,6 +69,7 @@
+ {
+ 	int ret = NOTIFY_DONE;
+ 	struct notifier_block *nb, *next_nb;
++	bool debug_pm = pm_debug_notifier_chain(nl);
+
+ 	nb = rcu_dereference_raw(*nl);
+
+@@ -82,7 +84,13 @@
+ 		}
+ #endif
+ 		trace_notifier_run((void *)nb->notifier_call);
++		if (debug_pm)
++			pr_notice("PM: diag notifier=%ps event=%lu begin\n",
++				  nb->notifier_call, val);
+ 		ret = nb->notifier_call(nb, val, v);
++		if (debug_pm)
++			pr_notice("PM: diag notifier=%ps event=%lu end ret=%#x\n",
++				  nb->notifier_call, val, ret);
+
+ 		if (nr_calls)
+ 			(*nr_calls)++;
+--- a/kernel/power/main.c
++++ b/kernel/power/main.c
+@@ -153,6 +153,11 @@
+
+ static BLOCKING_NOTIFIER_HEAD(pm_chain_head);
+
++bool pm_debug_notifier_chain(struct notifier_block **head)
++{
++	return head == &pm_chain_head.head && pm_debug_messages_on;
++}
++
+ int register_pm_notifier(struct notifier_block *nb)
+ {
+ 	return blocking_notifier_chain_register(&pm_chain_head, nb);
+--- a/kernel/power/suspend.c
++++ b/kernel/power/suspend.c
+@@ -20,6 +20,7 @@
+ #include <linux/io.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
++#include <linux/log2.h>
+ #include <linux/mm.h>
+ #include <linux/slab.h>
+ #include <linux/export.h>
+@@ -62,6 +63,30 @@
+ enum s2idle_states __read_mostly s2idle_state;
+ static DEFINE_RAW_SPINLOCK(s2idle_lock);
+
++/* Serialized by system_transition_mutex; notice level keeps photos readable. */
++static unsigned long suspend_diag_cycle;
++static bool s2idle_diag_seen[2];
++
++#define suspend_diag(fmt, ...) do { \
++	if (pm_debug_messages_on) \
++		pr_notice("diag cycle=%lu " fmt, suspend_diag_cycle, ##__VA_ARGS__); \
++} while (0)
++
++/* Called under tick_freeze_lock with interrupts disabled. */
++void pm_debug_s2idle_barrier(bool entering)
++{
++	if (!pm_debug_messages_on || pm_suspend_target_state != PM_SUSPEND_TO_IDLE ||
++	    s2idle_diag_seen[entering])
++		return;
++
++	s2idle_diag_seen[entering] = true;
++	/* Never invoke a console driver from inside the idle barrier. */
++	printk_deferred(KERN_NOTICE "PM: diag cycle=%lu first %s cpu=%u\n",
++			suspend_diag_cycle,
++			entering ? "all-CPU idle barrier" : "idle exit",
++			smp_processor_id());
++}
++
+ /**
+  * pm_suspend_default_s2idle - Check if suspend-to-idle is the default suspend.
+  *
+@@ -86,6 +111,8 @@
+ static void s2idle_begin(void)
+ {
+ 	s2idle_state = S2IDLE_STATE_NONE;
++	s2idle_diag_seen[0] = false;
++	s2idle_diag_seen[1] = false;
+ }
+
+ static void s2idle_enter(void)
+@@ -132,7 +159,11 @@
+
+ static void s2idle_loop(void)
+ {
++	unsigned long iterations = 0;
++	bool report;
++
+ 	pm_pr_dbg("suspend-to-idle\n");
++	suspend_diag("s2idle-loop begin\n");
+
+ 	/*
+ 	 * Suspend-to-idle equals:
+@@ -144,19 +175,34 @@
+ 	 * to avoid them upfront.
+ 	 */
+ 	for (;;) {
++		iterations++;
++		/* Log early iterations and powers of two, not every spurious wake. */
++		report = iterations <= 4 || is_power_of_2(iterations);
++		if (report)
++			suspend_diag("s2idle iteration=%lu wake-check begin\n", iterations);
+ 		if (s2idle_ops && s2idle_ops->wake) {
+-			if (s2idle_ops->wake())
++			if (s2idle_ops->wake()) {
++				suspend_diag("platform wake accepted irq=%u\n", pm_wakeup_irq());
+ 				break;
++			}
+ 		} else if (pm_wakeup_pending()) {
++			suspend_diag("wakeup pending irq=%u\n", pm_wakeup_irq());
+ 			break;
+ 		}
+
++		if (report)
++			suspend_diag("s2idle iteration=%lu platform-check begin\n", iterations);
+ 		if (s2idle_ops && s2idle_ops->check)
+ 			s2idle_ops->check();
+
++		if (report)
++			suspend_diag("s2idle iteration=%lu idle-enter begin\n", iterations);
+ 		s2idle_enter();
++		if (report)
++			suspend_diag("s2idle iteration=%lu idle-enter end\n", iterations);
+ 	}
+
++	suspend_diag("s2idle-loop end iterations=%lu\n", iterations);
+ 	pm_pr_dbg("resume from suspend-to-idle\n");
+ }
+
+@@ -376,24 +422,35 @@
+ 	if (!sleep_state_supported(state))
+ 		return -EPERM;
+
++	suspend_diag("console-prepare begin\n");
+ 	pm_prepare_console();
++	suspend_diag("console-prepare end; prepare-notifiers begin\n");
+
+ 	error = pm_notifier_call_chain_robust(PM_SUSPEND_PREPARE, PM_POST_SUSPEND);
++	suspend_diag("prepare-notifiers end error=%d\n", error);
+ 	if (error)
+ 		goto Restore;
+
++	suspend_diag("filesystems-freeze begin enabled=%d\n", filesystem_freeze_enabled);
+ 	filesystems_freeze(filesystem_freeze_enabled);
++	suspend_diag("filesystems-freeze end; tasks-freeze begin\n");
+ 	trace_suspend_resume(TPS("freeze_processes"), 0, true);
+ 	error = suspend_freeze_processes();
+ 	trace_suspend_resume(TPS("freeze_processes"), 0, false);
++	suspend_diag("tasks-freeze end error=%d\n", error);
+ 	if (!error)
+ 		return 0;
+
+ 	dpm_save_failed_step(SUSPEND_FREEZE);
++	suspend_diag("freeze-failure rollback: filesystems-thaw begin\n");
+ 	filesystems_thaw();
++	suspend_diag("filesystems-thaw end; rollback-notifiers begin\n");
+ 	pm_notifier_call_chain(PM_POST_SUSPEND);
++	suspend_diag("rollback-notifiers end\n");
+  Restore:
++	suspend_diag("console-restore begin\n");
+ 	pm_restore_console();
++	suspend_diag("console-restore end\n");
+ 	return error;
+ }
+
+@@ -420,30 +477,42 @@
+ {
+ 	int error;
+
++	suspend_diag("platform-prepare begin\n");
+ 	error = platform_suspend_prepare(state);
++	suspend_diag("platform-prepare end error=%d\n", error);
+ 	if (error)
+ 		goto Platform_finish;
+
++	suspend_diag("devices-late begin\n");
+ 	error = dpm_suspend_late(PMSG_SUSPEND);
++	suspend_diag("devices-late end error=%d\n", error);
+ 	if (error) {
+ 		pr_err("late suspend of devices failed\n");
+ 		goto Platform_finish;
+ 	}
++	suspend_diag("platform-prepare-late begin\n");
+ 	error = platform_suspend_prepare_late(state);
++	suspend_diag("platform-prepare-late end error=%d\n", error);
+ 	if (error)
+ 		goto Devices_early_resume;
+
++	suspend_diag("devices-noirq begin\n");
+ 	error = dpm_suspend_noirq(PMSG_SUSPEND);
++	suspend_diag("devices-noirq end error=%d\n", error);
+ 	if (error) {
+ 		pr_err("noirq suspend of devices failed\n");
+ 		goto Platform_early_resume;
+ 	}
++	suspend_diag("platform-prepare-noirq begin\n");
+ 	error = platform_suspend_prepare_noirq(state);
++	suspend_diag("platform-prepare-noirq end error=%d\n", error);
+ 	if (error)
+ 		goto Platform_wake;
+
+-	if (suspend_test(TEST_PLATFORM))
++	if (suspend_test(TEST_PLATFORM)) {
++		suspend_diag("platform test: skipping sleep\n");
+ 		goto Platform_wake;
++	}
+
+ 	if (state == PM_SUSPEND_TO_IDLE) {
+ 		s2idle_loop();
+@@ -483,17 +552,26 @@
+ 	pm_sleep_enable_secondary_cpus();
+
+  Platform_wake:
++	suspend_diag("platform-resume-noirq begin\n");
+ 	platform_resume_noirq(state);
++	suspend_diag("platform-resume-noirq end; devices-resume-noirq begin\n");
+ 	dpm_resume_noirq(PMSG_RESUME);
++	suspend_diag("devices-resume-noirq end\n");
+
+  Platform_early_resume:
++	suspend_diag("platform-resume-early begin\n");
+ 	platform_resume_early(state);
++	suspend_diag("platform-resume-early end\n");
+
+  Devices_early_resume:
++	suspend_diag("devices-resume-early begin\n");
+ 	dpm_resume_early(PMSG_RESUME);
++	suspend_diag("devices-resume-early end\n");
+
+  Platform_finish:
++	suspend_diag("platform-finish begin error=%d\n", error);
+ 	platform_resume_finish(state);
++	suspend_diag("platform-finish end\n");
+ 	return error;
+ }
+
+@@ -514,13 +592,18 @@
+ 	if (state == PM_SUSPEND_TO_IDLE)
+ 		pm_set_suspend_no_platform();
+
++	suspend_diag("platform-begin begin\n");
+ 	error = platform_suspend_begin(state);
++	suspend_diag("platform-begin end error=%d\n", error);
+ 	if (error)
+ 		goto Close;
+
++	suspend_diag("console-suspend begin\n");
+ 	console_suspend_all();
++	suspend_diag("console-suspend end; devices-suspend begin\n");
+ 	suspend_test_start();
+ 	error = dpm_suspend_start(PMSG_SUSPEND);
++	suspend_diag("devices-suspend end error=%d\n", error);
+ 	if (error) {
+ 		pr_err("Some devices failed to suspend, or early wake event detected\n");
+ 		goto Recover_platform;
+@@ -535,19 +618,27 @@
+
+  Resume_devices:
+ 	suspend_test_start();
++	suspend_diag("devices-resume begin\n");
+ 	dpm_resume_end(PMSG_RESUME);
++	suspend_diag("devices-resume end\n");
+ 	suspend_test_finish("resume devices");
+ 	trace_suspend_resume(TPS("console_resume_all"), state, true);
++	suspend_diag("console-resume begin\n");
+ 	console_resume_all();
++	suspend_diag("console-resume end\n");
+ 	trace_suspend_resume(TPS("console_resume_all"), state, false);
+
+  Close:
++	suspend_diag("platform-end begin\n");
+ 	platform_resume_end(state);
++	suspend_diag("platform-end end error=%d\n", error);
+ 	pm_suspend_target_state = PM_SUSPEND_ON;
+ 	return error;
+
+  Recover_platform:
++	suspend_diag("platform-recover begin error=%d\n", error);
+ 	platform_recover(state);
++	suspend_diag("platform-recover end\n");
+ 	goto Resume_devices;
+ }
+
+@@ -559,10 +650,15 @@
+  */
+ static void suspend_finish(void)
+ {
++	suspend_diag("tasks-thaw begin\n");
+ 	suspend_thaw_processes();
++	suspend_diag("tasks-thaw end; filesystems-thaw begin\n");
+ 	filesystems_thaw();
++	suspend_diag("filesystems-thaw end; post-notifiers begin\n");
+ 	pm_notifier_call_chain(PM_POST_SUSPEND);
++	suspend_diag("post-notifiers end; console-restore begin\n");
+ 	pm_restore_console();
++	suspend_diag("console-restore end\n");
+ }
+
+ /**
+@@ -591,13 +687,17 @@
+ 	if (!mutex_trylock(&system_transition_mutex))
+ 		return -EBUSY;
+
++	suspend_diag_cycle++;
++	suspend_diag("begin state=%s\n", mem_sleep_labels[state]);
+ 	if (state == PM_SUSPEND_TO_IDLE)
+ 		s2idle_begin();
+
+ 	if (sync_on_suspend_enabled) {
+ 		trace_suspend_resume(TPS("sync_filesystems"), 0, true);
+
++		suspend_diag("filesystems-sync begin\n");
+ 		error = pm_sleep_fs_sync();
++		suspend_diag("filesystems-sync end error=%d\n", error);
+ 		if (error)
+ 			goto Unlock;
+
+@@ -622,6 +722,7 @@
+ 	pm_pr_dbg("Finishing wakeup.\n");
+ 	suspend_finish();
+  Unlock:
++	suspend_diag("end error=%d\n", error);
+ 	mutex_unlock(&system_transition_mutex);
+ 	return error;
+ }
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -17,6 +17,7 @@
+ #include <linux/profile.h>
+ #include <linux/sched.h>
+ #include <linux/module.h>
++#include <linux/suspend.h>
+ #include <trace/events/power.h>
+
+ #include <asm/irq_regs.h>
+@@ -524,6 +525,7 @@
+ 	if (tick_freeze_depth == num_online_cpus()) {
+ 		trace_suspend_resume(TPS("timekeeping_freeze"),
+ 				     smp_processor_id(), true);
++		pm_debug_s2idle_barrier(true);
+ 		/*
+ 		 * All other CPUs have their interrupts disabled and are
+ 		 * suspended to idle. Other tasks have been frozen so there
+@@ -574,6 +576,7 @@
+ 		system_state = SYSTEM_RUNNING;
+ 		trace_suspend_resume(TPS("timekeeping_freeze"),
+ 				     smp_processor_id(), false);
++		pm_debug_s2idle_barrier(false);
+ 	} else {
+ 		touch_softlockup_watchdog();
+ 		tick_resume_local();

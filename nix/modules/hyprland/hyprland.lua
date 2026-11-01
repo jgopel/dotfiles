@@ -65,6 +65,17 @@ hl.window_rule({
 hl.window_rule({ match = { class = "^com\\.mitchellh\\.ghostty$" }, focus_on_activate = false })
 
 -- Keyboard shortcuts - largely stolen from Omarchy or Gnome muscle memory
+local function only_for(layouts, action)
+  return function()
+    local current = workspace_layout()
+    for _, layout in ipairs(layouts) do
+      if current == layout then
+        return hl.dispatch(action)
+      end
+    end
+  end
+end
+
 hl.bind("SUPER + SHIFT + RETURN", hl.dsp.layout("swapwithmaster master ignoremaster"))
 hl.bind("SUPER + W", hl.dsp.window.close())
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
@@ -82,20 +93,12 @@ for key, direction in pairs({ H = "l", J = "d", K = "u", L = "r" }) do
     end
   end)
 end
-for key, direction in pairs({ H = "prev", L = "next" }) do
-  hl.bind("SUPER + CTRL + " .. key, function()
-    if workspace_layout() == "scrolling" then
-      hl.dispatch(hl.dsp.layout("consume_or_expel " .. direction))
-    end
-  end)
-end
-for key, amount in pairs({ minus = "-0.05", equal = "+0.05", E = "-conf", R = "+conf" }) do
-  hl.bind("SUPER + " .. key, function()
-    if workspace_layout() == "scrolling" then
-      hl.dispatch(hl.dsp.layout("colresize " .. amount))
-    end
-  end)
-end
+hl.bind("SUPER + CTRL + H", only_for({ "scrolling" }, hl.dsp.layout("consume_or_expel prev")))
+hl.bind("SUPER + CTRL + L", only_for({ "scrolling" }, hl.dsp.layout("consume_or_expel next")))
+hl.bind("SUPER + minus", only_for({ "scrolling" }, hl.dsp.layout("colresize -0.05")))
+hl.bind("SUPER + equal", only_for({ "scrolling" }, hl.dsp.layout("colresize +0.05")))
+hl.bind("SUPER + R", only_for({ "scrolling" }, hl.dsp.layout("colresize +conf")))
+hl.bind("SUPER + E", only_for({ "scrolling" }, hl.dsp.layout("colresize -conf")))
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 

@@ -29,25 +29,40 @@ let
       hyprctl eval "set_workspace_layout(\"$layout\")"
     '';
   };
+  appearance = writeText "appearance.lua" (
+    lib.replaceStrings [ "@icons@" ] [ "${adwaita-icon-theme}/share/icons" ] (
+      builtins.readFile ./appearance.lua
+    )
+  );
+  bindings = writeText "bindings.lua" (
+    lib.replaceStrings
+      [ "@noctalia@" "@layouts@" "@terminal@" ]
+      [
+        "${noctalia}/bin/noctalia"
+        "${layouts}/bin/hyprland-layouts"
+        "${ghostty}/bin/ghostty --gtk-single-instance=true"
+      ]
+      (builtins.readFile ./bindings.lua)
+  );
 in
 {
   inherit noctalia layouts;
   config = writeText "hyprland.lua" (
     lib.replaceStrings
       [
-        "@noctalia@"
-        "@layouts@"
-        "@terminal@"
-        "@icons@"
+        "@appearance@"
+        "@bindings@"
+        "@scrolling@"
+        "@window-rules@"
         "@workspace-layouts@"
         "@workspace-bar@"
         "@workspace-navigation@"
       ]
       [
-        "${noctalia}/bin/noctalia"
-        "${layouts}/bin/hyprland-layouts"
-        "${ghostty}/bin/ghostty --gtk-single-instance=true"
-        "${adwaita-icon-theme}/share/icons"
+        "${appearance}"
+        "${bindings}"
+        "${./scrolling.lua}"
+        "${./window-rules.lua}"
         "${./workspace-layouts.lua}"
         "${./workspace-bar.lua}"
         "${./workspace-navigation.lua}"

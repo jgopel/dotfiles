@@ -46,6 +46,7 @@
       "jonathan@XPS-17-9720" = {
         includes = [
           (den.aspects.jonathan.desktop { noctaliaSettingsFile = ./noctalia/settings.toml; })
+          den.aspects.noctalia-greeter
           den.aspects.jonathan.personal-sync
           den.aspects.ssh.personal
           (den.aspects.canopy-desk {

@@ -1,4 +1,7 @@
 {
+  # Signal's existing database key must remain available without the GNOME desktop.
+  den.aspects.signal.provides.to-hosts.nixos.services.gnome.gnome-keyring.enable = true;
+
   den.aspects.signal.homeManager = { pkgs, ... }: {
     home.packages = [
       # Keep access to the existing database key when switching GNOME/Hyprland.

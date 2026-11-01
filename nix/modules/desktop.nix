@@ -9,7 +9,6 @@
     {
       name = "desktop";
       includes = [
-        den.aspects.gnome
         (den.aspects.hyprland { settingsFile = noctaliaSettingsFile; })
         den.aspects.pipewire
       ];

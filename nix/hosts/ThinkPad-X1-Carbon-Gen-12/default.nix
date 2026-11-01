@@ -35,6 +35,7 @@
       };
       "jonathan@ThinkPad-X1-Carbon-Gen-12" = {
         includes = [
+          den.aspects.gnome
           (den.aspects.jonathan.desktop { noctaliaSettingsFile = ./noctalia/settings.toml; })
           den.aspects.jonathan.nascent
           den.aspects.jonathan.personal-sync

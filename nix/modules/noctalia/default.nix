@@ -1,6 +1,8 @@
 { repoRoot, ... }:
 
 {
+  imports = [ ./greeter.nix ];
+
   den.aspects.noctalia.__functor =
     _:
     {

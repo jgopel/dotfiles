@@ -13,7 +13,17 @@
           den.aspects.nascent
           (den.aspects.caps-escape-swap { builtInIds = [ "0001:0001" ]; })
         ];
-        nixos.imports = [ ./configuration.nix ];
+        nixos = { pkgs, ... }: {
+          imports = [
+            ./configuration.nix
+            ./hardware-configuration.nix
+          ];
+
+          hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
+
+          networking.hostName = "ThinkPad-X1-Carbon-Gen-12";
+          system.stateVersion = "26.05";
+        };
       };
       "jonathan@ThinkPad-X1-Carbon-Gen-12" = {
         includes = [

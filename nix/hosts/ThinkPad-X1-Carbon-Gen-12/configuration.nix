@@ -6,16 +6,11 @@
     ../../nixos/users/jonathan.nix
     ../../nixos/boot/systemd-boot.nix
     # ../../nixos/swifteam.nix
-    ./hardware-configuration.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.loader.systemd-boot.prioritizeNixOS = true;
-
-  hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
-
-  networking.hostName = "ThinkPad-X1-Carbon-Gen-12";
 
   # After resume, DNS waits on Tailscale's resolvers exhaust nsncd's eight shared
   # NSS workers, starving local account lookups despite authentication needing
@@ -24,6 +19,4 @@
   # account lookups: 32 workers mitigate the measured burst, but do not isolate
   # authentication from DNS or fix the underlying resolver delay.
   systemd.services.nscd.environment.NSNCD_WORKER_COUNT = "32";
-
-  system.stateVersion = "26.05";
 }

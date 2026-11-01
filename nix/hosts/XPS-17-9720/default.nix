@@ -12,7 +12,34 @@
           den.aspects.hyprland-testing
           (den.aspects.caps-escape-swap { builtInIds = [ "0001:0001" ]; })
         ];
-        nixos.imports = [ ./configuration.nix ];
+        nixos = {
+          imports = [
+            ./configuration.nix
+            ./hardware-configuration.nix
+            ./suspend-tracing.nix
+          ];
+
+          services = {
+            xserver.videoDrivers = [ "nvidia" ];
+          };
+
+          hardware.nvidia = {
+            modesetting.enable = true;
+            open = true;
+            powerManagement = {
+              enable = true;
+              kernelSuspendNotifier = true;
+            };
+            prime = {
+              intelBusId = "PCI:0:2:0";
+              nvidiaBusId = "PCI:1:0:0";
+              sync.enable = true;
+            };
+          };
+
+          networking.hostName = "XPS-17-9720";
+          system.stateVersion = "26.05";
+        };
       };
       "jonathan@XPS-17-9720" = {
         includes = [

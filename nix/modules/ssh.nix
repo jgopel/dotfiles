@@ -26,9 +26,6 @@
             User = "jonathan";
           };
 
-          shared-ib-fix-dev = {
-            User = "jonathan";
-          };
         };
       };
     };

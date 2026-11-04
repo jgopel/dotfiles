@@ -58,11 +58,6 @@
               host = "platform-tokyo-dev";
               localPort = 8386;
             }
-            {
-              name = "shared-ib-fix-dev";
-              host = "shared-ib-fix-dev";
-              localPort = 8387;
-            }
           ];
         };
       };

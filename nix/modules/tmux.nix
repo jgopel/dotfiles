@@ -77,9 +77,6 @@
           bind L resize-pane -x100
           bind K resize-pane -x120
           bind J resize-pane -x150
-
-          # Equalize neighboring panes
-          bind = select-layout -E
         '';
       };
     };

@@ -47,6 +47,7 @@
         ];
         homeManager = {
           home.stateVersion = "26.05";
+          programs.btop.settings.selected_battery = "BAT0";
           services.syncthing-user.tunnels = [
             {
               name = "sov-cpu-srv";

@@ -1,0 +1,14 @@
+*.swp
+*.swo
+*.swn
+cscope.in.out
+cscope.out
+cscope.po.out
+tags
+__pycache__/
+.ycm_extra_conf.py
+compile_commands.json
+.clangd/
+.cache/
+*.sync-conflict-*.lock
+.syncthing.*.tmp

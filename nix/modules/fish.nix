@@ -1,3 +1,5 @@
+{ repoRoot, ... }:
+
 {
   den.aspects.fish = {
     provides.to-hosts.nixos.programs.fish.enable = true;
@@ -7,11 +9,7 @@
 
       xdg.configFile = {
         # Direct Fish logins skip /etc/profile. Initialize Nix before plugin snippets.
-        "fish/conf.d/00-nix-daemon.fish".text = ''
-          if test -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-            source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-          end
-        '';
+        "fish/conf.d/00-nix-daemon.fish".source = repoRoot + /fish/00-nix-daemon.fish;
 
         "fish/completions/devenv.fish".source =
           "${pkgs.devenv}/share/fish/vendor_completions.d/devenv.fish";
@@ -32,34 +30,8 @@
           }
         ];
 
-        shellAliases = {
-          ls = "ls -F --ignore-backups --color --group-directories-first --human-readable";
-          ll = "ls -l";
-          la = "LC_COLLATE=C ls -A";
-          lla = "la -l";
-          refresh = "source ~/.config/fish/config.fish";
-          tmux = "tmux -u";
-          sudol = "sudo -E";
-        };
-
-        shellInit = ''
-          # Disable greeting
-          set -g fish_greeting
-
-          # vim mode
-          fish_vi_key_bindings
-        '';
-
-        interactiveShellInit = ''
-          # Add ~/bin to PATH
-          fish_add_path -g $HOME/bin
-
-          # et (eternal-terminal) completions - wraps ssh for host/user completions
-          complete -c et --wraps ssh
-
-          # Continuation prompt
-          set -g fish_prompt_pwd_dir_length 0
-        '';
+        shellInit = builtins.readFile (repoRoot + /fish/config.fish);
+        interactiveShellInit = builtins.readFile (repoRoot + /fish/interactive.fish);
       };
     };
   };

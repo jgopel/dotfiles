@@ -68,21 +68,8 @@ in
     };
 
     homeManager.programs = {
-      git.settings = {
-        user = {
-          name = "Jonathan Gopel";
-          email = "jgopel@gmail.com";
-        };
-        sendemail = {
-          smtpserver = "smtp.gmail.com";
-          smtpserverport = 587;
-          smtpencryption = "tls";
-          smtpuser = "jgopel@gmail.com";
-        };
-      };
-      fish.interactiveShellInit = ''
-        set -gx TZ 'America/Denver'
-      '';
+      git.includes = [ { path = repoRoot + /git/identity; } ];
+      fish.interactiveShellInit = builtins.readFile (repoRoot + /fish/jonathan.fish);
     };
 
     personal-sync.includes = [

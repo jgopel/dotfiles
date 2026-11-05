@@ -1,0 +1,9 @@
+[user]
+    name = Jonathan Gopel
+    email = jgopel@gmail.com
+
+[sendemail]
+    smtpserver = smtp.gmail.com
+    smtpserverport = 587
+    smtpencryption = tls
+    smtpuser = jgopel@gmail.com

@@ -19,5 +19,14 @@
         DPM_WATCHDOG_TIMEOUT = lib.kernel.freeform "120";
       };
     }
+    {
+      name = "suspend-lock-owners";
+      patch = ./suspend-lock-owners.patch;
+      structuredExtraConfig = {
+        STACKTRACE = lib.kernel.yes;
+        KALLSYMS = lib.kernel.yes;
+        KALLSYMS_ALL = lib.kernel.yes;
+      };
+    }
   ];
 }

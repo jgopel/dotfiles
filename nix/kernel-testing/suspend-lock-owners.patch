@@ -1,0 +1,169 @@
+Subject: [PATCH] PM: dump bounded mutex owner chains on device watchdog timeout
+
+Local diagnostics for the XPS resume stall. At the warning and before
+panic, follow the timed-out task's mutex wait through four owners.
+Print task identities, lock symbols and 32 stack frames per owner.
+Prefix lines with root PID and depth to separate concurrent watchdogs.
+
+Trylock blocked_lock before reading blocked_on to pin the mutex.
+Resolve the sampled owner against the RCU task list (4096 tasks per
+hop), retain task references, and stop on missing owners, repeated
+tasks or depth limits. These snapshots do not prove a deadlock.
+Non-mutex waits terminate traversal. Never take the target mutex or
+its wait_lock, allocate memory, or change normal mutex acquisition.
+
+Built with DPM_WATCHDOG and STACKTRACE on non-PREEMPT_RT kernels;
+no-op elsewhere. Timeouts, panic policy and pstore setup are unchanged.
+
+---
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index e130da4..9fa6a6d 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -613,6 +613,8 @@ static void dpm_watchdog_handler(struct timer_list *t)
+ 		show_stack(wd->tsk, NULL, KERN_EMERG);
+ 		if (dpm_watchdog_all_cpu_backtrace)
+ 			trigger_allbutcpu_cpu_backtrace(this_cpu);
++		/* Keep owner evidence near the tail captured by pstore. */
++		mutex_dump_owner_chain(wd->tsk);
+ 		panic("%s %s: unrecoverable failure\n",
+ 			dev_driver_string(wd->dev), dev_name(wd->dev));
+ 	}
+@@ -621,6 +623,7 @@ static void dpm_watchdog_handler(struct timer_list *t)
+ 	dev_warn(wd->dev, "**** DPM device timeout after %u seconds; %u seconds until panic ****\n",
+ 		 dpm_watchdog_warning_timeout, time_left);
+ 	show_stack(wd->tsk, NULL, KERN_WARNING);
++	mutex_dump_owner_chain(wd->tsk);
+
+ 	wd->fatal = true;
+ 	mod_timer(timer, jiffies + HZ * time_left);
+diff --git a/include/linux/mutex.h b/include/linux/mutex.h
+index 734048c..7fae5f4 100644
+--- a/include/linux/mutex.h
++++ b/include/linux/mutex.h
+@@ -269,4 +269,10 @@ DECLARE_LOCK_GUARD_1_ATTRS(mutex_init,	__acquires(_T), __releases(*(struct mutex
+
+ extern unsigned long mutex_get_owner(struct mutex *lock);
+
++#if defined(CONFIG_DPM_WATCHDOG) && defined(CONFIG_STACKTRACE) && !defined(CONFIG_PREEMPT_RT)
++void mutex_dump_owner_chain(struct task_struct *task);
++#else
++static inline void mutex_dump_owner_chain(struct task_struct *task) { }
++#endif
++
+ #endif /* __LINUX_MUTEX_H */
+diff --git a/kernel/locking/mutex.c b/kernel/locking/mutex.c
+index 942a939..d1bda9a 100644
+--- a/kernel/locking/mutex.c
++++ b/kernel/locking/mutex.c
+@@ -30,6 +30,7 @@
+ #include <linux/debug_locks.h>
+ #include <linux/osq_lock.h>
+ #include <linux/hung_task.h>
++#include <linux/stacktrace.h>
+
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/lock.h>
+@@ -79,6 +80,102 @@ unsigned long mutex_get_owner(struct mutex *lock)
+ 	return (unsigned long)__owner_task(owner);
+ }
+
++#if defined(CONFIG_DPM_WATCHDOG) && defined(CONFIG_STACKTRACE)
++/*
++ * Best-effort diagnostics from the DPM watchdog's timer context. Do not take
++ * the mutex or its wait_lock: the interrupted task may already hold them.
++ * A non-NULL blocked_on, sampled under blocked_lock, pins the mutex until we
++ * release blocked_lock: the waiter must clear it before finishing its wait.
++ * Unlike task->blocker, this lets us inspect the owner without racing a freed
++ * mutex. Trylock only, since the interrupted task may hold blocked_lock too.
++ */
++void mutex_dump_owner_chain(struct task_struct *task)
++{
++	struct task_struct *chain[5] = { task };
++	unsigned long entries[32];
++	unsigned int depth, nr = 1, i;
++	pid_t root = task_pid_nr(task);
++
++	/* Keep visited tasks alive for stack walks and repeat detection. */
++	get_task_struct(task);
++	for (depth = 0; depth < nr; depth++) {
++		struct task_struct *g, *t, *next = NULL;
++		unsigned long flags, owner = 0;
++		unsigned int count, scanned = 0;
++		struct mutex *lock;
++
++		task = chain[depth];
++		pr_warn("PM: mutex-chain root=%d depth=%u task=%.*s:%d state=%c (best effort)\n",
++			root, depth, TASK_COMM_LEN, task->comm,
++			task_pid_nr(task), task_state_to_char(task));
++		/* The watchdog already printed the root's stack. */
++		if (depth) {
++			count = stack_trace_save_tsk(task, entries, ARRAY_SIZE(entries), 0);
++			for (i = 0; i < count; i++)
++				pr_warn("PM: mutex-chain root=%d depth=%u stack %pS\n",
++					root, depth, (void *)entries[i]);
++			if (!count || count == ARRAY_SIZE(entries))
++				pr_warn("PM: mutex-chain root=%d depth=%u stack unavailable or truncated\n",
++					root, depth);
++		}
++
++		/* Resolve only against live tasks, never dereference a raw owner. */
++		rcu_read_lock();
++		if (!raw_spin_trylock_irqsave(&task->blocked_lock, flags)) {
++			rcu_read_unlock();
++			pr_warn("PM: mutex-chain root=%d depth=%u blocked_lock busy; stopping\n",
++				root, depth);
++			break;
++		}
++		lock = __get_task_blocked_on(task);
++		if (lock)
++			owner = mutex_get_owner(lock);
++		raw_spin_unlock_irqrestore(&task->blocked_lock, flags);
++
++		if (owner) {
++			for_each_process_thread(g, t) {
++				if ((unsigned long)t == owner) {
++					get_task_struct(t);
++					next = t;
++					goto unlock_rcu;
++				}
++				if (++scanned == 4096)
++					goto unlock_rcu;
++			}
++		}
++unlock_rcu:
++		rcu_read_unlock();
++
++		if (!lock) {
++			pr_warn("PM: mutex-chain root=%d depth=%u no mutex wait recorded; stopping\n",
++				root, depth);
++			break;
++		}
++		/* lock is now an identity only; do not dereference it. */
++		if (!next) {
++			pr_warn("PM: mutex-chain root=%d depth=%u mutex=%ps (%p) owner unavailable (changed or scan limit); stopping\n",
++				root, depth, lock, lock);
++			break;
++		}
++		pr_warn("PM: mutex-chain root=%d depth=%u mutex=%ps (%p) likely owner=%.*s:%d\n",
++			root, depth, lock, lock, TASK_COMM_LEN,
++			next->comm, task_pid_nr(next));
++		for (i = 0; i < nr; i++)
++			if (next == chain[i])
++				break;
++		if (i < nr || nr == ARRAY_SIZE(chain)) {
++			pr_warn("PM: mutex-chain root=%d %s; stopping\n", root,
++				i < nr ? "repeated task" : "depth limit");
++			put_task_struct(next);
++			break;
++		}
++		chain[nr++] = next;
++	}
++	for (i = 0; i < nr; i++)
++		put_task_struct(chain[i]);
++}
++#endif
++
+ /*
+  * Returns: __mutex_owner(lock) on failure or NULL on success.
+  */

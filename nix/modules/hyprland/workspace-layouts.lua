@@ -92,5 +92,5 @@ hl.on("workspace.removed", function(workspace)
 end)
 
 hl.config({
-  scrolling = { fullscreen_on_one_column = false, column_width = 0.5, wrap_swapcol = false },
+  scrolling = { fullscreen_on_one_column = false, wrap_swapcol = false },
 })

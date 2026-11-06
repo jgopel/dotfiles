@@ -1,12 +1,15 @@
 {
   inputs,
+  repoRoot,
   lib,
   stdenv,
   writeShellApplication,
   writeText,
   adwaita-icon-theme,
   ghostty,
+  gnugrep,
   hyprland,
+  jq,
 }:
 
 let
@@ -17,21 +20,20 @@ let
       noctalia
       hyprland
     ];
-    text = ''
-      choice=$(printf '%s\n' 'Two columns' 'Scrolling' 'Dwindle' 'Monocle' | noctalia dmenu -p 'Workspace layout') || exit 0
-      case "$choice" in
-        'Two columns') layout=two-column ;;
-        'Scrolling') layout=scrolling ;;
-        'Dwindle') layout=dwindle ;;
-        'Monocle') layout=monocle ;;
-        *) exit 0 ;;
-      esac
-      hyprctl eval "set_workspace_layout(\"$layout\")"
-    '';
+    text = builtins.readFile (repoRoot + /hyprland/layouts.sh);
+  };
+  monitors = writeShellApplication {
+    name = "hyprland-monitors";
+    runtimeInputs = [
+      gnugrep
+      hyprland
+      jq
+    ];
+    text = builtins.readFile (repoRoot + /hyprland/monitors.sh);
   };
   appearance = writeText "appearance.lua" (
     lib.replaceStrings [ "@icons@" ] [ "${adwaita-icon-theme}/share/icons" ] (
-      builtins.readFile ./appearance.lua
+      builtins.readFile (repoRoot + /hyprland/appearance.lua)
     )
   );
   bindings = writeText "bindings.lua" (
@@ -42,11 +44,16 @@ let
         "${layouts}/bin/hyprland-layouts"
         "${ghostty}/bin/ghostty --gtk-single-instance=true"
       ]
-      (builtins.readFile ./bindings.lua)
+      (builtins.readFile (repoRoot + /hyprland/bindings.lua))
+  );
+  monitorConfig = writeText "monitors.lua" (
+    lib.replaceStrings [ "@monitors@" ] [ "${monitors}/bin/hyprland-monitors" ] (
+      builtins.readFile (repoRoot + /hyprland/monitors.lua)
+    )
   );
 in
 {
-  inherit noctalia layouts;
+  inherit layouts;
   config = writeText "hyprland.lua" (
     lib.replaceStrings
       [
@@ -57,16 +64,18 @@ in
         "@workspace-layouts@"
         "@workspace-bar@"
         "@workspace-navigation@"
+        "@monitors@"
       ]
       [
         "${appearance}"
         "${bindings}"
-        "${./scrolling.lua}"
-        "${./window-rules.lua}"
-        "${./workspace-layouts.lua}"
-        "${./workspace-bar.lua}"
-        "${./workspace-navigation.lua}"
+        "${repoRoot + /hyprland/scrolling.lua}"
+        "${repoRoot + /hyprland/window-rules.lua}"
+        "${repoRoot + /hyprland/workspace-layouts.lua}"
+        "${repoRoot + /hyprland/workspace-bar.lua}"
+        "${repoRoot + /hyprland/workspace-navigation.lua}"
+        "${monitorConfig}"
       ]
-      (builtins.readFile ./hyprland.lua)
+      (builtins.readFile (repoRoot + /hyprland/hyprland.lua))
   );
 }

@@ -1,4 +1,9 @@
-{ den, repoRoot, ... }:
+{
+  den,
+  inputs,
+  repoRoot,
+  ...
+}:
 
 {
   den.aspects.agents = {
@@ -10,5 +15,9 @@
     ];
 
     homeManager.xdg.configFile."agents/skills".source = repoRoot + /agents/skills;
+
+    desktop.homeManager = { pkgs, ... }: {
+      home.packages = [ inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.amp-desktop ];
+    };
   };
 }

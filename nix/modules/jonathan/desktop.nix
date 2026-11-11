@@ -12,6 +12,7 @@
       meta.aspect-chain = [ "jonathan" ];
       includes = [
         (den.aspects.desktop { inherit noctaliaSettingsFile; })
+        den.aspects.agents.desktop
         den.aspects.firefox
         den.aspects.ghostty
         den.aspects.signal

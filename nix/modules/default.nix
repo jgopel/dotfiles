@@ -7,6 +7,7 @@
 
 {
   imports = [
+    ./1pass
     ./agents.nix
     ./amp.nix
     ./antigravity-cli.nix
@@ -42,7 +43,6 @@
     ./pipewire.nix
     ./python.nix
     ./rust.nix
-    ./secrets.nix
     ./server.nix
     ./signal.nix
     ./slack.nix

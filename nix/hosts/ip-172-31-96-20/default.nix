@@ -8,7 +8,13 @@
         den.aspects.jonathan.nascent
         den.aspects.server
       ];
-      homeManager.home.stateVersion = "26.05";
+      homeManager = {
+        home.stateVersion = "26.05";
+        programs.onepassword.account = {
+          url = "https://sovereign-trading.1password.com";
+          secrets.OPENROUTER_API_KEY = "op://Employee/env-openrouter/credential";
+        };
+      };
     };
   };
 }

@@ -83,19 +83,28 @@ require("lazy").setup({
   -- AI
   {
     "milanglacier/minuet-ai.nvim",
-    enabled = vim.env.MISTRAL_API_KEY ~= nil and vim.env.MISTRAL_API_KEY ~= "",
+    enabled = vim.env.OPENROUTER_API_KEY ~= nil and vim.env.OPENROUTER_API_KEY ~= "",
     event = "InsertEnter",
     cmd = "Minuet",
-    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("minuet").setup({
-        provider = "codestral",
+        provider = "openai_compatible",
+        request_timeout = 2.5,
+        throttle = 1500,
+        debounce = 600,
         provider_options = {
-          codestral = {
-            model = "codestral-2508",
-            api_key = "MISTRAL_API_KEY",
-            end_point = "https://api.mistral.ai/v1/fim/completions",
+          openai_compatible = {
+            model = "deepseek/deepseek-v4-flash",
+            api_key = "OPENROUTER_API_KEY",
+            end_point = "https://openrouter.ai/api/v1/chat/completions",
+            name = "Openrouter",
             stream = true,
+            optional = {
+              max_tokens = 56,
+              top_p = 0.9,
+              provider = { sort = "throughput" },
+              reasoning_effort = "none",
+            },
           },
         },
         virtualtext = {

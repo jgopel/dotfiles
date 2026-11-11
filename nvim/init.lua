@@ -5,6 +5,24 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- Keep failed/skipped secret injection visible in :messages as well as the launcher.
+local secret_warning = vim.env.ONEPASSWORD_WARNING
+vim.env.ONEPASSWORD_WARNING = nil
+if secret_warning and secret_warning ~= "" then
+  vim.api.nvim_create_autocmd("VimEnter", {
+    once = true,
+    callback = function()
+      vim.schedule(function()
+        -- Keep the full warning in history without blocking on a hit-enter prompt.
+        local messagesopt = vim.o.messagesopt
+        vim.o.messagesopt = messagesopt:gsub("hit%-enter", "wait:0"):gsub("wait:%d+", "wait:0")
+        vim.api.nvim_echo({ { vim.trim(secret_warning), "WarningMsg" } }, true, {})
+        vim.o.messagesopt = messagesopt
+      end)
+    end,
+  })
+end
+
 -- Editor behavior
 vim.opt.number = true
 vim.opt.relativenumber = true

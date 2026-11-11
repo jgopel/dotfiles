@@ -21,7 +21,6 @@ in
       den.aspects.ghostty.terminfo
       den.aspects.git
       den.aspects.mosh
-      den.aspects.secrets
       den.aspects.ssh
       den.aspects.starship
       den.aspects.tailscale

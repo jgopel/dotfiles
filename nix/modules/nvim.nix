@@ -3,6 +3,7 @@
 {
   den.aspects.nvim = {
     includes = [
+      den.aspects."1pass"
       den.aspects.cpp
       den.aspects.rust
       den.aspects.python
@@ -19,7 +20,22 @@
       {
         programs.neovim = {
           enable = true;
-          package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
+          package = config.lib.onepassword.wrap {
+            package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
+            command = "nvim";
+            secretNames = [ "OPENROUTER_API_KEY" ];
+            skipArguments = [
+              "--headless"
+              "--embed"
+              "-es"
+              "-Es"
+              "-l"
+              "--version"
+              "-v"
+              "--help"
+              "-h"
+            ];
+          };
           defaultEditor = true;
         };
 

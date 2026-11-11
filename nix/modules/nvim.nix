@@ -20,8 +20,17 @@
       {
         programs.neovim = {
           enable = true;
-          package = config.lib.onepassword.wrap {
-            package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
+          package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
+          defaultEditor = true;
+        };
+
+        # sudoedit's editor lookup may use a secure_path without Nix profile binaries.
+        home.sessionVariables.SUDO_EDITOR = "${config.programs.neovim.finalPackage}/bin/nvim";
+
+        home.packages = with pkgs; [
+          (config.lib.onepassword.wrap {
+            name = "nvim-ai";
+            package = config.programs.neovim.finalPackage;
             command = "nvim";
             secretNames = [ "OPENROUTER_API_KEY" ];
             skipArguments = [
@@ -35,15 +44,9 @@
               "--help"
               "-h"
             ];
-          };
-          defaultEditor = true;
-        };
+          })
 
-        # sudoedit's editor lookup may use a secure_path without Nix profile binaries.
-        home.sessionVariables.SUDO_EDITOR = "${config.programs.neovim.finalPackage}/bin/nvim";
-
-        # Plugin executables, independent of other CLI package selections.
-        home.packages = with pkgs; [
+          # Plugin executables, independent of other CLI package selections.
           ast-grep
           gcc
           git

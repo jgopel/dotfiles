@@ -41,6 +41,7 @@
 
           lib.onepassword.wrap =
             {
+              name,
               package,
               command,
               secretNames,
@@ -50,6 +51,7 @@
               variables = lib.genAttrs secretNames (name: cfg.secrets.${name});
               configuration = ''
                 account=${lib.escapeShellArg (if cfg.url == null then "" else cfg.url)}
+                cache_key=${builtins.hashString "sha256" (if cfg.url == null then "" else cfg.url)}
                 names=(${lib.escapeShellArgs (builtins.attrNames variables)})
                 references=(${
                   lib.escapeShellArgs (
@@ -60,23 +62,20 @@
               '';
               launcher = pkgs.writeShellScript "${command}-with-1password" (
                 builtins.replaceStrings
-                  [ "@configuration@" "@op@" "@timeout@" ]
-                  [ configuration "${pkgs._1password-cli}/bin/op" "${pkgs.coreutils}/bin/timeout" ]
+                  [ "@configuration@" "@op@" "@timeout@" "@coreutils@" "@flock@" ]
+                  [
+                    configuration
+                    "${pkgs._1password-cli}/bin/op"
+                    "${pkgs.coreutils}/bin/timeout"
+                    "${pkgs.coreutils}"
+                    "${pkgs.flock}/bin/flock"
+                  ]
                   (builtins.readFile ./launch.sh)
               );
             in
-            pkgs.symlinkJoin {
-              name = "${package.name}-1password";
-              inherit (package) meta;
-              passthru = package.passthru or { };
-              paths = [ package ];
-              nativeBuildInputs = [ pkgs.makeWrapper ];
-              postBuild = ''
-                mv "$out/bin/${command}" "$out/bin/.${command}-without-secrets"
-                makeWrapper ${launcher} "$out/bin/${command}" \
-                  --add-flag "$out/bin/.${command}-without-secrets"
-              '';
-            };
+            pkgs.writeShellScriptBin name ''
+              exec ${launcher} ${lib.escapeShellArg "${package}/bin/${command}"} "$@"
+            '';
         };
       };
   };

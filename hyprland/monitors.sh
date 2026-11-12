@@ -27,7 +27,7 @@ updates=$(jq -r --argjson closed "$closed" '
     )) as $disable |
     .[] | select(internal) | select(.disabled != $disable) |
     "hl.monitor({ output = \(.name | tojson), disabled = \($disable) })"
-' <<< "$monitors")
+' <<<"$monitors")
 while IFS= read -r update; do
     [[ -n $update ]] || continue
     reply=$(hyprctl eval "$update")
@@ -35,4 +35,4 @@ while IFS= read -r update; do
         printf '%s\n' "$reply" >&2
         exit 1
     fi
-done <<< "$updates"
+done <<<"$updates"

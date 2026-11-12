@@ -33,7 +33,7 @@ NETRC_FILE=$(sudo "$NIX_BIN" --extra-experimental-features nix-command config sh
 if sudo test -f "$NETRC_FILE"; then
     # Read as root, but deliberately create the private copy as this user.
     # shellcheck disable=SC2024
-    sudo cat "$NETRC_FILE" > "$CACHE_DIR/nix/netrc"
+    sudo cat "$NETRC_FILE" >"$CACHE_DIR/nix/netrc"
 fi
 
 # Let Cachix read its own credentials (including CACHIX_AUTH_TOKEN) and key.

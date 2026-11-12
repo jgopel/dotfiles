@@ -6,7 +6,7 @@ set -euo pipefail
 
 echo "Creating AppArmor profile for Chrome..."
 
-sudo tee /etc/apparmor.d/chrome << 'EOF'
+sudo tee /etc/apparmor.d/chrome <<'EOF'
 abi <abi/4.0>,
 include <tunables/global>
 

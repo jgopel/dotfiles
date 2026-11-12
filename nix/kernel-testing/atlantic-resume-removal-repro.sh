@@ -31,21 +31,21 @@ nm_unmanaged=0
 wake_after=20
 while (($#)); do
     case "$1" in
-        repro | control-down | control-awake) mode="$1" ;;
-        --nm-unmanaged) nm_unmanaged=1 ;;
-        --wake-after)
-            [[ "${2:-}" =~ ^[0-9]+$ ]] || die "--wake-after needs a number of seconds"
-            wake_after="$2"
-            shift
-            ;;
-        -h | --help)
-            usage
-            exit 0
-            ;;
-        *)
-            usage >&2
-            exit 2
-            ;;
+    repro | control-down | control-awake) mode="$1" ;;
+    --nm-unmanaged) nm_unmanaged=1 ;;
+    --wake-after)
+        [[ "${2:-}" =~ ^[0-9]+$ ]] || die "--wake-after needs a number of seconds"
+        wake_after="$2"
+        shift
+        ;;
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    *)
+        usage >&2
+        exit 2
+        ;;
     esac
     shift
 done
@@ -85,8 +85,8 @@ if ((nm_unmanaged)); then
 fi
 
 case "$mode" in
-    repro | control-awake) is_up || die "$iface must be up (try --nm-unmanaged)" ;;
-    control-down) ! is_up || die "$iface must be down: run 'ip link set $iface down' or use --nm-unmanaged" ;;
+repro | control-awake) is_up || die "$iface must be up (try --nm-unmanaged)" ;;
+control-down) ! is_up || die "$iface must be down: run 'ip link set $iface down' or use --nm-unmanaged" ;;
 esac
 
 marker="atlantic-resume-removal-repro: $mode run $$-$(date +%s) start on $pci ($iface)"

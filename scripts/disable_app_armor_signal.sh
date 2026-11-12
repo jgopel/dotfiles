@@ -6,7 +6,7 @@ set -euo pipefail
 
 echo "Creating AppArmor profile for Signal..."
 
-sudo tee /etc/apparmor.d/signal << 'EOF'
+sudo tee /etc/apparmor.d/signal <<'EOF'
 abi <abi/4.0>,
 include <tunables/global>
 

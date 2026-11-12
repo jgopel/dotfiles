@@ -53,7 +53,7 @@ cached_sign_in() (
     umask 077
     runtime_dir=${XDG_RUNTIME_DIR:-/run/user/$UID}
     if [[ ! -d $runtime_dir || ! -O $runtime_dir || -L $runtime_dir ]] ||
-    [[ $("$coreutils/stat" -c %a "$runtime_dir") != 700 ]]; then
+        [[ $("$coreutils/stat" -c %a "$runtime_dir") != 700 ]]; then
         printf '%s\n' 'Secrets: no private runtime directory; this sign-in will not be cached.' >&2
         "$timeout" --foreground --kill-after=2s 60s "$op" signin --account "$account" --raw
         return

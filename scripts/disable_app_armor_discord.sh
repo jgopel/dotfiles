@@ -6,7 +6,7 @@ set -euo pipefail
 
 echo "Creating AppArmor profile for Discord..."
 
-sudo tee /etc/apparmor.d/discord << 'EOF'
+sudo tee /etc/apparmor.d/discord <<'EOF'
 abi <abi/4.0>,
 include <tunables/global>
 

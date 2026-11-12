@@ -6,7 +6,7 @@ set -euo pipefail
 
 echo "Creating AppArmor profile for Slack..."
 
-sudo tee /etc/apparmor.d/slack << 'EOF'
+sudo tee /etc/apparmor.d/slack <<'EOF'
 abi <abi/4.0>,
 include <tunables/global>
 

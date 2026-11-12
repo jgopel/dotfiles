@@ -86,19 +86,19 @@ if [ -n "$ctx_used" ] && [ "$ctx_used" != "null" ]; then
     empty=$((bar_width - filled))
 
     if [ "$ctx_used" -lt 50 ]; then
-        bar_color='\033[32m'  # Green (0-49%)
+        bar_color='\033[32m' # Green (0-49%)
     elif [ "$ctx_used" -lt 80 ]; then
-        bar_color='\033[33m'  # Yellow (50-79%)
+        bar_color='\033[33m' # Yellow (50-79%)
     else
-        bar_color='\033[31m'  # Red (80-100%)
+        bar_color='\033[31m' # Red (80-100%)
     fi
 
     progress_bar="${bar_color}"
-    for ((i=0; i<filled; i++)); do
+    for ((i = 0; i < filled; i++)); do
         progress_bar="${progress_bar}█"
     done
     progress_bar="${progress_bar}\033[2m"
-    for ((i=0; i<empty; i++)); do
+    for ((i = 0; i < empty; i++)); do
         progress_bar="${progress_bar}⣿"
     done
     progress_bar="${progress_bar}\033[0m"

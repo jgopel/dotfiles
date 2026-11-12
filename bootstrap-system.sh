@@ -13,16 +13,16 @@ echo ""
 
 # Only daemon installations need system-level cache configuration. Single-user
 # homes declare nixInstallation = "single-user" in den.homes instead.
-if systemctl cat nix-daemon.service > /dev/null 2>&1; then
+if systemctl cat nix-daemon.service >/dev/null 2>&1; then
     echo "Configuring Nix daemon binary caches..."
     cache_config=$(nix --extra-experimental-features nix-command eval --raw \
-            --file "$SCRIPT_DIR/nix/cache-settings.nix" \
+        --file "$SCRIPT_DIR/nix/cache-settings.nix" \
         --apply 'caches: builtins.concatStringsSep "\n" (builtins.attrValues (builtins.zipAttrsWith (name: lists: name + " = " + builtins.concatStringsSep " " (builtins.concatLists lists)) [ caches.common caches.jonathan ]))')
     # Provision /etc/nix/netrc separately (root-owned, mode 0600).
-    printf '%s\n' "$cache_config" \
-        | sudo tee /etc/nix/dotfiles-caches.conf > /dev/null
+    printf '%s\n' "$cache_config" |
+        sudo tee /etc/nix/dotfiles-caches.conf >/dev/null
     if ! grep -Fxq 'include /etc/nix/dotfiles-caches.conf' /etc/nix/nix.conf; then
-        echo 'include /etc/nix/dotfiles-caches.conf' | sudo tee -a /etc/nix/nix.conf > /dev/null
+        echo 'include /etc/nix/dotfiles-caches.conf' | sudo tee -a /etc/nix/nix.conf >/dev/null
     fi
     sudo systemctl restart nix-daemon
 else
@@ -47,16 +47,17 @@ sudo apt-get install -y \
 # Add Docker's official GPG key
 echo "Adding Docker GPG key..."
 sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc >/dev/null
 sudo chmod a+r /etc/apt/keyrings/docker.asc
 
 # Add Docker repository
 echo "Adding Docker repository..."
 echo \
-"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-    $(# shellcheck source=/dev/null
-. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+    $( # shellcheck source=/dev/null
+        . /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}"
+    ) stable" |
+    sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
 # Install Docker
 echo "Installing Docker..."
@@ -144,7 +145,7 @@ fi
 
 echo "Configuring Fish as the login shell..."
 if ! grep -Fxq "$FISH_SHELL" /etc/shells; then
-    printf '%s\n' "$FISH_SHELL" | sudo tee -a /etc/shells > /dev/null
+    printf '%s\n' "$FISH_SHELL" | sudo tee -a /etc/shells >/dev/null
 fi
 if [[ "$(getent passwd "$USER" | cut -d: -f7)" != "$FISH_SHELL" ]]; then
     sudo chsh -s "$FISH_SHELL" "$USER"

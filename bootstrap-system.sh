@@ -35,14 +35,13 @@ if [[ $EUID -eq 0 ]]; then
     exit 1
 fi
 
-# Install Docker prerequisites and make for the Home Manager setup target.
+# Install Docker prerequisites.
 echo "Installing prerequisites..."
 sudo apt-get update
 sudo apt-get install -y \
     ca-certificates \
     curl \
-    gnupg \
-    make
+    gnupg
 
 # Add Docker's official GPG key
 echo "Adding Docker GPG key..."
@@ -134,7 +133,8 @@ fi
 
 # Activate as the current user before selecting Home Manager's Fish as the shell.
 echo "Activating Home Manager..."
-make -C "$SCRIPT_DIR" setup-nix
+nix --extra-experimental-features 'nix-command flakes' run nixpkgs#just -- \
+    --justfile "$SCRIPT_DIR/justfile" setup-nix
 
 # Keep the profile path so the login shell follows Home Manager upgrades.
 FISH_SHELL="$HOME/.nix-profile/bin/fish"

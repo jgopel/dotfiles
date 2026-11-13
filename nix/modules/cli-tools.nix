@@ -7,6 +7,7 @@
       gdb
       inetutils
       jq
+      just
       less
       perf
       plocate

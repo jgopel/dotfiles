@@ -74,7 +74,7 @@
         in
         pkgs.mkShellNoCC {
           packages = with pkgs; [
-            gnumake
+            just
             prek
             nixfmt
             statix

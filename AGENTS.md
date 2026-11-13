@@ -6,8 +6,8 @@ Dotfiles repo managed by **Nix Home Manager (flakes)**.
 
 | Task                         | Command          |
 | ---------------------------- | ---------------- |
-| Quality checks (prek)        | `make quality`   |
-| Initial Home Manager install | `make setup-nix` |
+| Quality checks (prek)        | `just quality`   |
+| Initial Home Manager install | `just setup-nix` |
 
 ## Non-standard patterns
 

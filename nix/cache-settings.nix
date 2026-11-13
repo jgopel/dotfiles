@@ -14,13 +14,6 @@
     ];
   };
 
-  jonathan = {
-    extra-substituters = [ "https://jonathan.cachix.org" ];
-    extra-trusted-public-keys = [
-      "jonathan.cachix.org-1:aCu0qEoqdLs+Qmq9udXYcB5YISRuipb0XVxlpUx0PnE="
-    ];
-  };
-
   nascent = {
     trusted-substituters = [ "https://sovereign-systematic.cachix.org" ];
     extra-trusted-public-keys = [

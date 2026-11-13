@@ -1,8 +1,5 @@
 { den, repoRoot, ... }:
 
-let
-  caches = import ../../cache-settings.nix;
-in
 {
   imports = [
     ./desktop.nix
@@ -13,7 +10,6 @@ in
     includes = [
       den.aspects.agents
       den.aspects.btop
-      (den.aspects.cachix "jonathan")
       den.aspects.cli-tools
       den.aspects.dev-tools
       den.aspects.fish
@@ -25,11 +21,6 @@ in
       den.aspects.starship
       den.aspects.tailscale
       den.aspects.tmux
-      ({ home, ... }: {
-        homeManager = { lib, ... }: {
-          nix.settings = lib.mkIf (home.nixInstallation == "single-user") caches.jonathan;
-        };
-      })
     ];
 
     user =
@@ -49,7 +40,6 @@ in
       };
 
     provides.to-hosts.nixos = { lib, ... }: {
-      nix.settings = caches.jonathan;
       time.timeZone = lib.mkDefault "America/Denver";
       i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
       i18n.extraLocaleSettings = lib.mkDefault {

@@ -16,7 +16,6 @@
             ./hardware-configuration.nix
             ./suspend-tracing.nix
             ../../kernel-testing/suspend-diagnostics.nix
-            ../../kernel-testing/thunderbolt.nix
             ../../kernel-testing/atlantic-resume-removal-repro.nix
           ];
 

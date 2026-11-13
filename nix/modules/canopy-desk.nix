@@ -10,7 +10,9 @@
       name = "canopy-desk";
       includes = [ (den.aspects.arctis-sound-manager arctisSettings) ];
 
-      provides.to-hosts.nixos = { config, lib, ... }: {
+      provides.to-hosts.nixos = { config, lib, pkgs, ... }: {
+        boot.kernelPackages = lib.mkOverride 900 pkgs.linuxPackages_latest;
+
         assertions = [
           {
             # Nix recognizes "pre", but not "rc", as older than the final release.

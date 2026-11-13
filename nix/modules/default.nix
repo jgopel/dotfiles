@@ -90,8 +90,10 @@
 
     # Supply flake inputs to class modules and select packages per home.
     schema = {
-      host.instantiate =
-        args: inputs.nixpkgs.lib.nixosSystem (args // { specialArgs = { inherit inputs; }; });
+      host = {
+        includes = [ den.batteries.mutual-provider ];
+        instantiate = args: inputs.nixpkgs.lib.nixosSystem (args // { specialArgs = { inherit inputs; }; });
+      };
       home = { config, ... }: {
         pkgs = mkPkgs config.system;
         instantiate =

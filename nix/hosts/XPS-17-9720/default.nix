@@ -47,8 +47,8 @@
         includes = [
           (den.aspects.jonathan.desktop { noctaliaSettingsFile = ./noctalia/settings.toml; })
           den.aspects.noctalia-greeter
+          den.aspects.jonathan.personal
           den.aspects.jonathan.personal-sync
-          den.aspects.ssh.personal
           (den.aspects.canopy-desk {
             arctisSettings = {
               fallbackOutput = "alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Speaker__sink";

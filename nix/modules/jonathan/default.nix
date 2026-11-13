@@ -4,6 +4,7 @@
   imports = [
     ./desktop.nix
     ./nascent.nix
+    ./personal.nix
   ];
 
   den.aspects.jonathan = {

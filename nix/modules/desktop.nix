@@ -17,7 +17,6 @@
         networking.networkmanager.enable = true;
 
         services = {
-          avahi.nssmdns4 = true;
           fwupd.enable = true;
           xserver.xkb = {
             layout = lib.mkDefault "us";

@@ -35,6 +35,7 @@
     ./hyprland
     ./hyprland-testing.nix
     ./jonathan
+    ./mdns.nix
     ./mosh.nix
     ./nix.nix
     ./noctalia

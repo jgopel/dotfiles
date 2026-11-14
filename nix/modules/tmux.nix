@@ -21,7 +21,7 @@
     in
     {
       home.packages = [ pkgs.tmux ];
-      home.sessionVariables = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+      home.sessionVariables = {
         TMUX_TMPDIR = "\${XDG_RUNTIME_DIR:-\"/run/user/$(id -u)\"}";
       };
 

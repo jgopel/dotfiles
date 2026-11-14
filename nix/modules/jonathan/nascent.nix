@@ -1,15 +1,21 @@
 { den, repoRoot, ... }:
 
 {
-  den.aspects.jonathan.nascent.includes = [
-    den.aspects.nix.nascent
-    (den.aspects.syncthing {
-      category = "nascent";
-      path = "~/work";
-      stignore = repoRoot + /syncthing/work/nascent/stignore;
-    })
-    (den.lib.policy.when ({ hasAspect, ... }: hasAspect den.aspects.jonathan.desktop) {
-      includes = [ den.aspects.ssh.nascent ];
+  den.aspects.jonathan.nascent = {
+    includes = [
+      den.aspects.nix.nascent
+      (den.aspects.syncthing {
+        category = "nascent";
+        path = "~/work";
+        stignore = repoRoot + /syncthing/work/nascent/stignore;
+      })
+    ];
+
+    desktop = {
+      includes = [
+        den.aspects.jonathan.nascent
+        den.aspects.ssh.nascent
+      ];
 
       homeManager =
         { config, pkgs, ... }:
@@ -24,6 +30,6 @@
             Exec=${telegram}/bin/Telegram
           '';
         };
-    })
-  ];
+    };
+  };
 }

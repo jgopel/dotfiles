@@ -7,9 +7,6 @@
       noctaliaSettingsFile ? null,
     }:
     {
-      # Keep the parameterized instance identifiable by the Nascent composition rule.
-      name = "desktop";
-      meta.aspect-chain = [ "jonathan" ];
       includes = [
         (den.aspects.desktop { inherit noctaliaSettingsFile; })
         den.aspects."1pass".desktop

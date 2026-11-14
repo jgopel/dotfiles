@@ -13,7 +13,13 @@
         den.aspects.pipewire
       ];
 
-      provides.to-hosts.nixos = { lib, ... }: {
+      provides.to-hosts.nixos = { lib, pkgs, ... }: {
+        # Keep graphical recovery tools available without Home Manager.
+        environment.systemPackages = [
+          pkgs.ghostty
+          pkgs.firefox
+        ];
+
         networking.networkmanager.enable = true;
 
         services = {

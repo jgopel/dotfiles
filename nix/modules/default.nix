@@ -61,33 +61,19 @@
       den.aspects.nix
     ];
 
-    default.nixos =
-      {
-        config,
-        lib,
-        pkgs,
-        ...
-      }:
-      {
-        boot.kernelPackages = lib.mkDefault pkgs.linuxPackages;
-        boot.loader = {
-          systemd-boot = {
-            enable = lib.mkDefault true;
-            configurationLimit = lib.mkDefault 10;
-          };
-          efi.canTouchEfiVariables = lib.mkDefault true;
+    default.nixos = { lib, pkgs, ... }: {
+      boot.kernelPackages = lib.mkDefault pkgs.linuxPackages;
+      boot.loader = {
+        systemd-boot = {
+          enable = lib.mkDefault true;
+          configurationLimit = lib.mkDefault 10;
         };
-
-        # Keep recovery tools available without Home Manager. Headless systems
-        # already have a console shell and do not need graphical applications.
-        environment.systemPackages = [
-          pkgs.vim
-        ]
-        ++ lib.optionals config.services.graphical-desktop.enable [
-          pkgs.ghostty
-          pkgs.firefox
-        ];
+        efi.canTouchEfiVariables = lib.mkDefault true;
       };
+
+      # Keep recovery tools available without Home Manager.
+      environment.systemPackages = [ pkgs.vim ];
+    };
 
     # Supply flake inputs to class modules and select packages per home.
     schema = {

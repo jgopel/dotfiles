@@ -9,7 +9,6 @@
 
     homeManager = { pkgs, ... }: {
       imports = [
-        ./extensions/always-show-workspace-thumbnails.nix
         ./extensions/vitals.nix
         ./extensions/tactile.nix
         ./extensions/dash-to-dock.nix
@@ -17,7 +16,10 @@
 
       programs.gnome-shell = {
         enable = true;
-        extensions = [ { package = pkgs.gnomeExtensions.appindicator; } ];
+        extensions = [
+          { package = pkgs.gnomeExtensions.always-show-workspace-thumbnails; }
+          { package = pkgs.gnomeExtensions.appindicator; }
+        ];
       };
 
       dconf.settings = {

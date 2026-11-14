@@ -1,5 +1,7 @@
 {
-  den.aspects.firefox.homeManager = {
+  den.aspects.firefox.provides.to-hosts.darwin.homebrew.casks = [ "firefox" ];
+
+  den.aspects.firefox.hmLinux = {
     programs.firefox = {
       enable = true;
       policies.Preferences."widget.gtk.native-emoji-dialog" = {

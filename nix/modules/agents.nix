@@ -16,7 +16,7 @@
 
     homeManager.xdg.configFile."agents/skills".source = repoRoot + /agents/skills;
 
-    desktop.homeManager = { pkgs, ... }: {
+    desktop.hmLinux = { pkgs, ... }: {
       home.packages = [ inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.amp-desktop ];
     };
   };

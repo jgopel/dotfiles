@@ -56,6 +56,26 @@
         "type": "github"
       }
     },
+    "darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793418699,
+        "narHash": "sha256-+RpTlcdh9KqZ+ZiLkNSTvibQWm935EcIdBzRPCTFsrQ=",
+        "owner": "nix-darwin",
+        "repo": "nix-darwin",
+        "rev": "ff0e21a414d4547183396da1b44a66f2577b65e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-darwin",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "den": {
       "locked": {
         "lastModified": 1794523728,
@@ -310,6 +330,7 @@
     "root": {
       "inputs": {
         "arctis-sound-manager": "arctis-sound-manager",
+        "darwin": "darwin",
         "den": "den",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",

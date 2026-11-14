@@ -25,11 +25,11 @@
 
     user = { pkgs, ... }: {
       description = "Jonathan";
-      extraGroups = [ "wheel" ];
       shell = pkgs.fish;
     };
 
-    provides.to-hosts.nixos = { lib, ... }: {
+    provides.to-hosts.nixos = { lib, user, ... }: {
+      users.users.${user.userName}.extraGroups = [ "wheel" ];
       time.timeZone = lib.mkDefault "America/Denver";
       i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
       i18n.extraLocaleSettings = lib.mkDefault {
@@ -45,6 +45,8 @@
       };
       security.sudo.extraConfig = "Defaults pwfeedback";
     };
+
+    provides.to-hosts.darwin.security.sudo.extraConfig = "Defaults pwfeedback";
 
     homeManager.programs = {
       git.includes = [ { path = repoRoot + /git/identity; } ];

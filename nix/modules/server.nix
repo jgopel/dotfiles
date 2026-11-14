@@ -6,6 +6,6 @@
       den.aspects.mosh.server
       den.aspects.ssh.server
     ];
-    user.linger = true;
+    provides.to-hosts.nixos = { user, ... }: { users.users.${user.userName}.linger = true; };
   };
 }

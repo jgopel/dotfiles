@@ -1,5 +1,7 @@
 {
-  den.aspects.slack.homeManager = { pkgs, ... }: {
+  den.aspects.slack.provides.to-hosts.darwin.homebrew.casks = [ "slack" ];
+
+  den.aspects.slack.hmLinux = { pkgs, ... }: {
     home.packages = [
       (pkgs.slack.overrideAttrs (old: {
         # Slack 4.51.180 creates native notifications without retaining their JS

@@ -33,6 +33,7 @@
     ./hyprland
     ./hyprland-testing.nix
     ./jonathan
+    ./macos
     ./mdns.nix
     ./mosh.nix
     ./nix.nix
@@ -75,9 +76,9 @@
 
     # Supply flake inputs to class modules and select packages per home.
     schema = {
-      host = {
+      host = { options, ... }: {
         includes = [ den.batteries.mutual-provider ];
-        instantiate = args: inputs.nixpkgs.lib.nixosSystem (args // { specialArgs = { inherit inputs; }; });
+        instantiate = args: options.instantiate.default (args // { specialArgs = { inherit inputs; }; });
       };
       home = { config, ... }: {
         pkgs = mkPkgs config.system;

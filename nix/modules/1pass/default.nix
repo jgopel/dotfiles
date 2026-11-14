@@ -7,6 +7,8 @@
     desktop = {
       includes = [ den.aspects."1pass" ];
 
+      provides.to-hosts.darwin.homebrew.casks = [ "1password" ];
+
       provides.to-hosts.nixos.programs._1password-gui = {
         enable = true;
         polkitPolicyOwners = [ "jonathan" ];

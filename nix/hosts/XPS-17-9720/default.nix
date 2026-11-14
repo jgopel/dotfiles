@@ -45,7 +45,7 @@
       };
       "jonathan@XPS-17-9720" = {
         includes = [
-          (den.aspects.jonathan.desktop { noctaliaSettingsFile = ./noctalia/settings.toml; })
+          (den.aspects.jonathan.desktop.linux { noctaliaSettingsFile = ./noctalia/settings.toml; })
           den.aspects.jonathan.agents
           den.aspects.jonathan.dev
           den.aspects.jonathan.personal

@@ -111,49 +111,5 @@ in
         ''
       ) cfg.folders}
     '';
-
-    systemd.user.services = {
-      syncthing = {
-        Unit = {
-          Description = "Syncthing - Open Source Continuous File Synchronization";
-          Documentation = "man:syncthing(1)";
-          After = [ "network.target" ];
-        };
-        Service = {
-          ExecStart = "${pkgs.syncthing}/bin/syncthing serve --no-browser --gui-address=${cfg.guiAddress}";
-          Restart = "on-failure";
-          SuccessExitStatus = [
-            3
-            4
-          ];
-          RestartForceExitStatus = [
-            3
-            4
-          ];
-        };
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
-      };
-    }
-    // listToAttrs (
-      map (tunnel: {
-        name = "syncthing-tunnel-${tunnel.name}";
-        value = {
-          Unit = {
-            Description = "SSH tunnel to ${tunnel.name} syncthing GUI";
-            After = [ "network.target" ];
-          };
-          Service = {
-            ExecStart = "${pkgs.autossh}/bin/autossh -M 0 -N -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -L ${toString tunnel.localPort}:127.0.0.1:${toString tunnel.remotePort} ${tunnel.host}";
-            Restart = "on-failure";
-            RestartSec = 5;
-          };
-          Install = {
-            WantedBy = [ "default.target" ];
-          };
-        };
-      }) cfg.tunnels
-    );
   };
 }

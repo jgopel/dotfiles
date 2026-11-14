@@ -1,0 +1,11 @@
+profile = "default"
+
+[profiles.default.workspaceBar]
+position = "overlappingMenuBar"
+fullWidth = true
+fullWidthNotchMode = "splitAroundNotch"
+windowLevel = "floating"
+reserveLayoutSpace = true
+autoHide = false
+xOffset = 0
+yOffset = 0

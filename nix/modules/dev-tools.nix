@@ -12,17 +12,10 @@
     # Prek hooks download generic Linux binaries that expect /lib64/ld-linux-x86-64.so.2.
     provides.to-hosts.nixos.programs.nix-ld.enable = true;
 
-    homeManager = { pkgs, ... }: {
+    homeManager = {
       imports = [ inputs.nix-index-database.homeModules.nix-index ];
 
-      home.packages = with pkgs; [
-        gdb
-        perf
-        strace
-      ];
-
       programs = {
-        fish.shellAliases.gdb = "gdb -silent";
         nix-index-database.comma.enable = true;
         direnv = {
           enable = true;
@@ -31,5 +24,16 @@
         };
       };
     };
+
+    hmLinux = { pkgs, ... }: {
+      home.packages = with pkgs; [
+        gdb
+        perf
+        strace
+      ];
+      programs.fish.shellAliases.gdb = "gdb -silent";
+    };
+
+    hmDarwin = { pkgs, ... }: { home.packages = [ pkgs.lldb ]; };
   };
 }

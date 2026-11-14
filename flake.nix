@@ -1,9 +1,14 @@
 {
-  description = "Jonathan's NixOS and Home Manager configurations";
+  description = "Jonathan's NixOS, macOS, and Home Manager configurations";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     den.url = "github:denful/den";
+
+    darwin = {
+      url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";

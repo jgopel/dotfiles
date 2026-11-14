@@ -3,6 +3,7 @@
 {
   den.aspects.fish = {
     provides.to-hosts.nixos.programs.fish.enable = true;
+    provides.to-hosts.darwin.programs.fish.enable = true;
 
     homeManager = { pkgs, ... }: {
       home.packages = with pkgs.fishPlugins; [ done ];

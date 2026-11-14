@@ -1,9 +1,8 @@
 { den, ... }:
 
 {
-  den.aspects.jonathan.desktop.__functor = _: { noctaliaSettingsFile }: {
+  den.aspects.jonathan.desktop = {
     includes = [
-      (den.aspects.desktop { inherit noctaliaSettingsFile; })
       den.aspects."1pass".desktop
       den.aspects.agents.desktop
       den.aspects.firefox
@@ -12,12 +11,32 @@
       den.aspects.slack
     ];
 
-    homeManager = { pkgs, ... }: {
+    linux.__functor = _: { noctaliaSettingsFile }: {
+      includes = [
+        den.aspects.jonathan.desktop
+        (den.aspects.desktop { inherit noctaliaSettingsFile; })
+      ];
+    };
+
+    macos.includes = [
+      den.aspects.jonathan.desktop
+      den.aspects.macos
+    ];
+
+    provides.to-hosts.darwin.homebrew.casks = [
+      "discord"
+      "dropbox"
+      "google-chrome"
+      "keepassxc"
+    ];
+
+    homeManager = { pkgs, ... }: { home.packages = [ pkgs.hack-font ]; };
+
+    hmLinux = { pkgs, ... }: {
       home.packages = with pkgs; [
         discord
         dropbox
         google-chrome
-        hack-font
         keepassxc
       ];
     };

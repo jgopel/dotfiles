@@ -10,12 +10,13 @@ in
         "single-user"
         "multi-user"
         "nixos"
+        "darwin"
       ];
       description = ''
         Required Nix setup: single-user or multi-user Nix on another Linux
-        distribution, or NixOS. Single-user cache settings are managed by Home
+        distribution, NixOS, or nix-darwin. Single-user cache settings are managed by Home
         Manager, multi-user settings by bootstrap-system.sh, and NixOS settings
-        by the NixOS configuration. Standalone Home Manager can be used with
+        by NixOS (Darwin settings by nix-darwin). Standalone Home Manager can be used with
         any of these installation types.
       '';
     };
@@ -38,6 +39,26 @@ in
         gc = {
           automatic = true;
           dates = "daily";
+          options = "--delete-older-than 14d";
+        };
+      };
+    };
+
+    darwin = {
+      nixpkgs.config.allowUnfree = true;
+      nix = {
+        settings = caches.common // {
+          experimental-features = [
+            "nix-command"
+            "flakes"
+          ];
+        };
+        gc = {
+          automatic = true;
+          interval = {
+            Hour = 3;
+            Minute = 15;
+          };
           options = "--delete-older-than 14d";
         };
       };
@@ -69,6 +90,7 @@ in
     nascent = {
       includes = [ den.aspects.nix.nascent.single-user ];
       provides.to-hosts.nixos.nix.settings = caches.nascent;
+      provides.to-hosts.darwin.nix.settings = caches.nascent;
       single-user = { home, ... }: {
         homeManager = { lib, ... }: {
           nix.settings = lib.mkIf (home.nixInstallation == "single-user") caches.nascent;

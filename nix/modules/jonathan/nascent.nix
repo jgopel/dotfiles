@@ -17,7 +17,9 @@
         den.aspects.ssh.nascent
       ];
 
-      homeManager =
+      provides.to-hosts.darwin.homebrew.casks = [ "telegram" ];
+
+      hmLinux =
         { config, pkgs, ... }:
         let
           telegram = config.lib.nixGL.wrap pkgs.telegram-desktop;

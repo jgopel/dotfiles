@@ -19,5 +19,7 @@
           inherit tunnels;
         };
       };
+      hmLinux.imports = [ ./systemd.nix ];
+      hmDarwin.imports = [ ./launchd.nix ];
     };
 }

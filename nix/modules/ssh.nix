@@ -17,6 +17,16 @@
       };
     };
 
+    server.provides.to-hosts.darwin.services.openssh = {
+      enable = true;
+      extraConfig = ''
+        PasswordAuthentication no
+        KbdInteractiveAuthentication no
+        PermitRootLogin no
+        AuthenticationMethods publickey
+      '';
+    };
+
     nascent = {
       includes = [ den.aspects.ssh ];
 

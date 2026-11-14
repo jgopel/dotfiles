@@ -1,5 +1,6 @@
 {
   imports = [
+    ./Jonathans-MacBook-Pro
     ./XPS-17-9720
     ./mnemosyne-guest
     ./ThinkPad-X1-Carbon-Gen-12

@@ -13,7 +13,6 @@
     ./antigravity-cli.nix
     ./arctis-sound-manager
     ./bazel.nix
-    ./boot-nixos-first.nix
     ./btop.nix
     ./canopy-desk.nix
     ./caps-escape-swap.nix

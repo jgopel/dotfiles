@@ -1,6 +1,6 @@
 {
   den.aspects.docker = {
-    nixos = { config, lib, ... }: {
+    provides.to-hosts.nixos = { config, lib, ... }: {
       virtualisation.docker.enable = true;
       # Docker group membership grants root-equivalent access via the root-owned daemon.
       users.groups.docker.members = lib.attrNames (

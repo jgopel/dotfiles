@@ -51,6 +51,7 @@
     ./syncthing
     ./tailscale.nix
     ./tmux.nix
+    ./unraid-guest.nix
   ];
 
   den = {

@@ -8,6 +8,15 @@
       services.ssh-agent.enable = true;
     };
 
+    server.provides.to-hosts.nixos.services.openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+        PermitRootLogin = "no";
+      };
+    };
+
     nascent = {
       includes = [ den.aspects.ssh ];
 

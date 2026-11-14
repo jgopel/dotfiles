@@ -599,19 +599,21 @@ require("lazy").setup({
       },
     },
     config = function()
+      -- Skip linters whose command is missing, such as on hosts without dev tools.
       local function available(linters)
         return vim.tbl_filter(function(name)
-          return vim.fn.executable(name) == 1
+          local linter = require("lint").linters[name]
+          return vim.fn.executable(linter and linter.cmd or name) == 1
         end, linters)
       end
 
       local lint_augroup = vim.api.nvim_create_augroup("nvim-lint-autogroup", { clear = true })
       require("lint").linters_by_ft = {
-        bash = { "shellcheck" },
-        c = { "clangtidy" },
-        cpp = { "clangtidy" },
+        bash = available({ "shellcheck" }),
+        c = available({ "clangtidy" }),
+        cpp = available({ "clangtidy" }),
         python = available({ "pylint", "flake8", "mypy", "pyright" }),
-        rust = { "clippy" },
+        rust = available({ "clippy" }),
       }
       vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" }, {
         group = lint_augroup,

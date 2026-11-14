@@ -5,6 +5,8 @@
     homes.x86_64-linux."jonathan@sov-cpu-srv".nixInstallation = "multi-user";
     aspects."jonathan@sov-cpu-srv" = {
       includes = [
+        den.aspects.jonathan.agents
+        den.aspects.jonathan.dev
         den.aspects.jonathan.nascent
         den.aspects.server
         den.aspects.jonathan.personal-sync

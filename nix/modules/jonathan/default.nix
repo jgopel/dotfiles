@@ -9,15 +9,14 @@
 
   den.aspects.jonathan = {
     includes = [
-      den.aspects.agents
       den.aspects.btop
       den.aspects.cli-tools
-      den.aspects.dev-tools
       den.aspects.fish
       den.aspects.fzf
       den.aspects.ghostty.terminfo
       den.aspects.git
       den.aspects.mosh
+      den.aspects.nvim
       den.aspects.ssh
       den.aspects.starship
       den.aspects.tailscale
@@ -61,6 +60,9 @@
       git.includes = [ { path = repoRoot + /git/identity; } ];
       fish.interactiveShellInit = builtins.readFile (repoRoot + /fish/jonathan.fish);
     };
+
+    dev.includes = [ den.aspects.dev-tools ];
+    agents.includes = [ den.aspects.agents ];
 
     personal-sync.includes = [
       (den.aspects.syncthing {

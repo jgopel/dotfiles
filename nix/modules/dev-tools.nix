@@ -4,7 +4,7 @@
   den.aspects.dev-tools = {
     includes = [
       den.aspects.rust
-      den.aspects.nvim
+      den.aspects.nvim.dev
       den.aspects.python
       den.aspects.cpp
     ];
@@ -15,7 +15,11 @@
     homeManager = { pkgs, ... }: {
       imports = [ inputs.nix-index-database.homeModules.nix-index ];
 
-      home.packages = with pkgs; [ gdb ];
+      home.packages = with pkgs; [
+        gdb
+        perf
+        strace
+      ];
 
       programs = {
         fish.shellAliases.gdb = "gdb -silent";

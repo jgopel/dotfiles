@@ -4,16 +4,13 @@
       bash
       curl
       dtrx
-      gdb
       inetutils
       jq
       just
       less
-      perf
       plocate
       ripgrep
       rsync
-      strace
       time
       tree
       unzip

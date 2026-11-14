@@ -47,6 +47,8 @@
         includes = [
           (den.aspects.jonathan.desktop { noctaliaSettingsFile = ./noctalia/settings.toml; })
           den.aspects.noctalia-greeter
+          den.aspects.jonathan.agents
+          den.aspects.jonathan.dev
           den.aspects.jonathan.personal
           den.aspects.jonathan.personal-sync
           (den.aspects.canopy-desk {
@@ -63,6 +65,13 @@
             url = "https://sovereign-trading.1password.com";
             secrets.OPENROUTER_API_KEY = "op://Employee/env-openrouter/credential";
           };
+          services.syncthing-user.tunnels = [
+            {
+              name = "mnemosyne-guest";
+              host = "mnemosyne-guest";
+              localPort = 8385;
+            }
+          ];
         };
       };
     };

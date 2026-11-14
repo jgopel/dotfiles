@@ -41,6 +41,8 @@
         includes = [
           den.aspects.gnome
           (den.aspects.jonathan.desktop { noctaliaSettingsFile = ./noctalia/settings.toml; })
+          den.aspects.jonathan.agents
+          den.aspects.jonathan.dev
           den.aspects.jonathan.nascent
           den.aspects.jonathan.personal-sync
           (den.aspects.canopy-desk {

@@ -1,4 +1,4 @@
-config_version = 16
+config_version = 19
 
 [bar.default]
 center = ["notifications", "spacer_5", "clock", "spacer_2", "weather"]
@@ -201,5 +201,5 @@ show_label = false
 
 [widget.workspaces]
 hide_when_empty = true
-show_all_outputs = true
+monitors = ["*"]
 show_labels = false

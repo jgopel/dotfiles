@@ -1,6 +1,17 @@
+{ den, ... }:
+
 {
   den.aspects."1pass" = {
     provides.to-hosts.nixos.programs._1password.enable = true;
+
+    desktop = {
+      includes = [ den.aspects."1pass" ];
+
+      provides.to-hosts.nixos.programs._1password-gui = {
+        enable = true;
+        polkitPolicyOwners = [ "jonathan" ];
+      };
+    };
 
     homeManager =
       {

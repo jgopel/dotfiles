@@ -19,14 +19,6 @@
           networking.hostName = "ThinkPad-X1-Carbon-Gen-12";
           system.stateVersion = "26.05";
 
-          # NOTE: This is really only here for shuffling creds between 1pass
-          # vaults during the transition because it's the only good way of
-          # doing it
-          programs._1password-gui = {
-            enable = true;
-            polkitPolicyOwners = [ "jonathan" ];
-          };
-
           # After resume, DNS waits on Tailscale's resolvers exhaust nsncd's
           # eight shared NSS workers, starving local account lookups despite
           # authentication needing no DNS. Observed as ~10s Noctalia

@@ -1,11 +1,12 @@
 { repoRoot, ... }:
 
 {
-  imports = [ ./greeter.nix ];
-
   den.aspects.noctalia.__functor = _: { settingsFile }: {
     name = "noctalia";
-    provides.to-hosts.nixos.services.upower.enable = true;
+    provides.to-hosts.nixos.services = {
+      displayManager.noctalia-greeter.enable = true;
+      upower.enable = true;
+    };
 
     homeManager =
       {

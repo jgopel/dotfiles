@@ -29,7 +29,6 @@
     ./fzf.nix
     ./ghostty.nix
     ./git.nix
-    ./gnome
     ./home-manager.nix
     ./hyprland
     ./hyprland-testing.nix

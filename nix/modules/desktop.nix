@@ -15,6 +15,7 @@
         pkgs.firefox
       ];
 
+      hardware.bluetooth.enable = true;
       networking.networkmanager.enable = true;
 
       services = {

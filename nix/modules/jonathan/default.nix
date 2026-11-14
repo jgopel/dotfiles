@@ -23,21 +23,11 @@
       den.aspects.tmux
     ];
 
-    user =
-      {
-        osConfig,
-        lib,
-        pkgs,
-        ...
-      }:
-      {
-        description = "Jonathan";
-        extraGroups = [
-          "wheel"
-        ]
-        ++ lib.optional osConfig.networking.networkmanager.enable "networkmanager";
-        shell = pkgs.fish;
-      };
+    user = { pkgs, ... }: {
+      description = "Jonathan";
+      extraGroups = [ "wheel" ];
+      shell = pkgs.fish;
+    };
 
     provides.to-hosts.nixos = { lib, ... }: {
       time.timeZone = lib.mkDefault "America/Denver";

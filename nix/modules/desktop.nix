@@ -31,6 +31,9 @@
         };
       };
 
+      # Control NetworkManager without polkit admin prompts.
+      user.extraGroups = [ "networkmanager" ];
+
       homeManager.fonts.fontconfig.enable = true;
     };
 }

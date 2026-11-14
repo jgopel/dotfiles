@@ -4,7 +4,7 @@
     {
       category,
       path,
-      stignore ? null,
+      stignore,
       tunnels ? [ ],
     }:
     {

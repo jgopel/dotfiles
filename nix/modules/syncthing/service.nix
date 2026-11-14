@@ -18,8 +18,7 @@ let
         description = "Path to the folder to sync";
       };
       stignore = mkOption {
-        type = types.nullOr types.path;
-        default = null;
+        type = types.path;
         description = "Path to .stignore file to install in this folder";
       };
     };
@@ -108,9 +107,7 @@ in
         in
         ''
           mkdir -p "${expandedPath}"
-          ${optionalString (folder.stignore != null) ''
-            cp -f "${folder.stignore}" "${expandedPath}/.stignore"
-          ''}
+          cp -f "${folder.stignore}" "${expandedPath}/.stignore"
         ''
       ) cfg.folders}
     '';

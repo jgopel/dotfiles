@@ -1,39 +1,34 @@
 { den, ... }:
 
 {
-  den.aspects.desktop.__functor =
-    _:
-    {
-      noctaliaSettingsFile ? null,
-    }:
-    {
-      name = "desktop";
-      includes = [
-        (den.aspects.hyprland { settingsFile = noctaliaSettingsFile; })
-        den.aspects.pipewire
+  den.aspects.desktop.__functor = _: { noctaliaSettingsFile }: {
+    name = "desktop";
+    includes = [
+      (den.aspects.hyprland { settingsFile = noctaliaSettingsFile; })
+      den.aspects.pipewire
+    ];
+
+    provides.to-hosts.nixos = { lib, pkgs, ... }: {
+      # Keep graphical recovery tools available without Home Manager.
+      environment.systemPackages = [
+        pkgs.ghostty
+        pkgs.firefox
       ];
 
-      provides.to-hosts.nixos = { lib, pkgs, ... }: {
-        # Keep graphical recovery tools available without Home Manager.
-        environment.systemPackages = [
-          pkgs.ghostty
-          pkgs.firefox
-        ];
+      networking.networkmanager.enable = true;
 
-        networking.networkmanager.enable = true;
-
-        services = {
-          fwupd.enable = true;
-          xserver.xkb = {
-            layout = lib.mkDefault "us";
-            variant = lib.mkDefault "";
-          };
+      services = {
+        fwupd.enable = true;
+        xserver.xkb = {
+          layout = lib.mkDefault "us";
+          variant = lib.mkDefault "";
         };
       };
-
-      # Control NetworkManager without polkit admin prompts.
-      user.extraGroups = [ "networkmanager" ];
-
-      homeManager.fonts.fontconfig.enable = true;
     };
+
+    # Control NetworkManager without polkit admin prompts.
+    user.extraGroups = [ "networkmanager" ];
+
+    homeManager.fonts.fontconfig.enable = true;
+  };
 }

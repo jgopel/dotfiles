@@ -12,6 +12,12 @@
           imports = [ ./hardware-configuration.nix ];
 
           networking.hostName = "mnemosyne-guest";
+          # Home Assistant runs with host networking: its web UI, and Sonos
+          # event callbacks.
+          networking.firewall.allowedTCPPorts = [
+            8123
+            1400
+          ];
           system.stateVersion = "26.05";
         };
       };

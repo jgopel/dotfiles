@@ -11,3 +11,12 @@
 
 (?d)**/build
 (?d)**/build-*
+
+# Home Assistant writes runtime files into its config folder on the guest; sync
+# only the tracked files. Keep in sync with that folder's .gitignore.
+!/homelab/homeassistant/config/.gitignore
+!/homelab/homeassistant/config/configuration.yaml
+!/homelab/homeassistant/config/automations.yaml
+!/homelab/homeassistant/config/scripts.yaml
+!/homelab/homeassistant/config/scenes.yaml
+/homelab/homeassistant/config/*

@@ -5,6 +5,9 @@ center = ["notifications", "spacer_5", "clock", "spacer_2", "weather"]
 end = ["media", "spacer_7", "tray", "syncthing", "spacer_6", "clipboard", "network", "brightness", "battery"]
 start = ["launcher", "workspaces", "spacer_3", "cpu", "spacer_4", "ram"]
 
+[idle]
+pre_action_fade_seconds = 15.0
+
 [idle.behavior.lock]
 action = "lock"
 timeout = 300

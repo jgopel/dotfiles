@@ -20,8 +20,6 @@
     };
 
     hmLinux = { pkgs, ... }: { home.packages = [ pkgs.plocate ]; };
-    hmDarwin = { pkgs, ... }: {
-      home.packages = [ pkgs.coreutils ];
-    };
+    hmDarwin = { pkgs, ... }: { home.packages = [ pkgs.coreutils ]; };
   };
 }

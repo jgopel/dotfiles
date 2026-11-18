@@ -24,10 +24,4 @@ for position = 1, 10 do
       hl.dispatch(hl.dsp.focus({ workspace = target }))
     end
   end)
-  hl.bind("SUPER + SHIFT + " .. key, function()
-    local target = bar_workspace(position)
-    if target then
-      hl.dispatch(hl.dsp.window.move({ workspace = target, follow = true }))
-    end
-  end)
 end

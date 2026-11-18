@@ -10,12 +10,30 @@ local function by_layout(actions)
   end
 end
 
+local function by_workspace(actions)
+  return function()
+    local window = hl.get_active_window()
+    local workspace = window and window.workspace
+    local action = workspace and (actions[workspace.name] or actions.default)
+    if action then
+      return hl.dispatch(action)
+    end
+  end
+end
+
 hl.bind("SUPER + SHIFT + RETURN", hl.dsp.layout("swapwithmaster master ignoremaster"))
 hl.bind("SUPER + W", hl.dsp.window.close())
 hl.bind("SUPER + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
 hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("scratchpad"))
-hl.bind("SUPER + ALT + S", hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }))
+hl.bind(
+  "SUPER + ALT + S",
+  by_workspace({
+    -- e+0 is the workspace open on the monitor (it's never the scratch space)
+    ["special:scratchpad"] = hl.dsp.window.move({ workspace = "e+0", follow = false }),
+    default = hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }),
+  })
+)
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
 for key, direction in pairs({ H = "l", J = "d", K = "u", L = "r" }) do
   hl.bind("SUPER + " .. key, hl.dsp.focus({ direction = direction }))

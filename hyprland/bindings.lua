@@ -1,6 +1,9 @@
 -- Keyboard shortcuts - largely stolen from Omarchy or Gnome muscle memory
 local ipc = "@noctalia@ msg "
 
+-- The workspace open on the monitor (it's never the scratch space)
+local current_workspace = "e+0"
+
 local function by_layout(actions)
   return function()
     local action = actions[workspace_layout()] or actions.default
@@ -29,9 +32,15 @@ hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("scratchpad"))
 hl.bind(
   "SUPER + ALT + S",
   by_workspace({
-    -- e+0 is the workspace open on the monitor (it's never the scratch space)
-    ["special:scratchpad"] = hl.dsp.window.move({ workspace = "e+0", follow = false }),
+    ["special:scratchpad"] = hl.dsp.window.move({ workspace = current_workspace, follow = false }),
     default = hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }),
+  })
+)
+hl.bind(
+  "SUPER + ALT + SHIFT + S",
+  by_workspace({
+    ["special:scratchpad"] = hl.dsp.window.move({ workspace = current_workspace, follow = true }),
+    default = hl.dsp.window.move({ workspace = "special:scratchpad", follow = true }),
   })
 )
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(ipc .. "screenshot-region"))

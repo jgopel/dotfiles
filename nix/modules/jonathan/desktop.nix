@@ -30,7 +30,7 @@
       "keepassxc"
     ];
 
-    homeManager = { pkgs, ... }: { home.packages = [ pkgs.hack-font ]; };
+    homeManager = { pkgs, ... }: { home.packages = [ pkgs.nerd-fonts.hack ]; };
 
     hmLinux = { pkgs, ... }: {
       home.packages = with pkgs; [

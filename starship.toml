@@ -31,11 +31,13 @@ format = "[\\($state $progress_current/$progress_total\\)]($style) "
 
 [nix_shell]
 style = "blue"
-format = "[\\(nix\\)]($style) "
+symbol = ""
+format = "[$symbol]($style) "
 
 [python]
 style = "yellow"
-format = "[($virtualenv)]($style)"
+symbol = ""
+format = "[(${symbol}$virtualenv )]($style)"
 
 [status]
 style = "red"

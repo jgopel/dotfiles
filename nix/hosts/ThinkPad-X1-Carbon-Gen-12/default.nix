@@ -18,6 +18,8 @@
 
           services.hardware.bolt.enable = true;
 
+          services.tailscale.extraSetFlags = [ "--operator=jonathan" ];
+
           networking.hostName = "ThinkPad-X1-Carbon-Gen-12";
           system.stateVersion = "26.05";
 
@@ -45,8 +47,9 @@
             };
           })
         ];
-        homeManager = {
+        homeManager = { pkgs, ... }: {
           home.stateVersion = "26.05";
+          home.packages = [ pkgs.trayscale ];
           programs.btop.settings.selected_battery = "BAT0";
           programs.onepassword.account = {
             url = "https://sovereign-trading.1password.com";

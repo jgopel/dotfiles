@@ -4,11 +4,11 @@ return {
   -- Exclude all dot directories, but keep dotfiles
   "--glob=*",
   "--glob=!.*/",
-  "--glob=.github",
+  "--glob=.github/",
   "--glob=.github/**",
   -- Rust
-  "--glob=!target",
+  "--glob=!target/",
   -- C++
-  "--glob=!build",
-  "--glob=!build-*",
+  "--glob=!build/",
+  "--glob=!build-*/",
 }

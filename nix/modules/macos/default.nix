@@ -7,9 +7,12 @@
     ./omniwm.nix
   ];
 
-  den.aspects.macos.includes = [
-    den.aspects.macos.desktop
-    den.aspects.macos.keyboard
-    den.aspects.macos.omniwm
-  ];
+  den.aspects.macos.__functor = _: { omniwmSettingsFile }: {
+    name = "macos";
+    includes = [
+      den.aspects.macos.desktop
+      den.aspects.macos.keyboard
+      (den.aspects.macos.omniwm { settingsFile = omniwmSettingsFile; })
+    ];
+  };
 }

@@ -18,10 +18,12 @@
       ];
     };
 
-    macos.includes = [
-      den.aspects.jonathan.desktop
-      den.aspects.macos
-    ];
+    macos.__functor = _: { omniwmSettingsFile }: {
+      includes = [
+        den.aspects.jonathan.desktop
+        (den.aspects.macos { inherit omniwmSettingsFile; })
+      ];
+    };
 
     provides.to-hosts.darwin.homebrew.casks = [
       "discord"

@@ -23,7 +23,9 @@ repos:
         exclude: |
           (?x)^(
             rust/Cargo.lock|
-            uv.lock
+            uv.lock|
+            nix/hosts/[^/]+/noctalia/settings.toml
+            nix/hosts/[^/]+/omniwm/settings.toml
           )$
   - repo: https://github.com/executablebooks/mdformat
     rev: 1.0.0

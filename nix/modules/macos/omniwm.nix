@@ -1,9 +1,15 @@
 { repoRoot, ... }:
 
 {
-  den.aspects.macos.omniwm = {
+  den.aspects.macos.omniwm.__functor = _: { settingsFile }: {
+    name = "omniwm";
     homeManager =
-      { config, pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       let
         # Schema 5 and sided Command bindings require this release. Retain
         # nixpkgs' bsdtar unpacking so the app's signature survives extraction.
@@ -25,7 +31,11 @@
         '';
 
         xdg.configFile = {
-          "omniwm/settings.toml".source = repoRoot + /omniwm/settings.toml;
+          "omniwm/settings.toml".source =
+            let
+              relativePath = lib.removePrefix "${toString repoRoot}/" (toString settingsFile);
+            in
+            config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/${relativePath}";
           # The bundled shell otherwise overrides settings.toml's bar placement.
           "omniwm/shell/shell.toml".source = repoRoot + /omniwm/shell.toml;
         };

@@ -46,7 +46,7 @@
 
       "jonathan@Jonathans-MacBook-Pro" = {
         includes = [
-          den.aspects.jonathan.desktop.macos
+          (den.aspects.jonathan.desktop.macos { omniwmSettingsFile = ./omniwm/settings.toml; })
           den.aspects.jonathan.agents
           den.aspects.jonathan.dev
           den.aspects.jonathan.nascent.desktop

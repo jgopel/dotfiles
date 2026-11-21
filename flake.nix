@@ -28,6 +28,22 @@
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 
+    # Agent skill sources
+    superpowers = {
+      url = "github:obra/superpowers";
+      flake = false;
+    };
+    janestreet-agent-skills = {
+      url = "github:janestreet/agent_skills";
+      flake = false;
+    };
+    trailofbits-skills = {
+      # Pinned to the last commit before upstream removed
+      # ask-questions-if-underspecified (trailofbits/skills#214).
+      url = "github:trailofbits/skills/daa4ad03eb6ae7c451665ff30b5daaa6cfbe613c";
+      flake = false;
+    };
+
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       # Keep upstream's nixpkgs pin to match its binary cache builds.

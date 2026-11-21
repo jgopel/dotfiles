@@ -145,14 +145,14 @@ require("lazy").setup({
           map("v", "<leader>hs", function()
             gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
           end, { desc = "Stage Selected Git Lines" })
-          map("n", "]c", function()
+          map("n", "]h", function()
             if vim.wo.diff then
               return "]c"
             end
             vim.schedule(gs.next_hunk)
             return "<Ignore>"
           end, { expr = true, desc = "Next Git Hunk" })
-          map("n", "[c", function()
+          map("n", "[h", function()
             if vim.wo.diff then
               return "[c"
             end

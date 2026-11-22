@@ -14,7 +14,7 @@
         nixos = {
           imports = [
             ./hardware-configuration.nix
-            ./suspend-tracing.nix
+            ../../kernel-testing/suspend-tracing.nix
             ../../kernel-testing/suspend-diagnostics.nix
           ];
 

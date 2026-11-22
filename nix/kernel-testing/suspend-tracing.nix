@@ -58,8 +58,8 @@
     RateLimitIntervalSec = 0;
   };
 
-  # Keep this diagnostic recorder local to the XPS. Userspace cannot drain
-  # ftrace while frozen, so a forced power-off can still lose the final events.
+  # Userspace cannot drain ftrace while frozen, so a forced power-off can still
+  # lose the final events.
   systemd.services.suspend-trace = {
     description = "Rolling suspend trace recorder";
     wantedBy = [ "multi-user.target" ];

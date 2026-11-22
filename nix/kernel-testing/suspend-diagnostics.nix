@@ -3,7 +3,7 @@
 {
   imports = [ ./base.nix ];
 
-  # Temporary diagnostics for the XPS's intermittent s2idle hang.
+  # Temporary diagnostics for the intermittent s2idle hang on dock resume.
   boot.kernelPatches = [
     {
       name = "suspend-diagnostics";

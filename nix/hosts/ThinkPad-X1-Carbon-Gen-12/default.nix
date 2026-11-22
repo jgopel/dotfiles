@@ -12,7 +12,11 @@
           (den.aspects.caps-escape-swap { builtInIds = [ "0001:0001" ]; })
         ];
         nixos = { pkgs, ... }: {
-          imports = [ ./hardware-configuration.nix ];
+          imports = [
+            ./hardware-configuration.nix
+            ../../kernel-testing/suspend-tracing.nix
+            ../../kernel-testing/suspend-diagnostics.nix
+          ];
 
           hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
 

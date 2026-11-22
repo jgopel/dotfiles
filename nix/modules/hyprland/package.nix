@@ -32,9 +32,13 @@ let
     text = builtins.readFile (repoRoot + /hyprland/monitors.sh);
   };
   appearance = writeText "appearance.lua" (
-    lib.replaceStrings [ "@icons@" ] [ "${adwaita-icon-theme}/share/icons" ] (
-      builtins.readFile (repoRoot + /hyprland/appearance.lua)
-    )
+    lib.replaceStrings
+      [ "@icons@" "@futurista@" ]
+      [
+        "${adwaita-icon-theme}/share/icons"
+        "${inputs.noctalia-plugins}/hyprland-settings/lib/presets/futurista.luau"
+      ]
+      (builtins.readFile (repoRoot + /hyprland/appearance.lua))
   );
   bindings = writeText "bindings.lua" (
     lib.replaceStrings

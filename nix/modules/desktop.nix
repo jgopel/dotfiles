@@ -19,6 +19,7 @@
       networking.networkmanager.enable = true;
 
       services = {
+        automatic-timezoned.enable = true;
         fwupd.enable = true;
         xserver.xkb = {
           layout = lib.mkDefault "us";

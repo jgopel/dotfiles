@@ -9,7 +9,6 @@
       Jonathans-MacBook-Pro.darwin = {
         networking.hostName = "Jonathans-MacBook-Pro";
         networking.localHostName = "Jonathans-MacBook-Pro";
-        time.timeZone = "America/Denver";
 
         homebrew.casks = [ "steam" ];
 

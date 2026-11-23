@@ -49,7 +49,7 @@
     ./starship.nix
     ./syncthing
     ./tailscale.nix
-    ./tmux.nix
+    ./tmux
     ./unraid-guest.nix
   ];
 

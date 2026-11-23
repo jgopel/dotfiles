@@ -1,0 +1,22 @@
+diff --git a/layout.c b/layout.c
+index 92dad494..9448d9f5 100644
+--- a/layout.c
++++ b/layout.c
+@@ -1560,7 +1560,7 @@ layout_spread_cell(struct window *w, struct layout_cell *parent)
+
+ 	number = 0;
+ 	TAILQ_FOREACH (lc, &parent->cells, entry)
+-		if (layout_cell_is_tiled(lc))
++		if (layout_cell_is_tiled(lc) || layout_cell_has_tiled_child(lc))
+ 			number++;
+ 	if (number <= 1)
+ 		return (0);
+@@ -1589,7 +1589,7 @@ layout_spread_cell(struct window *w, struct layout_cell *parent)
+
+ 	changed = 0;
+ 	TAILQ_FOREACH (lc, &parent->cells, entry) {
+-		if (!layout_cell_is_tiled(lc))
++		if (!layout_cell_is_tiled(lc) && !layout_cell_has_tiled_child(lc))
+ 			continue;
+ 		change = 0;
+ 		if (parent->type == LAYOUT_LEFTRIGHT) {

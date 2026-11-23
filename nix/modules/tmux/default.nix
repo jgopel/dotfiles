@@ -10,7 +10,17 @@ let
 in
 {
   den.aspects.tmux = {
-    homeManager = { pkgs, ... }: { home.packages = [ pkgs.tmux ]; };
+    homeManager = { pkgs, ... }: {
+      home.packages = [
+        (pkgs.tmux.overrideAttrs (old: {
+          # tmux 3.8 `select-layout -E` ignores split cells when spreading panes,
+          # pushing a stacked column past the window edge. Backport upstream
+          # 67d1c4dc (tmux/tmux#5776). Once a release includes it, this patch
+          # no longer applies and the build fails: remove it then.
+          patches = (old.patches or [ ]) ++ [ ./select-layout-spread-tiled-children.patch ];
+        }))
+      ];
+    };
 
     hmLinux =
       { pkgs, ... }:

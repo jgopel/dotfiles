@@ -1,4 +1,4 @@
-{ inputs }:
+{ inputs, pkgs }:
 
 {
   shell = {
@@ -10,7 +10,13 @@
       {
         name = "community";
         kind = "path";
-        location = "${inputs.noctalia-plugins}";
+        location = toString (
+          pkgs.applyPatches {
+            name = "noctalia-community-plugins";
+            src = inputs.noctalia-plugins;
+            patches = [ ./timezone-hub.patch ];
+          }
+        );
       }
     ];
   };

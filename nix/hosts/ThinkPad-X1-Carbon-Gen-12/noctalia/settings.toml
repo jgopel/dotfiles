@@ -158,11 +158,15 @@ history_retention_hours = 168
 position = "top_center"
 width = 500
 
+[plugin_settings."ahmedhossamdev/timezone-hub"]
+show_date_in_bar = false
+time_format = "12h"
+
 [plugin_settings."rylos/syncthing"]
 notify_events = false
 
 [plugins]
-enabled = [ "michael-retunzew/hyprland-settings", "rylos/syncthing" ]
+enabled = [ "ahmedhossamdev/timezone-hub", "michael-retunzew/hyprland-settings", "rylos/syncthing" ]
 
 [shell]
 time_format = "{:%I:%M %p}"
@@ -180,7 +184,7 @@ builtin = "Tokyo-Night"
 path = "~/.config/background"
 
 [widget.clock]
-format = "{:%I:%M %p}"
+type = "ahmedhossamdev/timezone-hub:bar"
 
 [widget.network]
 show_label = false

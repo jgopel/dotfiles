@@ -1,0 +1,39 @@
+--- a/timezone-hub/bar.luau
++++ b/timezone-hub/bar.luau
+@@ -20,8 +20,12 @@
+ local function render()
+   local selectedRows = {}
++  local seen = {}
+   for _, zone in ipairs(barTzs) do
+     local row = findRow(zone)
+-    if row ~= nil then table.insert(selectedRows, row) end
++    if row ~= nil and not seen[row.tz] then
++      seen[row.tz] = true
++      table.insert(selectedRows, row)
++    end
+   end
+   if #selectedRows == 0 and rows[1] ~= nil then
+     table.insert(selectedRows, rows[1])
+--- a/timezone-hub/service.luau
++++ b/timezone-hub/service.luau
+@@ -101,5 +101,9 @@
+         end
+       end
+     end
++    if raw == nil then
++      comparisons = { { tz = "America/Denver", label = "Denver" } }
++      barTzs = { DEVICE_BAR_KEY, "America/Denver" }
++    end
+   end
+ end
+@@ -539,3 +543,10 @@
++local lastZoneCheck = noctalia.nowMs()
+ function update()
++  local now = noctalia.nowMs()
++  if now - lastZoneCheck >= 60000 then
++    lastZoneCheck = now
++    detectDeviceTimezone()
++  end
++
+   -- Self-heal: if the zone-list fetch never came back (its runAsync
+   -- callback silently never fired), don't stay stuck forever - clear the

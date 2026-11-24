@@ -1,0 +1,11 @@
+--- a/timezone-hub/service.luau
++++ b/timezone-hub/service.luau
+@@ -427,7 +427,7 @@
+ -- ---------------------------------------------------------------------
+ local function addComparison(tz, label)
+   tz = noctalia.string.trim(tz or "")
+-  if tz == "" or tz == deviceTz then
++  if tz == "" then
+     return false, "invalid"
+   end
+   if not noctalia.isValidTimezone(tz) then

@@ -14,7 +14,10 @@
           pkgs.applyPatches {
             name = "noctalia-community-plugins";
             src = inputs.noctalia-plugins;
-            patches = [ ./timezone-hub.patch ];
+            patches = [
+              ./timezone-hub.patch
+              ./timezone-hub-allow-device-zone.patch
+            ];
           }
         );
       }

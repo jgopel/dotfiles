@@ -46,49 +46,44 @@
 
         config = {
           home.packages = [ pkgs._1password-cli ];
+          xdg.configFile."fish/functions/__onepassword_launch.fish".source = ./__onepassword_launch.fish;
 
           assertions = lib.mapAttrsToList (name: _: {
             assertion = builtins.match "[A-Za-z_][A-Za-z0-9_]*" name != null;
             message = "Invalid 1Password environment variable name: ${name}";
           }) cfg.secrets;
 
-          lib.onepassword.wrap =
+          lib.onepassword.fishFunction =
             {
-              name,
-              package,
               command,
               secretNames,
-              skipArguments ? [ ],
+              signInAttempts ? 5,
             }:
+            assert lib.assertMsg (lib.types.ints.positive.check signInAttempts)
+              "signInAttempts must be a positive integer";
             let
-              variables = lib.genAttrs secretNames (name: cfg.secrets.${name});
-              configuration = ''
-                account=${lib.escapeShellArg (if cfg.url == null then "" else cfg.url)}
-                cache_key=${builtins.hashString "sha256" (if cfg.url == null then "" else cfg.url)}
-                names=(${lib.escapeShellArgs (builtins.attrNames variables)})
-                references=(${
-                  lib.escapeShellArgs (
-                    map (value: if value == null then "" else value) (builtins.attrValues variables)
-                  )
-                })
-                skip_arguments=(${lib.escapeShellArgs skipArguments})
+              fishArg = value: "'${lib.escape [ "\\" "'" ] (toString value)}'";
+              op = pkgs.writeShellScript "interactive-op" ''
+                # Fish aborts the calling function if its foreground job dies of SIGINT.
+                trap 'exit 130' INT
+                op=${lib.getExe' pkgs._1password-cli "op"}
+                if [[ -x /run/wrappers/bin/op ]]; then op=/run/wrappers/bin/op; fi
+                limit=$1; shift
+                ${lib.getExe' pkgs.coreutils "timeout"} --foreground --kill-after=2s "$limit" "$op" "$@"
               '';
-              launcher = pkgs.writeShellScript "${command}-with-1password" (
-                builtins.replaceStrings
-                  [ "@configuration@" "@op@" "@timeout@" "@coreutils@" "@flock@" ]
-                  [
-                    configuration
-                    "${pkgs._1password-cli}/bin/op"
-                    "${pkgs.coreutils}/bin/timeout"
-                    "${pkgs.coreutils}"
-                    "${pkgs.flock}/bin/flock"
-                  ]
-                  (builtins.readFile ./launch.sh)
-              );
             in
-            pkgs.writeShellScriptBin name ''
-              exec ${launcher} ${lib.escapeShellArg "${package}/bin/${command}"} "$@"
-            '';
+            {
+              wraps = builtins.baseNameOf command;
+              body = ''
+                set -l program ${fishArg command}
+                set -l op ${op}
+                set -l account ${fishArg cfg.url}
+                set -l names ${lib.concatMapStringsSep " " fishArg secretNames}
+                set -l references ${lib.concatMapStringsSep " " (name: fishArg cfg.secrets.${name}) secretNames}
+                set -l sign_in_attempts ${toString signInAttempts}
+                __onepassword_launch $argv
+              '';
+            };
         };
       };
   };

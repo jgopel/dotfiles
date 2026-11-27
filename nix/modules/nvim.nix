@@ -48,25 +48,10 @@
       ];
 
       homeManager = { config, ... }: {
-        home.packages = [
-          (config.lib.onepassword.wrap {
-            name = "nvim-ai";
-            package = config.programs.neovim.finalPackage;
-            command = "nvim";
-            secretNames = [ "OPENROUTER_API_KEY" ];
-            skipArguments = [
-              "--headless"
-              "--embed"
-              "-es"
-              "-Es"
-              "-l"
-              "--version"
-              "-v"
-              "--help"
-              "-h"
-            ];
-          })
-        ];
+        programs.fish.functions.nvim-ai = config.lib.onepassword.fishFunction {
+          command = "${config.programs.neovim.finalPackage}/bin/nvim";
+          secretNames = [ "OPENROUTER_API_KEY" ];
+        };
       };
     };
   };

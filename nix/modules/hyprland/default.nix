@@ -1,9 +1,9 @@
 { den, repoRoot, ... }:
 
 {
-  den.aspects.hyprland.__functor = _: { settingsFile }: {
+  den.aspects.hyprland.__functor = _: noctaliaOptions: {
     name = "hyprland";
-    includes = [ (den.aspects.noctalia { inherit settingsFile; }) ];
+    includes = [ (den.aspects.noctalia noctaliaOptions) ];
 
     provides.to-hosts.nixos.programs.hyprland.enable = true;
 
@@ -17,7 +17,10 @@
       }:
 
       let
-        desktop = pkgs.callPackage ./package.nix { inherit inputs repoRoot; };
+        desktop = pkgs.callPackage ./package.nix {
+          inherit inputs repoRoot;
+          noctalia = config.programs.noctalia.package;
+        };
       in
       {
         home.packages = [ desktop.layouts ];

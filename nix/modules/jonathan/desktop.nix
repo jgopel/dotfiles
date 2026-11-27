@@ -11,10 +11,10 @@
       den.aspects.slack
     ];
 
-    linux.__functor = _: { noctaliaSettingsFile }: {
+    linux.__functor = _: desktopOptions: {
       includes = [
         den.aspects.jonathan.desktop
-        (den.aspects.desktop { inherit noctaliaSettingsFile; })
+        (den.aspects.desktop desktopOptions)
       ];
     };
 

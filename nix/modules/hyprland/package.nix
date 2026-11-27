@@ -2,7 +2,7 @@
   inputs,
   repoRoot,
   lib,
-  stdenv,
+  noctalia,
   writeShellApplication,
   writeText,
   adwaita-icon-theme,
@@ -13,7 +13,6 @@
 }:
 
 let
-  noctalia = inputs.noctalia.packages.${stdenv.hostPlatform.system}.default;
   layouts = writeShellApplication {
     name = "hyprland-layouts";
     runtimeInputs = [

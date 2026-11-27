@@ -39,7 +39,10 @@
       };
       "jonathan@ThinkPad-X1-Carbon-Gen-12" = {
         includes = [
-          (den.aspects.jonathan.desktop.linux { noctaliaSettingsFile = ./noctalia/settings.toml; })
+          (den.aspects.jonathan.desktop.linux {
+            noctaliaSettingsFile = ./noctalia/settings.toml;
+            fingerprintUnlock = true;
+          })
           den.aspects.jonathan.agents
           den.aspects.jonathan.dev
           den.aspects.jonathan.nascent.desktop
